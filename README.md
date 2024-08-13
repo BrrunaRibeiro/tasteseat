@@ -83,6 +83,10 @@ Link to the deployed project: []()
 - Restaurants to Tables: One-to-Many(One restaurant can have multiple tables)
 - Tables to Bookings One-to-Many(Oe table can have many bookings, but only one active booking at a time)
 
+### Visual Representation ERD
+
+![ERD]()
+
 # Features
 
 ## Features Implemented
