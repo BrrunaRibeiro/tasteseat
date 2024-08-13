@@ -63,7 +63,7 @@ Link to the deployed project: []()
 
 # Design
 
-## Colour Scheme
+## Color Scheme
 ## Typography
 ## Logo and FavIcon
 ## Wireframes
@@ -71,12 +71,13 @@ Link to the deployed project: []()
 ## Database Plan
 
 ### Tables
+
 - Users
 - Restaurants
 - Tables
 - Bookings
 
-### Relatioships
+### Relationships
 
 - Users to Booking: One-to-Many(One user can have many bookings)
 - Restaurants to Tables: One-to-Many(One restaurant can have multiple tables)
