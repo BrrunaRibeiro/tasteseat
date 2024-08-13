@@ -12,9 +12,44 @@ Link to the deployed project: []()
 
 ## Contents
 
+## Problem Statement
+- The restaurant booking process is often frustrating and inefficient. I aim to create an easy-to-use, online system that makes reserving tables simple and hassle-free for customers.
+
 ## Application Objectives
+ - Offer a seamless interface that allows users to browse restaurant options effortlessly.
+ - Simplify the booking process and reduce the time spent to make a booking.
+ - Provide real-time availability information.
+
+ In summary, the goal of the restaurant booking system is to eliminate the friction involved in the booking process, leading to increased customer satisfaction, repeat visits, and enhanced operational efficiency for restaurants.
 
 # User Experience (UX)
+
+- Overall user experience goal is to deliver simplicity, efficiency and enjoyment, by allowing users to quickly find and reserve tables with a minimal number of steps.
+
+### Key User Flow
+
+1. Finding a restaurant
+2. Making a reservation
+3. Managing reservations
+
+### User Interface Features
+- Navigation
+- Search Functionality
+
+### Responsive Design
+
+#### This application is Responsive, ensuring optimal user experience on all devices.
+
+- Responsiveness is vital for enhancing user experience because it ensures accessibility across various devices, improves user engagement, facilitates better navigation, enhances performance, and supports SEO efforts. 
+
+- Responsive design can lead to higher user satisfaction, increased retention rates, and greater success for your web application.
+
+### Intuitive Feedback
+
+- The application keeps the user informed at every step.
+- Inform the user of successful and failed operations.
+- User receives responses that enhance the understanding of the application.
+
 
 ## Target Audience
 
@@ -35,6 +70,18 @@ Link to the deployed project: []()
 ## Flow Diagram
 ## Database Plan
 
+### Tables
+- Users
+- Restaurants
+- Tables
+- Bookings
+
+### Relatioships
+
+- Users to Booking: One-to-Many(One user can have many bookings)
+- Restaurants to Tables: One-to-Many(One restaurant can have multiple tables)
+- Tables to Bookings One-to-Many(Oe table can have many bookings, but only one active booking at a time)
+
 # Features
 
 ## Features Implemented
@@ -47,8 +94,13 @@ Link to the deployed project: []()
 
 ## Future Features
 
-###
-###
+### FeedBack and Reviews
+- Users will receive an email after 24h of the booking time to review and provide feedback to the restaurant.
+### Rating
+- Display restaurant's Ratings (x out of 5 stars)
+- Be able to filter restaurants by their Rating
+- Sort by Rating(low to high, high to low)
+
 
 # Technologies Used
 
@@ -68,6 +120,8 @@ This project was designed using Agile methodology, utilizing the Project Board a
 - [Project Board]()
 
 # Testing
+
+Please refer to TESTING.md file for all testing carried out.
 
 ## Manual Testing
 
