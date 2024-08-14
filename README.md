@@ -144,9 +144,6 @@ Please refer to TESTING.md file for all testing carried out.
 
 ## Credits
 
-- Extending built-in Django User with a Profile Model
-https://rennerocha.com/posts/extending-django-user-profile-model/
-
 ## Media
 
 ## Acknowledgments
