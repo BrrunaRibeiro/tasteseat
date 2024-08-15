@@ -9,7 +9,7 @@
             "phone_number": "020-1234567",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest1.jpg"
+            "image": "restaurant_images/rest1.webp"
         }
     },
     {
@@ -22,7 +22,7 @@
             "phone_number": "020-2345678",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest2.jpg"
+            "image": "restaurant_images/rest2.webp"
         }
     },
     {
@@ -35,7 +35,7 @@
             "phone_number": "020-3456789",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest3.jpg"
+            "image": "restaurant_images/rest3.webp"
         }
     },
     {
@@ -48,7 +48,7 @@
             "phone_number": "020-4567890",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest4.jpg"
+            "image": "restaurant_images/rest4.webp"
         }
     },
     {
@@ -61,7 +61,7 @@
             "phone_number": "020-5678901",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest5.jpg"
+            "image": "restaurant_images/rest5.webp"
         }
     },
     {
@@ -74,7 +74,7 @@
             "phone_number": "020-6789012",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest6.jpg"
+            "image": "restaurant_images/rest6.webp"
         }
     },
     {
@@ -87,7 +87,7 @@
             "phone_number": "020-7890123",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest7.jpg"
+            "image": "restaurant_images/rest7.webp"
         }
     },
     {
@@ -100,7 +100,7 @@
             "phone_number": "020-8901234",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest8.jpg"
+            "image": "restaurant_images/rest8.webp"
         }
     },
     {
@@ -113,7 +113,7 @@
             "phone_number": "020-9012345",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest9.jpg"
+            "image": "restaurant_images/rest9.webp"
         }
     },
     {
@@ -126,7 +126,7 @@
             "phone_number": "020-0123456",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest10.jpg"
+            "image": "restaurant_images/rest10.webp"
         }
     },
     {
@@ -139,7 +139,7 @@
             "phone_number": "020-1123456",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest11.jpg"
+            "image": "restaurant_images/rest11.webp"
         }
     },
     {
@@ -152,7 +152,7 @@
             "phone_number": "020-2123456",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest12.jpg"
+            "image": "restaurant_images/rest12.webp"
         }
     },
     {
@@ -165,7 +165,7 @@
             "phone_number": "020-3123456",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest13.jpg"
+            "image": "restaurant_images/rest13.webp"
         }
     },
     {
@@ -178,7 +178,7 @@
             "phone_number": "020-4123456",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest14.jpg"
+            "image": "restaurant_images/rest14.webp"
         }
     },
     {
@@ -191,7 +191,7 @@
             "phone_number": "020-5123456",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest15.jpg"
+            "image": "restaurant_images/rest15.webp"
         }
     },
     {
@@ -204,7 +204,7 @@
             "phone_number": "020-6123456",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest16.jpg"
+            "image": "restaurant_images/rest16.webp"
         }
     },
     {
@@ -217,7 +217,7 @@
             "phone_number": "020-7123456",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest17.jpg"
+            "image": "restaurant_images/rest17.webp"
         }
     },
     {
@@ -230,7 +230,7 @@
             "phone_number": "020-8123456",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest18.jpg"
+            "image": "restaurant_images/rest18.webp"
         }
     },
     {
@@ -243,7 +243,7 @@
             "phone_number": "020-9123456",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest19.jpg"
+            "image": "restaurant_images/rest19.webp"
         }
     },
     {
@@ -256,7 +256,7 @@
             "phone_number": "020-0135789",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest20.jpg"
+            "image": "restaurant_images/rest20.webp"
         }
     },
     {
@@ -269,7 +269,7 @@
             "phone_number": "020-1234561",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest21.jpg"
+            "image": "restaurant_images/rest21.webp"
         }
     },
     {
@@ -282,7 +282,7 @@
             "phone_number": "020-2234561",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest22.jpg"
+            "image": "restaurant_images/rest22.webp"
         }
     },
     {
@@ -295,7 +295,7 @@
             "phone_number": "020-3234561",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest23.jpg"
+            "image": "restaurant_images/rest23.webp"
         }
     },
     {
@@ -308,7 +308,7 @@
             "phone_number": "020-4234561",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest24.jpg"
+            "image": "restaurant_images/rest24.webp"
         }
     },
     {
@@ -321,7 +321,7 @@
             "phone_number": "020-5234561",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest25.jpg"
+            "image": "restaurant_images/rest25.webp"
         }
     },
     {
@@ -334,7 +334,7 @@
             "phone_number": "020-6234561",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest26.jpg"
+            "image": "restaurant_images/rest26.webp"
         }
     },
     {
@@ -347,7 +347,7 @@
             "phone_number": "020-7234561",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest27.jpg"
+            "image": "restaurant_images/rest27.webp"
         }
     },
     {
@@ -360,7 +360,7 @@
             "phone_number": "020-2828282",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest28.jpg"
+            "image": "restaurant_images/rest28.webp"
         }
     },
     {
@@ -373,7 +373,7 @@
             "phone_number": "020-2929292",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest29.jpg"
+            "image": "restaurant_images/rest29.webp"
         }
     },
     {
@@ -386,7 +386,7 @@
             "phone_number": "020-3030303",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest30.jpg"
+            "image": "restaurant_images/rest30.webp"
         }
     },
     {
@@ -399,7 +399,7 @@
             "phone_number": "020-3131313",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest31.jpg"
+            "image": "restaurant_images/rest31.webp"
         }
     },
     {
@@ -412,7 +412,7 @@
             "phone_number": "020-3232323",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest32.jpg"
+            "image": "restaurant_images/rest32.webp"
         }
     },
     {
@@ -425,7 +425,7 @@
             "phone_number": "020-3232323",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest33.jpg"
+            "image": "restaurant_images/rest33.webp"
         }
     },
     {
@@ -438,7 +438,7 @@
             "phone_number": "020-3434343",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest34.jpg"
+            "image": "restaurant_images/rest34.webp"
         }
     },
     {
@@ -451,7 +451,7 @@
             "phone_number": "020-3535353",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest35.jpg"
+            "image": "restaurant_images/rest35.webp"
         }
     },
     {
@@ -464,7 +464,7 @@
             "phone_number": "020-3636363",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest36.jpg"
+            "image": "restaurant_images/rest36.webp"
         }
     },
     {
@@ -477,7 +477,7 @@
             "phone_number": "020-3737373",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest37.jpg"
+            "image": "restaurant_images/rest37.webp"
         }
     },
     {
@@ -490,7 +490,7 @@
             "phone_number": "020-3838383",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest38.jpg"
+            "image": "restaurant_images/rest38.webp"
         }
     },
     {
@@ -503,7 +503,7 @@
             "phone_number": "020-3939393",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest39.jpg"
+            "image": "restaurant_images/rest39.webp"
         }
     },
     {
@@ -516,7 +516,7 @@
             "phone_number": "020-4040404",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest40.jpg"
+            "image": "restaurant_images/rest40.webp"
         }
     },
     {
@@ -529,7 +529,7 @@
             "phone_number": "020-4141414",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest41.jpg"
+            "image": "restaurant_images/rest41.webp"
         }
     },
     {
@@ -542,7 +542,7 @@
             "phone_number": "020-4242424",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest42.jpg"
+            "image": "restaurant_images/rest42.webp"
         }
     },
     {
@@ -555,7 +555,7 @@
             "phone_number": "020-4343434",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest43.jpg"
+            "image": "restaurant_images/rest43.webp"
         }
     },
     {
@@ -568,7 +568,7 @@
             "phone_number": "020-4444444",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest44.jpg"
+            "image": "restaurant_images/rest44.webp"
         }
     },
     {
@@ -581,7 +581,7 @@
             "phone_number": "020-4545454",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest45.jpg"
+            "image": "restaurant_images/rest45.webp"
         }
     }
 ]
