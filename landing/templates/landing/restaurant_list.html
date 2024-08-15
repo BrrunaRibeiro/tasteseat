@@ -8,13 +8,11 @@
 </head>
 {% load static %}
 <body>
-    <!-- <h1>TasteSeat</h1>
+    <header>
+
+    </header>
     {% for restaurant in object_list %}
-    
-    <img src="{{ restaurant.image.url }}" alt="Restaunt's Image" width="300" height="300">
-    {% endfor %} -->
-    {% for restaurant in object_list %}
-        <article class="restaurant-list">
+        <main class="restaurant-list">
             <div class="restaurant-image" style="float: left; margin-right: 15px;">
                 <img src="{{ restaurant.image.url }}" alt="{{ restaurant.name }}'s Image" width="150" height="150">
             </div>
@@ -24,7 +22,7 @@
                 <address>{{ restaurant.address }}</address>
             </div>
             <div style="clear: both;"></div>
-        </article>
+        </main>
         {% endfor %}
 </body>
 </html>

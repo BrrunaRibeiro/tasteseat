@@ -1,0 +1,587 @@
+[
+    {
+        "model": "landing.restaurant",
+        "pk": 1,
+        "fields": {
+            "name": "The Italian Eatery",
+            "address": "Keizersgracht 123, 1015 CJ Amsterdam",
+            "cuisine_type": 1,
+            "phone_number": "020-1234567",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest1.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 2,
+        "fields": {
+            "name": "Sushi Central",
+            "address": "Prinsengracht 456, 1016 HN Amsterdam",
+            "cuisine_type": 2,
+            "phone_number": "020-2345678",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest2.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 3,
+        "fields": {
+            "name": "Curry Palace",
+            "address": "Herengracht 789, 1017 BS Amsterdam",
+            "cuisine_type": 3,
+            "phone_number": "020-3456789",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest3.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 4,
+        "fields": {
+            "name": "Taco Loco",
+            "address": "Brouwersgracht 25, 1013 GZ Amsterdam",
+            "cuisine_type": 4,
+            "phone_number": "020-4567890",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest4.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 5,
+        "fields": {
+            "name": "Burger Joint",
+            "address": "Spaarndammerstraat 10, 1013 SV Amsterdam",
+            "cuisine_type": 5,
+            "phone_number": "020-5678901",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest5.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 6,
+        "fields": {
+            "name": "Pizza Planet",
+            "address": "Haarlemmerdijk 16, 1013 JC Amsterdam",
+            "cuisine_type": 6,
+            "phone_number": "020-6789012",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest6.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 7,
+        "fields": {
+            "name": "BBQ Barn",
+            "address": "Rozengracht 50, 1016 ND Amsterdam",
+            "cuisine_type": 7,
+            "phone_number": "020-7890123",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest7.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 8,
+        "fields": {
+            "name": "Vegan Vibes",
+            "address": "Lijnbaansgracht 39, 1015 GP Amsterdam",
+            "cuisine_type": 8,
+            "phone_number": "020-8901234",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest8.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 9,
+        "fields": {
+            "name": "Pasta Place",
+            "address": "Marnixstraat 290, 1016 TL Amsterdam",
+            "cuisine_type": 9,
+            "phone_number": "020-9012345",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest9.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 10,
+        "fields": {
+            "name": "Seafood Shack",
+            "address": "Egelantiersgracht 65, 1015 RW Amsterdam",
+            "cuisine_type": 10,
+            "phone_number": "020-0123456",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest10.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 11,
+        "fields": {
+            "name": "Steakhouse Supreme",
+            "address": "Westerstraat 172, 1015 MP Amsterdam",
+            "cuisine_type": 11,
+            "phone_number": "020-1123456",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest11.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 12,
+        "fields": {
+            "name": "Dim Sum Delight",
+            "address": "Prins Hendrikkade 33, 1012 TM Amsterdam",
+            "cuisine_type": 12,
+            "phone_number": "020-2123456",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest12.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 13,
+        "fields": {
+            "name": "Falafel Fantasia",
+            "address": "Nieuwezijds Voorburgwal 10, 1012 RZ Amsterdam",
+            "cuisine_type": 13,
+            "phone_number": "020-3123456",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest13.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 14,
+        "fields": {
+            "name": "Noodle Nook",
+            "address": "Kloveniersburgwal 55, 1012 TG Amsterdam",
+            "cuisine_type": 14,
+            "phone_number": "020-4123456",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest14.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 15,
+        "fields": {
+            "name": "BBQ Brothers",
+            "address": "Warmoesstraat 80, 1012 JH Amsterdam",
+            "cuisine_type": 15,
+            "phone_number": "020-5123456",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest15.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 16,
+        "fields": {
+            "name": "Grill Gurus",
+            "address": "Nieuwezijds Kolk 8, 1012 PV Amsterdam",
+            "cuisine_type": 16,
+            "phone_number": "020-6123456",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest16.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 17,
+        "fields": {
+            "name": "Soup Specialist",
+            "address": "Haarlemmerstraat 13, 1013 EH Amsterdam",
+            "cuisine_type": 17,
+            "phone_number": "020-7123456",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest17.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 18,
+        "fields": {
+            "name": "Ramen Retreat",
+            "address": "Van Baerlestraat 1, 1071 AL Amsterdam",
+            "cuisine_type": 18,
+            "phone_number": "020-8123456",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest18.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 19,
+        "fields": {
+            "name": "Fry Fiesta",
+            "address": "Reguliersdwarsstraat 69, 1017 BK Amsterdam",
+            "cuisine_type": 19,
+            "phone_number": "020-9123456",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest19.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 20,
+        "fields": {
+            "name": "Panini Paradise",
+            "address": "Oudezijds Voorburgwal 40, 1012 GE Amsterdam",
+            "cuisine_type": 20,
+            "phone_number": "020-0135789",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest20.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 21,
+        "fields": {
+            "name": "Burrito Bar",
+            "address": "Rokin 50, 1012 KS Amsterdam",
+            "cuisine_type": 21,
+            "phone_number": "020-1234561",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest21.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 22,
+        "fields": {
+            "name": "Healthy Hut",
+            "address": "Kalverstraat 120, 1012 PK Amsterdam",
+            "cuisine_type": 22,
+            "phone_number": "020-2234561",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest22.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 23,
+        "fields": {
+            "name": "Wok Wizards",
+            "address": "Leidseplein 22, 1017 PT Amsterdam",
+            "cuisine_type": 23,
+            "phone_number": "020-3234561",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest23.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 24,
+        "fields": {
+            "name": "Kebab Kitchen",
+            "address": "Rembrandtplein 40, 1017 CV Amsterdam",
+            "cuisine_type": 24,
+            "phone_number": "020-4234561",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest24.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 25,
+        "fields": {
+            "name": "Bakery Bliss",
+            "address": "Damstraat 15, 1012 JL Amsterdam",
+            "cuisine_type": 25,
+            "phone_number": "020-5234561",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest25.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 26,
+        "fields": {
+            "name": "Sandwich Stop",
+            "address": "Muntplein 6, 1017 HK Amsterdam",
+            "cuisine_type": 26,
+            "phone_number": "020-6234561",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest26.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 27,
+        "fields": {
+            "name": "Dumpling Den",
+            "address": "Jordaanstraat 24, 1015 NV Amsterdam",
+            "cuisine_type": 27,
+            "phone_number": "020-7234561",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest27.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 28,
+        "fields": {
+            "name": "Salad Stop",
+            "address": "Vijzelstraat 78, 1017 HL Amsterdam",
+            "cuisine_type": 28,
+            "phone_number": "020-2828282",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest28.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 29,
+        "fields": {
+            "name": "Bistro Belle",
+            "address": "Rietlandpark 17, 1019 DT Amsterdam",
+            "cuisine_type": 29,
+            "phone_number": "020-2929292",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest29.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 30,
+        "fields": {
+            "name": "Wraps & Rolls",
+            "address": "IJdock 21, 1013 MM Amsterdam",
+            "cuisine_type": 30,
+            "phone_number": "020-3030303",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest30.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 31,
+        "fields": {
+            "name": "Taco Time",
+            "address": "Brouwersgracht 200, 1013 HB Amsterdam",
+            "cuisine_type": 31,
+            "phone_number": "020-3131313",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest31.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 32,
+        "fields": {
+            "name": "Spice Route",
+            "address": "Amstel 50, 1017 AC Amsterdam",
+            "cuisine_type": 32,
+            "phone_number": "020-3232323",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest32.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 33,
+        "fields": {
+            "name": "Spice Route",
+            "address": "Amstel 50, 1017 AC Amsterdam",
+            "cuisine_type": 32,
+            "phone_number": "020-3232323",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest33.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 34,
+        "fields": {
+            "name": "Pasta Passion",
+            "address": "Overtoom 60, 1054 HK Amsterdam",
+            "cuisine_type": 33,
+            "phone_number": "020-3434343",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest34.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 35,
+        "fields": {
+            "name": "Burger Bay",
+            "address": "Ferdinand Bolstraat 3, 1072 LA Amsterdam",
+            "cuisine_type": 34,
+            "phone_number": "020-3535353",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest35.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 36,
+        "fields": {
+            "name": "Crepe Corner",
+            "address": "Spuistraat 95, 1012 ST Amsterdam",
+            "cuisine_type": 35,
+            "phone_number": "020-3636363",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest36.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 37,
+        "fields": {
+            "name": "Stir Fry Station",
+            "address": "Haarlemmerstraat 30, 1013 EK Amsterdam",
+            "cuisine_type": 36,
+            "phone_number": "020-3737373",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest37.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 38,
+        "fields": {
+            "name": "Pita Point",
+            "address": "Van Woustraat 58, 1073 LN Amsterdam",
+            "cuisine_type": 37,
+            "phone_number": "020-3838383",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest38.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 39,
+        "fields": {
+            "name": "Smoothie Spot",
+            "address": "Kinkerstraat 85, 1053 DB Amsterdam",
+            "cuisine_type": 38,
+            "phone_number": "020-3939393",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest39.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 40,
+        "fields": {
+            "name": "Rice Table",
+            "address": "Stadhouderskade 7, 1054 ES Amsterdam",
+            "cuisine_type": 39,
+            "phone_number": "020-4040404",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest40.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 41,
+        "fields": {
+            "name": "Sushi Station",
+            "address": "Nieuwe Doelenstraat 20, 1012 CP Amsterdam",
+            "cuisine_type": 40,
+            "phone_number": "020-4141414",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest41.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 42,
+        "fields": {
+            "name": "The Greek Place",
+            "address": "Damrak 60, 1012 LM Amsterdam",
+            "cuisine_type": 41,
+            "phone_number": "020-4242424",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest42.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 43,
+        "fields": {
+            "name": "Tex-Mex Tavern",
+            "address": "Lijnbaansgracht 236, 1017 PH Amsterdam",
+            "cuisine_type": 42,
+            "phone_number": "020-4343434",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest43.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 44,
+        "fields": {
+            "name": "Southeast Asian Eats",
+            "address": "Ceintuurbaan 250, 1072 GG Amsterdam",
+            "cuisine_type": 43,
+            "phone_number": "020-4444444",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest44.jpg"
+        }
+    },
+    {
+        "model": "landing.restaurant",
+        "pk": 45,
+        "fields": {
+            "name": "The Pancake House",
+            "address": "Singel 40, 1015 AB Amsterdam",
+            "cuisine_type": 44,
+            "phone_number": "020-4545454",
+            "created_at": "2024-08-15T14:22:35Z",
+            "updated_at": "2024-08-15T14:22:35Z",
+            "image": "restaurant_images/rest45.jpg"
+        }
+    }
+]
