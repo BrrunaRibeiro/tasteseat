@@ -7,3 +7,4 @@ from .models import Restaurant, Table, Booking
 class ShowRestaurants(generic.ListView):
     queryset = Restaurant.objects.all()
     template_name = "restaurant_list.html"
+

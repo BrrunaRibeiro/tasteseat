@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import timedelta
+from cloudinary.models import CloudinaryField
 
 CUISINES = (
     (1, 'American'),
@@ -67,8 +68,8 @@ class Restaurant(models.Model):
     phone_number = models.CharField(max_length=20)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    image = models.ImageField(upload_to='restaurant_images/')
-
+    image = CloudinaryField('image')
+    
     def __srt__(self):
         return f"Restaurant {self.name} at {self.address}"
 

@@ -1,266 +1,6 @@
 [
     {
         "model": "landing.restaurant",
-        "pk": 1,
-        "fields": {
-            "name": "The Italian Eatery",
-            "address": "Keizersgracht 123, 1015 CJ Amsterdam",
-            "cuisine_type": 1,
-            "phone_number": "020-1234567",
-            "created_at": "2024-08-15T14:22:35Z",
-            "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest1.webp"
-        }
-    },
-    {
-        "model": "landing.restaurant",
-        "pk": 2,
-        "fields": {
-            "name": "Sushi Central",
-            "address": "Prinsengracht 456, 1016 HN Amsterdam",
-            "cuisine_type": 2,
-            "phone_number": "020-2345678",
-            "created_at": "2024-08-15T14:22:35Z",
-            "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest2.webp"
-        }
-    },
-    {
-        "model": "landing.restaurant",
-        "pk": 3,
-        "fields": {
-            "name": "Curry Palace",
-            "address": "Herengracht 789, 1017 BS Amsterdam",
-            "cuisine_type": 3,
-            "phone_number": "020-3456789",
-            "created_at": "2024-08-15T14:22:35Z",
-            "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest3.webp"
-        }
-    },
-    {
-        "model": "landing.restaurant",
-        "pk": 4,
-        "fields": {
-            "name": "Taco Loco",
-            "address": "Brouwersgracht 25, 1013 GZ Amsterdam",
-            "cuisine_type": 4,
-            "phone_number": "020-4567890",
-            "created_at": "2024-08-15T14:22:35Z",
-            "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest4.webp"
-        }
-    },
-    {
-        "model": "landing.restaurant",
-        "pk": 5,
-        "fields": {
-            "name": "Burger Joint",
-            "address": "Spaarndammerstraat 10, 1013 SV Amsterdam",
-            "cuisine_type": 5,
-            "phone_number": "020-5678901",
-            "created_at": "2024-08-15T14:22:35Z",
-            "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest5.webp"
-        }
-    },
-    {
-        "model": "landing.restaurant",
-        "pk": 6,
-        "fields": {
-            "name": "Pizza Planet",
-            "address": "Haarlemmerdijk 16, 1013 JC Amsterdam",
-            "cuisine_type": 6,
-            "phone_number": "020-6789012",
-            "created_at": "2024-08-15T14:22:35Z",
-            "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest6.webp"
-        }
-    },
-    {
-        "model": "landing.restaurant",
-        "pk": 7,
-        "fields": {
-            "name": "BBQ Barn",
-            "address": "Rozengracht 50, 1016 ND Amsterdam",
-            "cuisine_type": 7,
-            "phone_number": "020-7890123",
-            "created_at": "2024-08-15T14:22:35Z",
-            "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest7.webp"
-        }
-    },
-    {
-        "model": "landing.restaurant",
-        "pk": 8,
-        "fields": {
-            "name": "Vegan Vibes",
-            "address": "Lijnbaansgracht 39, 1015 GP Amsterdam",
-            "cuisine_type": 8,
-            "phone_number": "020-8901234",
-            "created_at": "2024-08-15T14:22:35Z",
-            "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest8.webp"
-        }
-    },
-    {
-        "model": "landing.restaurant",
-        "pk": 9,
-        "fields": {
-            "name": "Pasta Place",
-            "address": "Marnixstraat 290, 1016 TL Amsterdam",
-            "cuisine_type": 9,
-            "phone_number": "020-9012345",
-            "created_at": "2024-08-15T14:22:35Z",
-            "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest9.webp"
-        }
-    },
-    {
-        "model": "landing.restaurant",
-        "pk": 10,
-        "fields": {
-            "name": "Seafood Shack",
-            "address": "Egelantiersgracht 65, 1015 RW Amsterdam",
-            "cuisine_type": 10,
-            "phone_number": "020-0123456",
-            "created_at": "2024-08-15T14:22:35Z",
-            "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest10.webp"
-        }
-    },
-    {
-        "model": "landing.restaurant",
-        "pk": 11,
-        "fields": {
-            "name": "Steakhouse Supreme",
-            "address": "Westerstraat 172, 1015 MP Amsterdam",
-            "cuisine_type": 11,
-            "phone_number": "020-1123456",
-            "created_at": "2024-08-15T14:22:35Z",
-            "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest11.webp"
-        }
-    },
-    {
-        "model": "landing.restaurant",
-        "pk": 12,
-        "fields": {
-            "name": "Dim Sum Delight",
-            "address": "Prins Hendrikkade 33, 1012 TM Amsterdam",
-            "cuisine_type": 12,
-            "phone_number": "020-2123456",
-            "created_at": "2024-08-15T14:22:35Z",
-            "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest12.webp"
-        }
-    },
-    {
-        "model": "landing.restaurant",
-        "pk": 13,
-        "fields": {
-            "name": "Falafel Fantasia",
-            "address": "Nieuwezijds Voorburgwal 10, 1012 RZ Amsterdam",
-            "cuisine_type": 13,
-            "phone_number": "020-3123456",
-            "created_at": "2024-08-15T14:22:35Z",
-            "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest13.webp"
-        }
-    },
-    {
-        "model": "landing.restaurant",
-        "pk": 14,
-        "fields": {
-            "name": "Noodle Nook",
-            "address": "Kloveniersburgwal 55, 1012 TG Amsterdam",
-            "cuisine_type": 14,
-            "phone_number": "020-4123456",
-            "created_at": "2024-08-15T14:22:35Z",
-            "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest14.webp"
-        }
-    },
-    {
-        "model": "landing.restaurant",
-        "pk": 15,
-        "fields": {
-            "name": "BBQ Brothers",
-            "address": "Warmoesstraat 80, 1012 JH Amsterdam",
-            "cuisine_type": 15,
-            "phone_number": "020-5123456",
-            "created_at": "2024-08-15T14:22:35Z",
-            "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest15.webp"
-        }
-    },
-    {
-        "model": "landing.restaurant",
-        "pk": 16,
-        "fields": {
-            "name": "Grill Gurus",
-            "address": "Nieuwezijds Kolk 8, 1012 PV Amsterdam",
-            "cuisine_type": 16,
-            "phone_number": "020-6123456",
-            "created_at": "2024-08-15T14:22:35Z",
-            "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest16.webp"
-        }
-    },
-    {
-        "model": "landing.restaurant",
-        "pk": 17,
-        "fields": {
-            "name": "Soup Specialist",
-            "address": "Haarlemmerstraat 13, 1013 EH Amsterdam",
-            "cuisine_type": 17,
-            "phone_number": "020-7123456",
-            "created_at": "2024-08-15T14:22:35Z",
-            "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest17.webp"
-        }
-    },
-    {
-        "model": "landing.restaurant",
-        "pk": 18,
-        "fields": {
-            "name": "Ramen Retreat",
-            "address": "Van Baerlestraat 1, 1071 AL Amsterdam",
-            "cuisine_type": 18,
-            "phone_number": "020-8123456",
-            "created_at": "2024-08-15T14:22:35Z",
-            "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest18.webp"
-        }
-    },
-    {
-        "model": "landing.restaurant",
-        "pk": 19,
-        "fields": {
-            "name": "Fry Fiesta",
-            "address": "Reguliersdwarsstraat 69, 1017 BK Amsterdam",
-            "cuisine_type": 19,
-            "phone_number": "020-9123456",
-            "created_at": "2024-08-15T14:22:35Z",
-            "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest19.webp"
-        }
-    },
-    {
-        "model": "landing.restaurant",
-        "pk": 20,
-        "fields": {
-            "name": "Panini Paradise",
-            "address": "Oudezijds Voorburgwal 40, 1012 GE Amsterdam",
-            "cuisine_type": 20,
-            "phone_number": "020-0135789",
-            "created_at": "2024-08-15T14:22:35Z",
-            "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest20.webp"
-        }
-    },
-    {
-        "model": "landing.restaurant",
         "pk": 21,
         "fields": {
             "name": "Burrito Bar",
@@ -269,7 +9,7 @@
             "phone_number": "020-1234561",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest21.webp"
+            "image": "https://res.cloudinary.com/dq6adyatv/image/upload/v1723742635/rest21_bj8jl0.webp"
         }
     },
     {
@@ -282,7 +22,7 @@
             "phone_number": "020-2234561",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest22.webp"
+            "image": "https://res.cloudinary.com/dq6adyatv/image/upload/v1723742635/rest22_ctqytf.webp"
         }
     },
     {
@@ -295,7 +35,7 @@
             "phone_number": "020-3234561",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest23.webp"
+            "image": "https://res.cloudinary.com/dq6adyatv/image/upload/v1723742635/rest23_q3had7.webp"
         }
     },
     {
@@ -308,7 +48,7 @@
             "phone_number": "020-4234561",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest24.webp"
+            "image": "https://res.cloudinary.com/dq6adyatv/image/upload/v1723742635/rest24_phsawk.webp"
         }
     },
     {
@@ -321,7 +61,7 @@
             "phone_number": "020-5234561",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest25.webp"
+            "image": "https://res.cloudinary.com/dq6adyatv/image/upload/v1723742635/rest25_yo7ad4.webp"
         }
     },
     {
@@ -334,7 +74,7 @@
             "phone_number": "020-6234561",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest26.webp"
+            "image": "https://res.cloudinary.com/dq6adyatv/image/upload/v1723742635/rest26_d1pzdq.webp"
         }
     },
     {
@@ -347,7 +87,7 @@
             "phone_number": "020-7234561",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest27.webp"
+            "image": "https://res.cloudinary.com/dq6adyatv/image/upload/v1723742635/rest27_o3x0ri.webp"
         }
     },
     {
@@ -360,7 +100,7 @@
             "phone_number": "020-2828282",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest28.webp"
+            "image": "https://res.cloudinary.com/dq6adyatv/image/upload/v1723742635/rest28_shliem.webp"
         }
     },
     {
@@ -373,7 +113,7 @@
             "phone_number": "020-2929292",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest29.webp"
+            "image": "https://res.cloudinary.com/dq6adyatv/image/upload/v1723742635/rest29_dxldtq.webp"
         }
     },
     {
@@ -386,7 +126,7 @@
             "phone_number": "020-3030303",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest30.webp"
+            "image": "https://res.cloudinary.com/dq6adyatv/image/upload/v1723742635/rest30_mhpi5r.webp"
         }
     },
     {
@@ -399,7 +139,7 @@
             "phone_number": "020-3131313",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest31.webp"
+            "image": "https://res.cloudinary.com/dq6adyatv/image/upload/v1723742635/rest31_dxmxsx.webp"
         }
     },
     {
@@ -412,7 +152,7 @@
             "phone_number": "020-3232323",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest32.webp"
+            "image": "https://res.cloudinary.com/dq6adyatv/image/upload/v1723742635/rest32_w3dsb4.webp"
         }
     },
     {
@@ -425,7 +165,7 @@
             "phone_number": "020-3232323",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest33.webp"
+            "image": "https://res.cloudinary.com/dq6adyatv/image/upload/v1723742635/rest33_mwpuig.webp"
         }
     },
     {
@@ -438,7 +178,7 @@
             "phone_number": "020-3434343",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest34.webp"
+            "image": "https://res.cloudinary.com/dq6adyatv/image/upload/v1723742635/rest34_wnomwi.webp"
         }
     },
     {
@@ -451,7 +191,7 @@
             "phone_number": "020-3535353",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest35.webp"
+            "image": "https://res.cloudinary.com/dq6adyatv/image/upload/v1723742635/rest35_vgefia.webp"
         }
     },
     {
@@ -464,7 +204,7 @@
             "phone_number": "020-3636363",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest36.webp"
+            "image": "https://res.cloudinary.com/dq6adyatv/image/upload/v1723742635/rest36_qsmueh.webp"
         }
     },
     {
@@ -477,7 +217,7 @@
             "phone_number": "020-3737373",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest37.webp"
+            "image": "https://res.cloudinary.com/dq6adyatv/image/upload/v1723742635/rest37_fh7wyl.webp"
         }
     },
     {
@@ -490,7 +230,7 @@
             "phone_number": "020-3838383",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest38.webp"
+            "image": "https://res.cloudinary.com/dq6adyatv/image/upload/v1723742635/rest38_qjstmn.webp"
         }
     },
     {
@@ -503,7 +243,7 @@
             "phone_number": "020-3939393",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest39.webp"
+            "image": "https://res.cloudinary.com/dq6adyatv/image/upload/v1723742635/rest39_o3mrgx.webp"
         }
     },
     {
@@ -516,7 +256,7 @@
             "phone_number": "020-4040404",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest40.webp"
+            "image": "https://res.cloudinary.com/dq6adyatv/image/upload/v1723742635/rest40_ecxpam.webp"
         }
     },
     {
@@ -529,7 +269,7 @@
             "phone_number": "020-4141414",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest41.webp"
+            "image": "https://res.cloudinary.com/dq6adyatv/image/upload/v1723742635/rest41_xwdgsu.webp"
         }
     },
     {
@@ -542,7 +282,7 @@
             "phone_number": "020-4242424",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest42.webp"
+            "image": "https://res.cloudinary.com/dq6adyatv/image/upload/v1723742635/rest42_x3oquu.webp"
         }
     },
     {
@@ -555,7 +295,7 @@
             "phone_number": "020-4343434",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest43.webp"
+            "image": "https://res.cloudinary.com/dq6adyatv/image/upload/v1723742635/rest43_fhupdg.webp"
         }
     },
     {
@@ -568,20 +308,7 @@
             "phone_number": "020-4444444",
             "created_at": "2024-08-15T14:22:35Z",
             "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest44.webp"
-        }
-    },
-    {
-        "model": "landing.restaurant",
-        "pk": 45,
-        "fields": {
-            "name": "The Pancake House",
-            "address": "Singel 40, 1015 AB Amsterdam",
-            "cuisine_type": 44,
-            "phone_number": "020-4545454",
-            "created_at": "2024-08-15T14:22:35Z",
-            "updated_at": "2024-08-15T14:22:35Z",
-            "image": "restaurant_images/rest45.webp"
+            "image": "https://res.cloudinary.com/dq6adyatv/image/upload/v1723742635/rest44_dicpak.webp"
         }
     }
 ]
