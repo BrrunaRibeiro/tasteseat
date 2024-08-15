@@ -70,7 +70,7 @@ class Restaurant(models.Model):
     image = models.ImageField(upload_to='restaurant_images/')
 
     def __srt__(self):
-        return self.name
+        return f"Restaurant {self.name} at {self.address}"
 
 
 class Table(models.Model):

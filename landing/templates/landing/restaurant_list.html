@@ -6,11 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TasteSeat</title>
 </head>
+{% load static %}
 <body>
-    <h1>Restaurants</h1>
-    {% for restaurant in Restaurant.object.all %}
-    <h2>{{restaurant.name}}</h2>
-    <p>{{restaurant.cuisine_type}}</p>
-    {% endfor %}
+    <!-- <h1>TasteSeat</h1>
+    {% for restaurant in object_list %}
+    
+    <img src="{{ restaurant.image.url }}" alt="Restaunt's Image" width="300" height="300">
+    {% endfor %} -->
+    {% for restaurant in object_list %}
+        <article class="restaurant-list">
+            <div class="restaurant-image" style="float: left; margin-right: 15px;">
+                <img src="{{ restaurant.image.url }}" alt="{{ restaurant.name }}'s Image" width="150" height="150">
+            </div>
+            <div class="restaurant-details">
+                <h2>{{ restaurant.name }}</h2>
+                <p class="cuisine-type">Cuisine: {{ restaurant.get_cuisine_type_display }}</p>
+                <address>{{ restaurant.address }}</address>
+            </div>
+            <div style="clear: both;"></div>
+        </article>
+        {% endfor %}
 </body>
 </html>
