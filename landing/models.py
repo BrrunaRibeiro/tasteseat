@@ -43,6 +43,7 @@ class Restaurant(models.Model):
     phone_number = models.CharField(max_length=20)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    image = models.ImageField(upload_to='restaurant_images/')
 
     def __srt__(self):
         return self.name
@@ -78,4 +79,4 @@ class Booking(models.Model):
 
     def reset(self):
         self.booking_end_time = self.booking_start_time + timedelta(hours=2)
-        
+
