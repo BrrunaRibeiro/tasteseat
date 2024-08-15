@@ -69,9 +69,9 @@ class Restaurant(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     image = CloudinaryField('image')
-    
-    def __srt__(self):
-        return f"Restaurant {self.name} at {self.address}"
+
+    def __str__(self):
+        return str(self.name)
 
 
 class Table(models.Model):
