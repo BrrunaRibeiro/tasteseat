@@ -1,12 +1,17 @@
 from django import forms
-from .models import Booking
+# from .models import Booking, Table, Restaurant
+# from django.core.exceptions import ValidationError
+# from django.utils import timezone
 
-class BookingForm(forms.ModelForm):
-    class Meta:
-        model = Booking
-        fields = ['table_id', 'booking_start_time', 'number_of_guests', 'food_restrictions', 'special_requests']
 
-    def clean(self):
-        cleaned_data = super().clean()
-        start_time = cleaned_data.get("booking_start_time")
-        
+class UserInfoForm(forms.Form):
+    name = forms.CharField(max_length=100, required=True)
+    email = forms.EmailField(required=True)
+    phone = forms.CharField(max_length=20, required=False)
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        if user:
+            self.fields['name'].initial = user.get_full_name()
+            self.fields['email'].initial = user.email

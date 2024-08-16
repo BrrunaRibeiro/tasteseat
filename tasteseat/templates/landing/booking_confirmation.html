@@ -1,0 +1,13 @@
+{% extends "landing/base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="container mt-5">
+    <h2>Booking Confirmation</h2>
+    <p>Thank you for your booking, {{ booking.user_id.username }}!</p>
+    <p>Your table is reserved at {{ booking.table_id.at_restaurant.name }} on {{ booking.booking_start_time }} for {{ booking.number_of_guests }} guests.</p>
+    <p>Special Requests: {{ booking.special_requests }}</p>
+    <p>Food Restrictions: {{ booking.food_restrictions }}</p>
+</div>
+
+{% endblock %}
