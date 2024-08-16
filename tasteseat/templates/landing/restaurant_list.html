@@ -1,21 +1,24 @@
 {% extends "landing/base.html" %}
 {% block content %}
 {% load static %}
-{% for restaurant in object_list %}
-<main class="restaurant-list container-fluid">
-    <div class="row card list-card">
-        <a href="{% url 'restaurant_detail' restaurant.id %}">
-            <div class="resto-img-list col-4" style="float: left; margin-right: 15px;">
-                <img src="{{ restaurant.image.url }}" alt="{{ restaurant.name }}'s Image" width="150" height="150">
-            </div>
-            <div class="restaurant-details col-6">
-                <h2>{{ restaurant.name }}</h2>
-                <p class="cuisine-type">Cuisine: {{ restaurant.get_cuisine_type_display }}</p>
-                <address>{{ restaurant.address }}</address>
-            </div>
-            <div style="clear: both;"></div>
-        </a>
+
+<main class="restaurant-list container">
+    <div class="card list-card">
+        {% for restaurant in object_list %}
+        <div class="col-6"> <!-- Keep this inside the for loop -->
+            <a href="{% url 'restaurant_detail' restaurant.id %}">
+                <div class="resto-img-list" style="float: left; margin-right: 15px;">
+                    <img src="{{ restaurant.image.url }}" alt="{{ restaurant.name }}'s Image" width="150" height="150">
+                </div>
+                <div class="restaurant-details">
+                    <h2>{{ restaurant.name }}</h2>
+                    <p class="cuisine-type">Cuisine: {{ restaurant.get_cuisine_type_display }}</p>
+                    <address>{{ restaurant.address }}</address>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
     </div>
 </main>
-{% endfor %}
+
 {% endblock %}

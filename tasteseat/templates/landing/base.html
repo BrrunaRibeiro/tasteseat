@@ -23,12 +23,24 @@
             <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none logo">
                 <img src="{% static 'landing/logo.png' %}" alt="TasteSeat logo" width="120" height="60">
             </a>
-            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            <ul class="nav col-6 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="#" class="nav-link px-2 link-body-emphasis" contenteditable="false"
                         style="cursor: pointer;">Restaurants</a></li>
                 <!-- <li><a href="#" class="nav-link px-2 link-body-emphasis" contenteditable="false"
                         style="cursor: pointer;">Products</a></li> -->
             </ul>
+            <!-- CODE BELOW ONLY IF ALREADY LOGGED IN -->
+            <!-- <div class="dropdown text-end">
+                <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" contenteditable="false" style="cursor: pointer;">
+                  <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                </a>
+                <ul class="dropdown-menu text-small" style="">
+                  <li><a class="dropdown-item" href="#" contenteditable="false" style="cursor: pointer;">My Bookings</a></li>
+                  <li><a class="dropdown-item" href="#" contenteditable="false" style="cursor: pointer;">Profile</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#" contenteditable="false" style="cursor: pointer;">Sign out</a></li>
+                </ul>
+              </div> -->
             <!-- Search Bar -->
             <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
                 <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
@@ -40,7 +52,6 @@
             </div>
     </header>
     {% block content %}
-
     {% endblock %}
     <footer>
 

@@ -67,3 +67,4 @@ def booking_confirmation(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)
     return render(request, 'landing/booking_confirmation.html',
                    {'booking': booking})
+    # should add user feed back, confirmation or error messages
