@@ -1,0 +1,66 @@
+{% extends "landing/base.html" %}
+{% block content %}
+{% load static %}
+<!-- <div class="masthead">
+    <div class="container">
+        <div class="row g-0">
+            <div class="col-md-6 masthead-text">
+                <h1 class="restaurant-name">{{ restaurant.name }}</h1>
+                <p class="cuisine-type">{{ restaurant.cuisine_type }}</p>
+            </div>
+            <div class="d-none d-md-block col-md-6 masthead-image">
+                <p>image goes here</p>
+                <img src="{{ restaurant.image}}" class="scale" alt="placeholder">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col card mb-4  mt-3 left  top">
+            <div class="card-body">
+                <p class="card-text">
+                   Restaurant info
+                </p>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!-- <div class="container mt-5">
+    <div class="card">
+        <img src="{{ restaurant.image.url }}" class="card-img-top resto-img-details" alt="{{ restaurant.name }}">
+        <div class="card-body">
+            <h1 class="card-title">{{ restaurant.name }}</h1>
+            <p class="card-text">
+                <strong>Address:</strong> {{ restaurant.address }}<br>
+                <strong>Cuisine Type:</strong> {{ restaurant.get_cuisine_type_display }}<br>
+                <strong>Phone Number:</strong> {{ restaurant.phone_number }}<br>
+                <strong>Created At:</strong> {{ restaurant.created_at|date:"F j, Y, g:i a" }}<br>
+                <strong>Last Updated:</strong> {{ restaurant.updated_at|date:"F j, Y, g:i a" }}
+            </p>
+            <a href="/" class="btn btn-primary">Book a Table</a>
+        </div>
+    </div>
+</div> -->
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-5">
+            <img src="{{ restaurant.image.url }}" class="img-fluid" alt="{{ restaurant.name }}">
+        </div>
+        <div class="col-md-6">
+            <h1>{{ restaurant.name }}</h1>
+            <p>{{ restaurant.get_cuisine_type_display }}</p><br>
+
+            <p class="resto-info">
+                <strong>Address:</strong> {{ restaurant.address }}<br>
+                <strong>Phone Number:</strong> {{ restaurant.phone_number }}<br>
+            </p>
+            <a href="/" class="btn btn-primary">Book a Table</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
