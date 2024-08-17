@@ -1,20 +1,64 @@
+@import url("https://use.typekit.net/isu1auv.css");
+/* font-family: "acumin-pro", sans-serif;
+font-weight: 400;
+font-style: normal; */
+@import url("https://use.typekit.net/isu1auv.css");
+/* Fira Sans ExtraLight
+font-family: "fira-sans", sans-serif;
+font-weight: 200;
+font-style: normal;
+Fira Sans Regular
+font-family: "fira-sans", sans-serif;
+font-weight: 400;
+font-style: normal; */
+@import url("https://use.typekit.net/isu1auv.css");
+/* font-family: "acumin-pro", sans-serif;
+font-weight: 200;
+font-style: normal;
+font-family: "acumin-pro", sans-serif;
+font-weight: 600;
+font-style: normal; */
+@import url("https://use.typekit.net/isu1auv.css");
+/* 
+font-family: "bio-sans", sans-serif;
+font-weight: 300;
+font-style: normal; */
+
+body {
+    font-family: "bio-sans", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+}
 
 a {
     text-decoration: none;
     color: black;
 }
 
-img {
-    width: 400px;
+.search-bar-container{
+    display: flex;
+    justify-content: center;
+}
+
+.search-bar {
+    max-width: 25%; 
+}
+
+.resto-img-list {
+    width: 300px;
     height: 250px;
     aspect-ratio: 8/5;
     object-fit: cover;
 }
 
-.resto-img-details {}
+.resto-img-details {
 
-.resto-img-list {
-    width: 400px;
+}
+
+.resto-name-list {
+    margin-top: 10px;
+    font-weight: 400;
+    font-size: 24px;
 }
 
 .list-card {
@@ -24,4 +68,37 @@ img {
 .logo {
     height: 10px;
     width: 10px;
+}
+
+.card {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+    text-decoration: none;
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.resto-img-list {
+    margin-right: 15px;
+    /* Space between the image and details */
+}
+
+.restaurant-details h2 {
+    margin: 0;
+    /* Remove default margin */
+}
+
+.cuisine-type,
+address {
+    margin: 5px 0;
+    /* Spacing for sub-elements */
+}
+.time-slot {
+    margin: 2px;
+}
+
+.btn-primary {
+    background-color: #41587b;
 }

@@ -1,24 +1,28 @@
 {% extends "landing/base.html" %}
 {% block content %}
 {% load static %}
-
+<div class="container-fluid search-bar-container">
+    <!-- Search Bar -->
+    <form class="search-bar col-4 col-lg-6 mb-3 mb-lg-0 me-lg-3" role="search">
+        <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+    </form>
+</div>
 <main class="restaurant-list container">
-    <div class="card list-card">
+    <div class="row"> <!-- Added a row to contain the columns -->
         {% for restaurant in object_list %}
-        <div class="col-6"> <!-- Keep this inside the for loop -->
-            <a href="{% url 'restaurant_detail' restaurant.id %}">
-                <div class="resto-img-list" style="float: left; margin-right: 15px;">
-                    <img src="{{ restaurant.image.url }}" alt="{{ restaurant.name }}'s Image" width="150" height="150">
+        <div class="col-6"> <!-- Each restaurant takes half of the row -->
+            <a href="{% url 'restaurant_detail' restaurant.id %}" class="card list-card">
+                <div>
+                    <img src="{{ restaurant.image.url }}" class="resto-img-list" alt="{{ restaurant.name }}'s Image" width="150" height="150" style="border-radius: 8px;">
                 </div>
                 <div class="restaurant-details">
-                    <h2>{{ restaurant.name }}</h2>
-                    <p class="cuisine-type">Cuisine: {{ restaurant.get_cuisine_type_display }}</p>
-                    <address>{{ restaurant.address }}</address>
+                    <h2 class="resto-name-list">{{ restaurant.name }}</h2>
+                    <p class="cuisine-type" style="margin: 5px 0;">{{ restaurant.get_cuisine_type_display }}</p>
+                    <address style="margin: 0;">{{ restaurant.address }}</address>
                 </div>
             </a>
         </div>
         {% endfor %}
     </div>
 </main>
-
 {% endblock %}
