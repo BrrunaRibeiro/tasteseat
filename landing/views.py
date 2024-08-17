@@ -14,6 +14,7 @@ class ShowRestaurants(generic.ListView):
     queryset = Restaurant.objects.all()
     template_name = "restaurant_list.html"
 
+
 def restaurant_detail(request, restaurant_id):
     restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
 
@@ -40,6 +41,7 @@ def restaurant_detail(request, restaurant_id):
         'form': form,
     })
 
+
 def get_available_times(restaurant, guest_count, date):
     time_slots = ['12:00', '12:30', '13:00', '13:30', '14:00', '14:30',
                   '18:00', '18:30', '19:00', '19:30', '20:00', '20:30']
@@ -50,7 +52,7 @@ def get_available_times(restaurant, guest_count, date):
     for time in time_slots:
         # Create a timezone-aware datetime object
         naive_slot_datetime = datetime.strptime(f"{date} {time}", "%Y-%m-%d %H:%M")
-        slot_datetime = fixed_timezone.localize(naive_slot_datetime)  # Make slot_date_time aware
+        slot_datetime = fixed_timezone.localize(naive_slot_datetime)  # Make slot_datetime aware
         slot_datetime_utc = slot_datetime.astimezone(pytz.utc)
 
         # Check for availability using aware datetime
@@ -66,12 +68,14 @@ def get_available_times(restaurant, guest_count, date):
 
     return available_times
 
+
 @require_POST
 def book_table(request):
     form = UserInfoForm(request.POST)
-    booking_time_str = request.POST.get('booking_time')
+    booking_time_start = request.POST.get('booking_start_time')
     restaurant_id = request.POST.get('restaurant_id')
     guests = int(request.POST.get('guests', 2))
+    timezone_offset = int(request.POST.get('timezone_offset', 0))  # Timezone offset in minutes
 
     if form.is_valid():
         # Check if the user is authenticated, adjust this logic if non-authenticated can book
@@ -83,7 +87,7 @@ def book_table(request):
 
             # Ensure booking_time is valid and parse it
             try:
-                naive_booking_time = datetime.strptime(booking_time_str, '%H:%M')
+                naive_booking_time = datetime.strptime(booking_time_start, '%H:%M')
             except ValueError:
                 form.add_error(None, 'Invalid time format. Please use HH:MM.')
                 return render(request, 'landing/restaurant_detail.html', {'form': form})
@@ -93,7 +97,11 @@ def book_table(request):
             today = timezone.localtime().date()
             complete_booking_time = datetime.combine(today, naive_booking_time.time())
             booking_time = fixed_timezone.localize(complete_booking_time)
-            booking_time_utc = booking_time.astimezone(pytz.utc)
+
+            # Adjust time for user's timezone offset
+            offset_seconds = timezone_offset * 60  # Convert minutes to seconds
+            booking_time_utc = booking_time - timedelta(seconds=offset_seconds)  # Adjust to UTC
+
             booking_end_time_utc = booking_time_utc + timedelta(hours=2)
 
             # Query for the restaurant and check for an available table

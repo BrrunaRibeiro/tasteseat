@@ -39,9 +39,10 @@
             <form id="booking-form" method="POST" action="{% url 'book_table' %}" style="display: none;">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <input type="hidden" name="booking_time" id="booking_time">
+                <input type="hidden" name="booking_start_time" id="booking_start_time">
                 <input type="hidden" name="restaurant_id" value="{{ restaurant.id }}">
                 <input type="hidden" name="guests" value="{{ guest_count }}">
+                <input type="hidden" id="timezone_offset" name="timezone_offset">
                 <button type="submit" class="btn btn-primary">Book Now</button>
             </form>
     </div>

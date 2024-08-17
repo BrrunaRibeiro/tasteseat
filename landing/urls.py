@@ -6,7 +6,7 @@ urlpatterns = [
     path('', views.ShowRestaurants.as_view(), name='home'),
     path('restaurant/<int:restaurant_id>/',
           views.restaurant_detail, name='restaurant_detail'),
-    path('book/', book_table, name='book_table'),
+    path('restaurant_details/', book_table, name='book_table'),
     path('booking-confirmation/<int:booking_id>/', views.booking_confirmation,
                 name='booking_confirmation'),
 ]
