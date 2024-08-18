@@ -23,11 +23,24 @@ font-style: normal; */
 font-family: "bio-sans", sans-serif;
 font-weight: 300;
 font-style: normal; */
+@import url("https://use.typekit.net/isu1auv.css");
+/* New Spirit Bold
+font-family: "new-spirit", serif;
+font-weight: 700;
+font-style: normal; */
 
 body {
+    display: flex;
+    flex-direction: column;
     font-family: "bio-sans", sans-serif;
     font-weight: 300;
     font-style: normal;
+}
+
+
+.header {
+    display: flex;
+    height: 60px;
 }
 
 a {
@@ -35,13 +48,23 @@ a {
     color: black;
 }
 
-.search-bar-container{
+.logo {
+    font-family: "new-spirit", serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 40px;
+    margin-right: 30px;
+    margin-left: 10px;
+}
+
+.search-bar-container {
     display: flex;
     justify-content: center;
+    margin: 20px;
 }
 
 .search-bar {
-    max-width: 25%; 
+    max-width: 25%;
 }
 
 .resto-img-list {
@@ -51,9 +74,7 @@ a {
     object-fit: cover;
 }
 
-.resto-img-details {
-
-}
+/* .resto-img-details {} */
 
 .resto-name-list {
     margin-top: 10px;
@@ -63,11 +84,6 @@ a {
 
 .list-card {
     margin: 10px 0 10px 0;
-}
-
-.logo {
-    height: 10px;
-    width: 10px;
 }
 
 .card {
@@ -93,8 +109,8 @@ a {
 .cuisine-type,
 address {
     margin: 5px 0;
-    /* Spacing for sub-elements */
 }
+
 .time-slot {
     margin: 2px;
 }

@@ -19,15 +19,14 @@
 
 <body>
     <header class="container-fluid">
-        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none logo">
-                <img src="{% static 'landing/logo.png' %}" alt="TasteSeat logo" width="120" height="60">
+        <div class="header flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="{% url 'restaurant_list' %}"
+                class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none logo">
+                TasteSeat
             </a>
             <ul class="nav col-6 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="#" class="nav-link px-2 link-body-emphasis" contenteditable="false"
-                        style="cursor: pointer;">Restaurants</a></li>
-                <!-- <li><a href="#" class="nav-link px-2 link-body-emphasis" contenteditable="false"
-                        style="cursor: pointer;">Bookings</a></li> -->
+                <li><a href="{% url 'restaurant_list' %}" class="nav-link px-2 link-body-emphasis"
+                        contenteditable="false" style="cursor: pointer;">Restaurants</a></li>
             </ul>
             <!-- CODE BELOW ONLY IF ALREADY LOGGED IN -->
             <!-- <div class="dropdown text-end">
@@ -44,9 +43,9 @@
 
             <!-- Login & Sign-up -->
             <div class="text-end">
-                <button type="button" class="btn btn-outline-dark me-2">Login</button>
-                <button type="button" class="btn btn-warning">Sign-up</button>
+                <button type="button" class="btn btn-outline-dark me-2">My Bookings</button>
             </div>
+        </div>
     </header>
     {% block content %}
     {% endblock %}
