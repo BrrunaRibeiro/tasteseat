@@ -34,7 +34,10 @@
 
             <!-- Hidden div to store available times data -->
             <div id="available-times-data" style="display: none;">{{ available_times|safe }}</div>
-
+            <div class="date-picker-container">
+                <label for="date-picker">Or select another day too see available tables</label>
+                <input type="date" id="date-picker" onchange="updateAvailability()">
+            </div>
             <!-- Booking Form (initially hidden) -->
             <form id="booking-form" method="POST" action="{% url 'book_table' %}" style="display: none;">
                 {% csrf_token %}

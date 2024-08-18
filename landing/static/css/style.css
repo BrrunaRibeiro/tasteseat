@@ -67,6 +67,24 @@ a {
     max-width: 25%;
 }
 
+.search-results {
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto; 
+    z-index: 100; 
+}
+
+.search-result-item {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.search-result-item:hover {
+    background-color: #f0f0f0; /* Highlight on hover */
+}
+
 .resto-img-list {
     width: 300px;
     height: 250px;

@@ -8,6 +8,8 @@ from .forms import UserInfoForm
 from .models import Restaurant, Table, Booking
 from django.contrib.auth.models import User
 import pytz
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt 
 
 
 class ShowRestaurants(generic.ListView):
@@ -67,6 +69,29 @@ def get_available_times(restaurant, guest_count, date):
         available_times[time] = available_tables.exists()
 
     return available_times
+
+
+# @csrf_exempt  # Use with caution for CSRF, it's better to use the normal approach for production  
+# def fetch_available_times(request):
+#     if request.method == 'POST':
+#         try:
+#             data = json.loads(request.body)
+#             restaurant_id = data.get('restaurant_id')
+#             guest_count = data.get('guest_count')
+#             date = data.get('date')  # Ensure you send date to check availability  
+
+#             # Retrieve the restaurant object
+#             restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
+
+#             # Call your existing function to get available times
+#             available_times = get_available_times(restaurant, guest_count, date)  
+
+#             return JsonResponse(available_times)
+
+#         except Exception as e:
+#             return JsonResponse({'error': str(e)}, status=400)
+
+#     return JsonResponse({'error': 'Invalid request'}, status=400)
 
 
 @require_POST
@@ -144,3 +169,14 @@ def book_table(request):
 def booking_confirmation(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)
     return render(request, 'landing/booking_confirmation.html', {'booking': booking})
+
+
+def search_restaurants(request):
+    # Check if the request is an AJAX request
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        if request.method == "GET":
+            query = request.GET.get('q', '').strip()
+            restaurants = Restaurant.objects.filter(name__icontains=query)  # Adjust the field as necessary
+            restaurant_list = list(restaurants.values('id', 'name'))  # Retrieve the relevant fields
+            return JsonResponse(restaurant_list, safe=False)
+    return JsonResponse(restaurant_list, safe=False, content_type='application/json')

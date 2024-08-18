@@ -49,6 +49,7 @@
     </header>
     {% block content %}
     {% endblock %}
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">  
     <footer>
 
     </footer>
