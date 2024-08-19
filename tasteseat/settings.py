@@ -34,14 +34,13 @@ MEDIA_URL = '/media/'
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     '.herokuapp.com',
     'ep-gentle-mountain-a23bxz6h-pooler.eu-central-1.aws.neon.tech',
     '127.0.0.1',
 ]
-
 
 # Application definition
 
