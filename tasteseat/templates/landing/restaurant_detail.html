@@ -19,11 +19,11 @@
             <div class="form-group">
                 <label for="guest-select">Number of Guests</label>
                 <div id="guest-selection" class="btn-group" role="group" aria-label="Number of Guests">
-                    <button type="button" class="time-slot btn btn-primary" value="1" onclick="selectGuest(this);">1</button>
-                    <button type="button" class="time-slot btn btn-primary" value="2" onclick="selectGuest(this);" selected>2</button>
-                    <button type="button" class="time-slot btn btn-primary" value="3" onclick="selectGuest(this);">3</button>
-                    <button type="button" class="time-slot btn btn-primary" value="4" onclick="selectGuest(this);">4</button>
-                    <button type="button" class="time-slot btn btn-primary" value="5" onclick="selectGuest(this);">5+</button>
+                    <button type="button" class="time-slot btn btn-primary" value="1">1</button>
+                    <button type="button" class="time-slot btn btn-primary" value="2" selected>2</button>
+                    <button type="button" class="time-slot btn btn-primary" value="3">3</button>
+                    <button type="button" class="time-slot btn btn-primary" value="4">4</button>
+                    <button type="button" class="time-slot btn btn-primary" value="5">5+</button>
                 </div>
             </div>
             <br>
@@ -36,7 +36,7 @@
             <div id="available-times-data" style="display: none;">{{ available_times|safe }}</div>
             <div class="date-picker-container">
                 <label for="date-picker">Or select another day too see available tables</label>
-                <input type="date" id="date-picker" onchange="updateAvailability()">
+                <input type="date" id="date-picker">
             </div>
             <!-- Booking Form (initially hidden) -->
             <form id="booking-form" method="POST" action="{% url 'book_table' %}" style="display: none;">

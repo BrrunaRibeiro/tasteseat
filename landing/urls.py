@@ -1,5 +1,5 @@
 from . import views
-from .views import ShowRestaurants, restaurant_detail, book_table, booking_confirmation, search_restaurants  #, fetch_available_times
+from .views import ShowRestaurants, restaurant_detail, book_table, booking_confirmation, search_restaurants, fetch_available_times
 from django.urls import path
 
 urlpatterns = [
@@ -10,5 +10,5 @@ urlpatterns = [
     path('booking-confirmation/<int:booking_id>/', views.booking_confirmation,
                 name='booking_confirmation'),
     path('search/', search_restaurants, name='search_restaurants'),
-#     path('fetch_available_times/', fetch_available_times, name='fetch_available_times'),      
+    path('fetch_available_times/', views.fetch_available_times, name='fetch_available_times'),      
 ]

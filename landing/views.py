@@ -9,7 +9,7 @@ from .models import Restaurant, Table, Booking
 from django.contrib.auth.models import User
 import pytz
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt 
+from django.views.decorators.csrf import csrf_exempt
 
 
 class ShowRestaurants(generic.ListView):
@@ -19,7 +19,6 @@ class ShowRestaurants(generic.ListView):
 
 def restaurant_detail(request, restaurant_id):
     restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
-
     # Use timezone-aware 'now' to get default date
     default_date = timezone.localtime().date()
     selected_date = request.GET.get('date', default_date)
@@ -44,54 +43,55 @@ def restaurant_detail(request, restaurant_id):
     })
 
 
-def get_available_times(restaurant, guest_count, date):
-    time_slots = ['12:00', '12:30', '13:00', '13:30', '14:00', '14:30',
-                  '18:00', '18:30', '19:00', '19:30', '20:00', '20:30']
-
-    fixed_timezone = pytz.timezone('Europe/Amsterdam')
-    available_times = {}
+def get_available_times(restaurant, guest_count, date):  
+    time_slots = ['12:00', '12:30', '13:00', '13:30', '14:00', '14:30',  
+                  '18:00', '18:30', '19:00', '19:30', '20:00', '20:30']  
+    available_times = {}  
 
     for time in time_slots:
-        # Create a timezone-aware datetime object
-        naive_slot_datetime = datetime.strptime(f"{date} {time}", "%Y-%m-%d %H:%M")
-        slot_datetime = fixed_timezone.localize(naive_slot_datetime)  # Make slot_datetime aware
-        slot_datetime_utc = slot_datetime.astimezone(pytz.utc)
+        # Create a naive datetime object
+        naive_slot_datetime = datetime.strptime(
+            f"{date} {time}", "%Y-%m-%d %H:%M")
+        slot_datetime_utc = timezone.make_aware(naive_slot_datetime,  
+                                             timezone.utc)  
 
-        # Check for availability using aware datetime
-        available_tables = Table.objects.filter(
-            at_restaurant=restaurant,
-            capacity__gte=guest_count
-        ).exclude(
-            booking__booking_start_time__lt=slot_datetime_utc + timedelta(hours=2),
-            booking__booking_end_time__gt=slot_datetime_utc
+        # Check for availability using aware datetime  
+        available_tables = Table.objects.filter(  
+            at_restaurant=restaurant,  
+            capacity__gte=guest_count  
+        ).exclude(  
+            booking__booking_start_time__lt=slot_datetime_utc + timedelta(  
+                hours=2),  
+            booking__booking_end_time__gt=slot_datetime_utc  
         )
 
-        available_times[time] = available_tables.exists()
+        available_times[time] = available_tables.exists()  
 
-    return available_times
+    return available_times  
 
 
-# @csrf_exempt  # Use with caution for CSRF, it's better to use the normal approach for production  
-# def fetch_available_times(request):
-#     if request.method == 'POST':
-#         try:
-#             data = json.loads(request.body)
-#             restaurant_id = data.get('restaurant_id')
-#             guest_count = data.get('guest_count')
-#             date = data.get('date')  # Ensure you send date to check availability  
+@csrf_exempt  # Use with caution for CSRF, it's better to use the normal approach for production
+def fetch_available_times(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            restaurant_id = data.get('restaurant_id')
+            guest_count = data.get('guest_count')
+            date = data.get('date')
 
-#             # Retrieve the restaurant object
-#             restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
+            # Retrieve the restaurant object
+            restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
 
-#             # Call your existing function to get available times
-#             available_times = get_available_times(restaurant, guest_count, date)  
+            # Call your existing function to get available times
+            available_times = get_available_times(restaurant,
+                                                    guest_count, date)
 
-#             return JsonResponse(available_times)
+            return JsonResponse(available_times)
 
-#         except Exception as e:
-#             return JsonResponse({'error': str(e)}, status=400)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
 
-#     return JsonResponse({'error': 'Invalid request'}, status=400)
+    return JsonResponse({'error': 'Invalid request'}, status=400)
 
 
 @require_POST
@@ -100,10 +100,14 @@ def book_table(request):
     booking_time_start = request.POST.get('booking_start_time')
     restaurant_id = request.POST.get('restaurant_id')
     guests = int(request.POST.get('guests', 2))
-    timezone_offset = int(request.POST.get('timezone_offset', 0))  # Timezone offset in minutes
+    try:
+        timezone_offset = int(request.POST.get('timezone_offset', 0))
+    except ValueError:
+        timezone_offset = 0
 
     if form.is_valid():
-        # Check if the user is authenticated, adjust this logic if non-authenticated can book
+        # Check if the user is authenticated, 
+        # adjust this logic if non-authenticated can book
         if request.user.is_authenticated:
             # Extract user information
             name = form.cleaned_data['name']
@@ -112,20 +116,18 @@ def book_table(request):
 
             # Ensure booking_time is valid and parse it
             try:
-                naive_booking_time = datetime.strptime(booking_time_start, '%H:%M')
+                naive_booking_time = datetime.strptime(booking_time_start,
+                                                            '%H:%M')
             except ValueError:
                 form.add_error(None, 'Invalid time format. Please use HH:MM.')
-                return render(request, 'landing/restaurant_detail.html', {'form': form})
+                return render(request, 'landing/restaurant_detail.html',
+                                {'form': form})
 
             # Localize booking time
-            fixed_timezone = pytz.timezone('Europe/Amsterdam')
             today = timezone.localtime().date()
-            complete_booking_time = datetime.combine(today, naive_booking_time.time())
-            booking_time = fixed_timezone.localize(complete_booking_time)
-
-            # Adjust time for user's timezone offset
-            offset_seconds = timezone_offset * 60  # Convert minutes to seconds
-            booking_time_utc = booking_time - timedelta(seconds=offset_seconds)  # Adjust to UTC
+            complete_booking_time = datetime.combine(today,
+                                                        naive_booking_time.time())
+            booking_time_utc = timezone.make_aware(complete_booking_time, timezone.utc)
 
             booking_end_time_utc = booking_time_utc + timedelta(hours=2)
 
@@ -144,16 +146,17 @@ def book_table(request):
             if table:
                 # Create a new booking
                 booking = Booking.objects.create(
-                    user_id=request.user,  # Django will automatically use the user's id
+                    user_id=request.user,
                     table_id=table,
                     booking_start_time=booking_time_utc,
                     booking_end_time=booking_end_time_utc,
                     number_of_guests=guests,
-                    # Optionally add any fields like food_restrictions or special_requests or simply keep it blank.
+                    # Optionally add any fields like food_restrictions or special_requests or simply keep it blank.  
                 )
                 return redirect('booking_confirmation', booking_id=booking.id)
             else:
-                form.add_error(None, "No tables available for the selected time.")
+                form.add_error(None,
+                                "No tables available for the selected time.")
         else:
             form.add_error(None, "User is not authenticated.")
     else:
@@ -162,13 +165,14 @@ def book_table(request):
     # If the form is invalid or no table is found, re-render the detail page
     return render(request, 'landing/restaurant_detail.html', {
         'form': form,
-        # Include any necessary context data for the template
+            # Include any necessary context data for the template
     })
 
 
 def booking_confirmation(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)
-    return render(request, 'landing/booking_confirmation.html', {'booking': booking})
+    return render(request, 'landing/booking_confirmation.html',
+                    {'booking': booking})  
 
 
 def search_restaurants(request):
@@ -176,7 +180,8 @@ def search_restaurants(request):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         if request.method == "GET":
             query = request.GET.get('q', '').strip()
-            restaurants = Restaurant.objects.filter(name__icontains=query)  # Adjust the field as necessary
-            restaurant_list = list(restaurants.values('id', 'name'))  # Retrieve the relevant fields
+            restaurants = Restaurant.objects.filter(name__icontains=query)
+            restaurant_list = list(restaurants.values('id', 'name'))
             return JsonResponse(restaurant_list, safe=False)
-    return JsonResponse(restaurant_list, safe=False, content_type='application/json')
+    return JsonResponse(restaurant_list, safe=False,
+                        content_type='application/json')

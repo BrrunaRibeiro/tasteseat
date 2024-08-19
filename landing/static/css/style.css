@@ -133,6 +133,18 @@ address {
     margin: 2px;
 }
 
-.btn-primary {
-    background-color: #41587b;
-}
+.btn-primary {  /* Default primary button style */  
+    background-color: rgb(66, 66, 100);  
+    border: rgb(66, 66, 100);
+    color: white;  
+}  
+
+.btn-secondary {  /* Default secondary button style */  
+    background-color: lightgray;  
+    color: black;  
+}  
+
+#guest-selection .btn-secondary { /* More specific rule for guest buttons */  
+    background-color: green;  
+    color: white;  
+}  
