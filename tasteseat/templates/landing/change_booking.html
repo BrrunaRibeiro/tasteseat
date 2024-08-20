@@ -1,0 +1,28 @@
+{% extends "landing/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Change Booking</h2>
+    <br>
+    <form method="post" id="booking-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="booking_start_time">New Date and Time</label>
+            {{ form.booking_start_time }}
+            {% for error in form.booking_start_time.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="number_of_guests">Number of Guests</label>
+            {{ form.number_of_guests }}
+            {% for error in form.number_of_guests.errors %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+        <br>
+        <br>
+        <button type="submit" class="btn btn-primary">Update Booking</button>
+    </form>
+</div>
+{% endblock %}

@@ -4,9 +4,10 @@ from django.views import generic
 from django.views.decorators.http import require_POST
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import UserInfoForm
+from .forms import UserInfoForm, ChangeBookingForm
 from .models import Restaurant, Table, Booking
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 import pytz
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -185,3 +186,50 @@ def search_restaurants(request):
             return JsonResponse(restaurant_list, safe=False)
     return JsonResponse(restaurant_list, safe=False,
                         content_type='application/json')
+
+
+@login_required
+def my_bookings(request):
+    # Fetch all bookings made by the logged-in user
+    bookings = Booking.objects.filter(user_id=request.user)
+
+    return render(request, 'landing/my_bookings.html', {'bookings': bookings})
+
+
+@login_required
+def cancel_booking(request, booking_id):
+    if request.method == "POST":
+        booking = get_object_or_404(Booking, id=booking_id)
+        booking.delete()  # Perform the deletion
+        return JsonResponse({"message": "Booking cancelled successfully."})
+    return JsonResponse({"error": "Invalid request."}, status=400)
+
+
+def change_booking(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id)
+
+    if request.method == 'POST':
+        form = ChangeBookingForm(request.POST)
+        if form.is_valid():
+            # Update the booking instance with new data
+            booking.booking_start_time = form.cleaned_data['booking_start_time']
+            booking.number_of_guests = form.cleaned_data['number_of_guests']
+            booking.save()
+            return redirect('booking_success', booking_id=booking.id)  # Pass booking ID to the redirect
+    else:
+        # Populate the form with the current booking data
+        form = ChangeBookingForm(initial={
+            'booking_start_time': booking.booking_start_time,
+            'number_of_guests': booking.number_of_guests,
+        })
+
+    return render(request, 'landing/change_booking.html', {'form': form, 'booking': booking})
+
+
+def booking_success(request, booking_id):  # Ensure this parameter is included
+    booking = get_object_or_404(Booking, id=booking_id)  # Use booking_id to query
+    return render(request, 'landing/booking_success.html', {'booking': booking})
+
+
+def custom_404_view(request, exception):
+    return render(request, 'landing/404.html', status=404)

@@ -1,7 +1,6 @@
 from django import forms
-# from .models import Booking, Table, Restaurant
-# from django.core.exceptions import ValidationError
-# from django.utils import timezone
+from .models import Booking
+
 
 
 class UserInfoForm(forms.Form):
@@ -15,3 +14,14 @@ class UserInfoForm(forms.Form):
         if user:
             self.fields['name'].initial = user.get_full_name()
             self.fields['email'].initial = user.email
+
+
+class ChangeBookingForm(forms.Form):
+    booking_start_time = forms.DateTimeField(
+        widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+        required=True,
+    )
+    number_of_guests = forms.IntegerField(
+        min_value=1,
+        required=True,
+    )   

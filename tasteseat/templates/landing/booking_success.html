@@ -3,15 +3,8 @@
 {% load static %}
 
 <div class="container mt-5">
-    <h2>Booking Confirmation</h2>
+    <h2>Booking Updated</h2>
     <br>
-    <!-- <br>
-    <p>Thank you for your booking, {{ booking.user_id.username }}!</p>
-    <p>Your table is reserved at {{ booking.table_id.at_restaurant.name }} on {{ booking.booking_start_time }} for {{ booking.number_of_guests }} guests.</p>
-    {% if booking.special_requests or booking.food_restrictions %}
-    <p>Special Requests: {{ booking.special_requests }}</p>
-    <p>Food Restrictions: {{ booking.food_restrictions }}</p>
-    {% endif %} -->
     <p>
         {% with booking.booking_start_time as start_time %}
             {% if start_time %}
@@ -20,19 +13,19 @@
                     {% with time_only|slice:":2" as hour %}  <!-- Get the hour -->
                         {% with time_only|slice:"3:" as minute %}  <!-- Get the minute -->
                             {% if hour == "12" %}
-                                <strong>Your booking is at {{ hour }}:{{ minute }} PM.</strong>
+                                <strong>Your booking has been changed to {{ hour }}:{{ minute }} PM.</strong>
                             {% elif hour == "00" %}
-                                <strong>Your booking is at 12:{{ minute }} AM.</strong>
+                                <strong>Your booking has been changed to 12:{{ minute }} AM.</strong>
                             {% elif hour|add:"0"|add:"0" >= "13" %}
-                                <strong>Your booking is at {{ hour|add:"-12" }}:{{ minute }}.</strong>
+                                <strong>Your booking has been changed to {{ hour|add:"-12" }}:{{ minute }} PM.</strong>
                             {% else %}
-                                <strong>Your booking is at {{ hour }}:{{ minute }}.</strong>
+                                <strong>Your booking has been changed to {{ hour }}:{{ minute }} PM.</strong>
                             {% endif %}
                         {% endwith %}
                     {% endwith %}
                 {% endwith %}
             {% else %}
-                <strong>Booking time is not available. Please try again..</strong>
+                <strong>New booking time is not available. Please try again.</strong>
             {% endif %}
         {% endwith %}
     </p>

@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const currentPath = window.location.pathname;
+    const currentPath = window.location.pathname;  
 
     if (currentPath.startsWith('/restaurant/') && !isNaN(currentPath.split('/')[2])) {
         function captureTimezoneOffset() {
@@ -10,11 +10,11 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
-        captureTimezoneOffset();
+        captureTimezoneOffset(); 
 
         function setDefaultDate() {
             const datePicker = document.getElementById('date-picker');
-
+    
             // If the value is empty or undefined, set it to today's date
             if (!datePicker.value) {
                 const today = new Date();
@@ -24,29 +24,29 @@ document.addEventListener("DOMContentLoaded", function () {
                 datePicker.value = `${year}-${month}-${day}`; // Set the value in YYYY-MM-DD format
             }
         }
-
+    
         setDefaultDate();
-
-        function updateAvailability() {
-            const selectedDate = document.getElementById('date-picker').value;
-            if (selectedDate) {
-                console.log("Selected Date: " + selectedDate);
-                window.location.href = window.location.pathname + `?guests=${guestCount}&date=${selectedDate}`;
-            } else {
-                console.error("No date selected.");
-            }
-        }
-
+        
+        function updateAvailability() {  
+            const selectedDate = document.getElementById('date-picker').value;  
+            if (selectedDate) {  
+                console.log("Selected Date: " + selectedDate);  
+                window.location.href = window.location.pathname + `?guests=${guestCount}&date=${selectedDate}`;  
+            } else {  
+                console.error("No date selected.");  
+            }  
+        }  
+        
         // Event listener for date change  
-        document.getElementById('date-picker').addEventListener('change', updateAvailability);
-
-        const guestButtons = document.querySelectorAll('#guest-selection button');
-        guestButtons.forEach(button => {
-            button.addEventListener('click', function () {
-                selectGuest(this);
-            });
+        document.getElementById('date-picker').addEventListener('change', updateAvailability); 
+    
+        const guestButtons = document.querySelectorAll('#guest-selection button');  
+        guestButtons.forEach(button => {  
+            button.addEventListener('click', function() {  
+                selectGuest(this);  
+            });  
         });
-
+        
         // Access the hidden div to get available times data  
         const availableTimesData = document.getElementById("available-times-data");
         if (availableTimesData) {
@@ -107,19 +107,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 resultsContainer.style.display = 'none'; // Hide results container  
             }
         });
-
-        // Function to handle selection of a time slot  
-        function selectTime(element, available) {
-            if (available) {
-                // Set the selected booking time  
-                document.getElementById('booking_start_time').value = element.getAttribute('data-time');
-
-                // Show the booking form  
-                document.getElementById('booking-form').style.display = 'block';
-            } else {
-                alert('This time is not available. Please select another.');
-            }
-        }
     }
 
     // Get the CSRF 
@@ -175,6 +162,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    // Function to handle selection of a time slot  
+    function selectTime(element, available) {
+        if (available) {
+            // Set the selected booking time  
+            document.getElementById('booking_start_time').value = element.getAttribute('data-time');
+
+            // Show the booking form  
+            document.getElementById('booking-form').style.display = 'block';
+        } else {
+            alert('This time is not available. Please select another.');
+        }
+    }
+
     // Function to handle guest selection
     function selectGuest(button) {
         // Deselect all buttons
@@ -198,63 +198,113 @@ document.addEventListener("DOMContentLoaded", function () {
         updateAvailability();
     }
 
-    if (document.body.classList.contains('my_bookings')) {
-        const deleteButtons = document.querySelectorAll('.delete-booking-button');
-        const modal = document.getElementById('delete-modal');
-        const modalMessage = document.getElementById('modal-message');
-        const confirmButton = document.getElementById('confirm-delete');
-        const cancelButton = document.getElementById('cancel-delete');
-        let bookingToDelete;
-    
-        deleteButtons.forEach(button => {
-            button.addEventListener('click', function (event) {
-                event.preventDefault();
-                const restaurantName = this.getAttribute('data-restaurant-name');
-                const bookingTime = this.getAttribute('data-booking-time');
-                bookingToDelete = this.parentElement; // Save reference to the form element
-    
-                modalMessage.textContent = `Are you sure you want to delete the booking for ${restaurantName} on ${bookingTime}?`;
-    
-                modal.show();
-            });
+    // Modal functionality for deletion confirmation
+    const deleteButtons = document.querySelectorAll('.delete-booking-button'); // Assuming you have a class for delete buttons
+    const modal = document.getElementById('delete-modal');
+    const modalMessage = document.getElementById('modal-message');
+    const confirmButton = document.getElementById('confirm-delete');
+    const cancelButton = document.getElementById('cancel-delete');
+    let bookingToDelete;
+
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the form submission
+            const restaurantName = this.getAttribute('data-restaurant-name'); // Assuming you set data attributes
+            const bookingTime = this.getAttribute('data-booking-time'); // Assuming you set data attributes
+            bookingToDelete = this.parentElement; // Save reference to the form element
+
+            modalMessage.textContent = `Are you sure you want to delete the booking for ${restaurantName} on ${bookingTime}?`;
+            modal.style.display = 'block'; // Show the modal
         });
+    });
+
+    confirmButton.addEventListener('click', function() {
+        if (bookingToDelete) {
+            bookingToDelete.querySelector('button[type="submit"]').click(); // Submit the form
+        }
+        modal.style.display = 'none'; // Hide the modal
+    });
+
+    cancelButton.addEventListener('click', function() {
+        modal.style.display = 'none'; // Hide the modal
+    });
+
+    // Close modal when clicking outside of it
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    // Close modal when clicking the close button
+    const closeButton = document.querySelector('.close-button');
+    closeButton.addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
+
+    confirmButton.addEventListener('click', function() {
+        console.log("Confirm button clicked."); // Debug log
+        if (bookingToDelete) {
+            console.log("Submitting the form."); // Debug log
+            const form = bookingToDelete.closest('form'); // Get the correct form
+            
+            if (form) {
+                const formData = new FormData(form); // Prepare form data for submission
     
-        confirmButton.addEventListener('click', function () {
-            if (bookingToDelete) {
-                const formData = new FormData(bookingToDelete);
-                fetch(bookingToDelete.action, {
-                    method: 'POST',
+                fetch(form.action, {
+                    method: form.method,
                     body: formData,
                     headers: {
-                        'X-CSRFToken': csrftoken
+                        'X-CSRFToken': csrftoken // Add this if CSRF token is required for Django or similar frameworks
                     },
                 })
                 .then(response => {
                     if (!response.ok) {
-                        return response.text().then(text => {
-                            console.error("Error response:", text);
-                            throw new Error('Network response was not ok');
-                        });
+                        throw new Error('Network response was not ok');
                     }
-                    return response.json();
+                    return response.json(); // Assuming the response is JSON, modify as needed
                 })
                 .then(data => {
                     console.log("Deletion successful:", data);
-                    const modalConfirmation = bootstrap.Modal.getInstance(modal);
-                    modalConfirmation.hide(); // Hide the modal
-                    location.reload(); // Refresh the page 
+                    showAlert(); // Call function to show Bootstrap alert
+                    location.reload(); // Optionally refresh the page to reflect changes
                 })
                 .catch(error => {
                     console.error("There was a problem with the deletion:", error);
-                    const modalConfirmation = bootstrap.Modal.getInstance(modal);
-                    modalConfirmation.hide(); // Hide modal on error
                 });
+            } else {
+                console.error("No form found for deletion."); // Error log
             }
-        });
+        }
     
-        cancelButton.addEventListener('click', function () {
-            const modalConfirmation = bootstrap.Modal.getInstance(modal);
-            modalConfirmation.hide(); // Hide the modal
-        });
+        modal.style.display = 'none'; // Hide the modal
+    });
+    
+    // Function to show the Bootstrap alert
+    function showAlert() {
+        const alertMessage = document.getElementById('alert-message');
+        alertMessage.style.display = 'block'; // Show the alert
+    
+        // Automatically hide the alert after 9 seconds
+        setTimeout(() => {
+            alertMessage.style.display = 'none'; // Hide the alert
+        }, 9000);
     }
+
+    
+    //Modal for Change the booking
+    document.getElementById('booking-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form submission for now
+        
+        // Show the confirmation modal
+        var confirmationMessage = 'Are you sure you want to save these changes?';
+        document.getElementById('confirmationMessage').innerText = confirmationMessage;
+        var modal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+        modal.show();
+        
+        // When the user clicks "OK" in the modal, submit the form
+        document.getElementById('confirmButton').onclick = function() {
+            document.getElementById('booking-form').submit();
+        };
+    });
 });

@@ -48,6 +48,14 @@ a {
     color: black;
 }
 
+.nav-button {
+    color:rgb(118, 118, 170)
+}
+
+.nav-button:hover {
+    color:rgb(44, 44, 132)
+}
+
 .logo {
     font-family: "new-spirit", serif;
     font-weight: 700;
@@ -148,3 +156,59 @@ address {
     background-color: green;  
     color: white;  
 }  
+
+/* MODAL */
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scrolling if needed */
+    background-color: rgba(0, 0, 0, 0.5); /* Black with opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888; /* Gray border */
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 500px; /* Maximum width */
+    text-align: center;
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn {
+    margin: 5px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-danger {
+    background-color: #d9534f;
+    color: white;
+}
+
+.btn {
+    background-color: #5bc0de;
+    color: white;
+}

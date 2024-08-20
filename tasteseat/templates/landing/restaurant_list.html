@@ -10,10 +10,10 @@
 <main class="restaurant-list container">
     <div class="row"> <!-- Added a row to contain the columns -->
         {% for restaurant in object_list %}
-        <div class="col-6"> <!-- Each restaurant takes half of the row -->
+        <div class="col-12 col-lg-6"> <!-- Each restaurant takes half of the row -->
             <a href="{% url 'restaurant_detail' restaurant.id %}" class="card list-card">
                 <div>
-                    <img src="{{ restaurant.image.url }}" class="resto-img-list" alt="{{ restaurant.name }}'s Image" width="150" height="150" style="border-radius: 8px;">
+                    <img src="{{ restaurant.image.url }}" class="resto-img-list" alt="{{ restaurant.name }}'s Image" style="border-radius: 8px;">
                 </div>
                 <div class="restaurant-details">
                     <h2 class="resto-name-list">{{ restaurant.name }}</h2>

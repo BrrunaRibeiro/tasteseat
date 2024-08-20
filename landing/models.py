@@ -104,3 +104,4 @@ class Booking(models.Model):
 
     def reset(self):
         self.booking_end_time = self.booking_start_time + timedelta(hours=2)
+
