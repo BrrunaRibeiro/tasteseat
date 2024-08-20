@@ -140,14 +140,15 @@ address {
 /* MODAL */
 
 .modal {
+    display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1050;  
+    z-index: 1000; /* Sit on top */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scrolling if needed */
-    background-color: rgba(90, 90, 90, 0.5); 
+    background-color: rgba(0, 0, 0, 0.5); /* Black with opacity */
 }
 
 .modal-content {
@@ -158,10 +159,6 @@ address {
     width: 80%; /* Could be more or less, depending on screen size */
     max-width: 500px; /* Maximum width */
     text-align: center;
-}
-
-.modal-backdrop {
-    z-index: 1;
 }
 
 .close-button {

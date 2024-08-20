@@ -23,6 +23,20 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    // // Function to show confirmation modal for booking deletion
+    // // This is necessary to confirm the user's intent before performing a destructive action.
+    // function showModal(button) {
+    //     const restaurantName = button.getAttribute('data-restaurant-name');
+    //     const bookingTime = button.getAttribute('data-booking-time');
+    //     const modalMessage = document.getElementById('modal-message');
+
+    //     // Update modal message
+    //     modalMessage.textContent = `Are you sure you want to delete the booking for ${restaurantName} on ${bookingTime}?`;
+
+    //     // Show the modal to confirm the booking deletion
+    //     const modal = new bootstrap.Modal(document.getElementById('delete-modal'));
+    //     modal.show();
+    // }
 
     if (currentPath.startsWith('/restaurant/') && !isNaN(currentPath.split('/')[2])) {
         // Function to capture the user's timezone offset
@@ -75,50 +89,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 selectGuest(this);
             });
         });
-
-        // const confirmButton = document.getElementById('confirm-delete');
-        // const cancelButton = document.getElementById('cancel-delete');
-        // let bookingToDeleteUrl; // Store the URL for deletion
-
-
-        // confirmButton.addEventListener('click', function () {
-        //     console.log('Confirm button clicked');
-        //     if (bookingToDeleteUrl) {
-        //         const formData = new FormData(); // Create a new FormData object
-        //         formData.append('csrfmiddlewaretoken', csrftoken); // Append CSRF token
-
-        //         // Send the fetch request to cancel the booking
-        //         fetch(bookingToDeleteUrl, {
-        //             method: 'POST',
-        //             body: formData
-        //         })
-        //             .then(response => {
-        //                 if (!response.ok) {
-        //                     alert("Error deleting booking."); // Inform the user
-        //                     return response.text().then(text => {
-        //                         throw new Error('Network response was not ok');
-        //                     });
-        //                 }
-        //                 return response.json(); // Parse the JSON response
-        //             })
-        //             .then(data => {
-        //                 alert("Deletion successful."); // Inform the user
-        //                 const modal = bootstrap.Modal.getInstance(document.getElementById('delete-modal'));
-        //                 modal.hide(); // Hide the modal
-        //                 document.getElementById('alert-deleted').style.display = 'block'; // Show success alert
-        //                 location.reload(); // Refresh the page
-        //             })
-        //             .catch(error => {
-        //                 alert("There was a problem with the deletion."); // Inform the user
-        //             });
-        //     }
-        // });
-
-        // cancelButton.addEventListener('click', function (event) {
-        //     event.preventDefault(); // Prevent default action
-        //     const modal = bootstrap.Modal.getInstance(document.getElementById('delete-modal'));
-        //     modal.hide(); // Hide the modal
-        // });
 
         // Access the hidden div to get available times data  
         const availableTimesData = document.getElementById("available-times-data");
@@ -266,36 +236,52 @@ document.addEventListener("DOMContentLoaded", function () {
         const restaurantName = button.getAttribute('data-restaurant-name');
         const bookingTime = button.getAttribute('data-booking-time');
         const modalMessage = document.getElementById('modal-message');
+
+        // Update modal message
+        modalMessage.textContent = `Are you sure you want to delete the booking for ${restaurantName} on ${bookingTime}?`;
+
+        // Show the modal
+        const modal = new bootstrap.Modal(document.getElementById('delete-modal'));
+        modal.show();
+    }
+
+    if (document.body.classList.contains('my_bookings')) {
+        const deleteButtons = document.querySelectorAll('.delete-booking-button');
+        const modalMessage = document.getElementById('modal-message');
         const confirmButton = document.getElementById('confirm-delete');
         const cancelButton = document.getElementById('cancel-delete');
-        const bookingToDeleteUrl = button.getAttribute('data-delete-url');
+        let bookingToDeleteUrl; // Store the URL for deletion
 
 
         confirmButton.addEventListener('click', function () {
             if (bookingToDeleteUrl) {
                 const formData = new FormData(); // Create a new FormData object
                 formData.append('csrfmiddlewaretoken', csrftoken); // Append CSRF token
+
                 // Send the fetch request to cancel the booking
                 fetch(bookingToDeleteUrl, {
                     method: 'POST',
                     body: formData
-                }).then(response => {
-                    if (!response.ok) {
-                        alert("Error deleting booking."); // Inform the user
-                        return response.text().then(text => {
-                            throw new Error('Network response was not ok');
-                        });
-                    }
-                    return response.json(); // Parse the JSON response
-                }).then(data => {
-                    alert("Deletion successful."); // Inform the user
-                    const modal = bootstrap.Modal.getInstance(document.getElementById('delete-modal'));
-                    modal.hide(); // Hide the modal
-                    document.getElementById('alert-deleted').style.display = 'block'; // Show success alert
-                    location.reload(); // Refresh the page
-                }).catch(error => {
-                    alert("There was a problem with the deletion."); // Inform the user
-                });
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            alert("Error deleting booking."); // Inform the user
+                            return response.text().then(text => {
+                                throw new Error('Network response was not ok');
+                            });
+                        }
+                        return response.json(); // Parse the JSON response
+                    })
+                    .then(data => {
+                        alert("Deletion successful."); // Inform the user
+                        const modal = bootstrap.Modal.getInstance(document.getElementById('delete-modal'));
+                        modal.hide(); // Hide the modal
+                        document.getElementById('alert-deleted').style.display = 'block'; // Show success alert
+                        location.reload(); // Refresh the page
+                    })
+                    .catch(error => {
+                        alert("There was a problem with the deletion."); // Inform the user
+                    });
             }
         });
 
@@ -304,12 +290,5 @@ document.addEventListener("DOMContentLoaded", function () {
             const modal = bootstrap.Modal.getInstance(document.getElementById('delete-modal'));
             modal.hide(); // Hide the modal
         });
-        // Update modal message
-        modalMessage.textContent = `Are you sure you want to delete the booking for ${restaurantName} on ${bookingTime}?`;
-
-        // Show the modal
-        const modal = new bootstrap.Modal(document.getElementById('delete-modal'));
-        modal.show();
-        
     }
 });
