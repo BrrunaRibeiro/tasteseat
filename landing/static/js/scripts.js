@@ -1,6 +1,19 @@
 document.addEventListener("DOMContentLoaded", function () {
     const currentPath = window.location.pathname;
 
+    // Function to handle selection of a time slot  
+    function selectTime(element, available) {
+        if (available) {
+            // Set the selected booking time  
+            document.getElementById('booking_start_time').value = element.getAttribute('data-time');
+
+            // Show the booking form  
+            document.getElementById('booking-form').style.display = 'block';
+        } else {
+            alert('This time is not available. Please select another.');
+        }
+    }
+
     if (currentPath.startsWith('/restaurant/') && !isNaN(currentPath.split('/')[2])) {
         function captureTimezoneOffset() {
             const timezoneOffset = new Date().getTimezoneOffset(); // in minutes  
@@ -108,18 +121,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        // Function to handle selection of a time slot  
-        function selectTime(element, available) {
-            if (available) {
-                // Set the selected booking time  
-                document.getElementById('booking_start_time').value = element.getAttribute('data-time');
-
-                // Show the booking form  
-                document.getElementById('booking-form').style.display = 'block';
-            } else {
-                alert('This time is not available. Please select another.');
-            }
-        }
     }
 
     // Get the CSRF 
@@ -205,20 +206,20 @@ document.addEventListener("DOMContentLoaded", function () {
         const confirmButton = document.getElementById('confirm-delete');
         const cancelButton = document.getElementById('cancel-delete');
         let bookingToDelete;
-    
+
         deleteButtons.forEach(button => {
             button.addEventListener('click', function (event) {
                 event.preventDefault();
                 const restaurantName = this.getAttribute('data-restaurant-name');
                 const bookingTime = this.getAttribute('data-booking-time');
                 bookingToDelete = this.parentElement; // Save reference to the form element
-    
+
                 modalMessage.textContent = `Are you sure you want to delete the booking for ${restaurantName} on ${bookingTime}?`;
-    
+
                 modal.show();
             });
         });
-    
+
         confirmButton.addEventListener('click', function () {
             if (bookingToDelete) {
                 const formData = new FormData(bookingToDelete);
@@ -229,29 +230,29 @@ document.addEventListener("DOMContentLoaded", function () {
                         'X-CSRFToken': csrftoken
                     },
                 })
-                .then(response => {
-                    if (!response.ok) {
-                        return response.text().then(text => {
-                            console.error("Error response:", text);
-                            throw new Error('Network response was not ok');
-                        });
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log("Deletion successful:", data);
-                    const modalConfirmation = bootstrap.Modal.getInstance(modal);
-                    modalConfirmation.hide(); // Hide the modal
-                    location.reload(); // Refresh the page 
-                })
-                .catch(error => {
-                    console.error("There was a problem with the deletion:", error);
-                    const modalConfirmation = bootstrap.Modal.getInstance(modal);
-                    modalConfirmation.hide(); // Hide modal on error
-                });
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.text().then(text => {
+                                console.error("Error response:", text);
+                                throw new Error('Network response was not ok');
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log("Deletion successful:", data);
+                        const modalConfirmation = bootstrap.Modal.getInstance(modal);
+                        modalConfirmation.hide(); // Hide the modal
+                        location.reload(); // Refresh the page 
+                    })
+                    .catch(error => {
+                        console.error("There was a problem with the deletion:", error);
+                        const modalConfirmation = bootstrap.Modal.getInstance(modal);
+                        modalConfirmation.hide(); // Hide modal on error
+                    });
             }
         });
-    
+
         cancelButton.addEventListener('click', function () {
             const modalConfirmation = bootstrap.Modal.getInstance(modal);
             modalConfirmation.hide(); // Hide the modal

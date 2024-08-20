@@ -38,6 +38,7 @@
                 <label for="date-picker">Or select another day too see available tables</label>
                 <input type="date" id="date-picker">
             </div>
+            <br>
             <!-- Booking Form (initially hidden) -->
             <form id="booking-form" method="POST" action="{% url 'book_table' %}" style="display: none;">
                 {% csrf_token %}
