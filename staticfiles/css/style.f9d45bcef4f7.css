@@ -1,4 +1,13 @@
 @import url("https://use.typekit.net/isu1auv.css");
+/* 
+font-family: "bio-sans", sans-serif;
+font-weight: 300;
+font-style: normal; */
+@import url("https://use.typekit.net/isu1auv.css");
+/* New Spirit Bold
+font-family: "new-spirit", serif;
+font-weight: 700;
+font-style: normal; */
 
 body {
     display: flex;
@@ -8,6 +17,7 @@ body {
     font-style: normal;
 }
 
+
 .header {
     display: flex;
     height: 60px;
@@ -15,15 +25,15 @@ body {
 
 a {
     text-decoration: none;
-    color: rgb(9, 9, 9);
+    color: black;
 }
 
 .nav-button {
-    color: rgb(118, 118, 170);
+    color:rgb(118, 118, 170)
 }
 
 .nav-button:hover {
-    color: rgb(44, 44, 132);
+    color:rgb(44, 44, 132)
 }
 
 .logo {
@@ -31,8 +41,8 @@ a {
     font-weight: 700;
     font-style: normal;
     font-size: 40px;
-    margin-right: 5%;
-    margin-left: 1%;
+    margin-right: 30px;
+    margin-left: 10px;
 }
 
 .search-bar-container {
@@ -60,7 +70,7 @@ a {
 }
 
 .search-result-item:hover {
-    background-color: #f0f0f0;
+    background-color: #f0f0f0; /* Highlight on hover */
 }
 
 .resto-img-list {
@@ -69,6 +79,8 @@ a {
     aspect-ratio: 8/5;
     object-fit: cover;
 }
+
+/* .resto-img-details {} */
 
 .resto-name-list {
     margin-top: 10px;
@@ -92,10 +104,12 @@ a {
 
 .resto-img-list {
     margin-right: 15px;
+    /* Space between the image and details */
 }
 
 .restaurant-details h2 {
     margin: 0;
+    /* Remove default margin */
 }
 
 .cuisine-type,
@@ -107,40 +121,42 @@ address {
     margin: 2px;
 }
 
-.btn-primary {  
+.btn-primary {  /* Default primary button style */  
     background-color: rgb(66, 66, 100);  
     border: rgb(66, 66, 100);
     color: white;  
 }  
 
-.btn-secondary {  
+.btn-secondary {  /* Default secondary button style */  
     background-color: lightgray;  
     color: black;  
 }  
 
-#guest-selection .btn-secondary {  
+#guest-selection .btn-secondary { /* More specific rule for guest buttons */  
     background-color: green;  
     color: white;  
 }  
 
+/* MODAL */
+
 .modal {
-    position: fixed;  
+    position: fixed; /* Stay in place */
     z-index: 1050;  
     left: 0;
     top: 0;
-    width: 100%; 
-    height: 100%; 
-    overflow: auto; 
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scrolling if needed */
     background-color: rgba(90, 90, 90, 0.5); 
 }
 
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto; 
+    margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
-    border: 1px solid #888; 
-    width: 80%; 
-    max-width: 500px; 
+    border: 1px solid #888; /* Gray border */
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 500px; /* Maximum width */
     text-align: center;
 }
 
@@ -178,21 +194,4 @@ address {
 .modal .btn {
     background-color: #5bc0de;
     color: white;
-}
-
-@media screen and (min-width: 576px) {
-    .search-bar {
-        width: 100%; 
-        margin: 0; 
-    }
-    
-    .header {
-        flex-direction: column; 
-        align-items: flex-start; 
-    }
-
-    .nav {
-        width: 100%; 
-        margin-top: 5px; 
-    }
 }
