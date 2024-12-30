@@ -76,50 +76,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
 
-        // const confirmButton = document.getElementById('confirm-delete');
-        // const cancelButton = document.getElementById('cancel-delete');
-        // let bookingToDeleteUrl; // Store the URL for deletion
-
-
-        // confirmButton.addEventListener('click', function () {
-        //     console.log('Confirm button clicked');
-        //     if (bookingToDeleteUrl) {
-        //         const formData = new FormData(); // Create a new FormData object
-        //         formData.append('csrfmiddlewaretoken', csrftoken); // Append CSRF token
-
-        //         // Send the fetch request to cancel the booking
-        //         fetch(bookingToDeleteUrl, {
-        //             method: 'POST',
-        //             body: formData
-        //         })
-        //             .then(response => {
-        //                 if (!response.ok) {
-        //                     alert("Error deleting booking."); // Inform the user
-        //                     return response.text().then(text => {
-        //                         throw new Error('Network response was not ok');
-        //                     });
-        //                 }
-        //                 return response.json(); // Parse the JSON response
-        //             })
-        //             .then(data => {
-        //                 alert("Deletion successful."); // Inform the user
-        //                 const modal = bootstrap.Modal.getInstance(document.getElementById('delete-modal'));
-        //                 modal.hide(); // Hide the modal
-        //                 document.getElementById('alert-deleted').style.display = 'block'; // Show success alert
-        //                 location.reload(); // Refresh the page
-        //             })
-        //             .catch(error => {
-        //                 alert("There was a problem with the deletion."); // Inform the user
-        //             });
-        //     }
-        // });
-
-        // cancelButton.addEventListener('click', function (event) {
-        //     event.preventDefault(); // Prevent default action
-        //     const modal = bootstrap.Modal.getInstance(document.getElementById('delete-modal'));
-        //     modal.hide(); // Hide the modal
-        // });
-
         // Access the hidden div to get available times data  
         const availableTimesData = document.getElementById("available-times-data");
         if (availableTimesData) {

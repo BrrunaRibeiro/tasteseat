@@ -19,9 +19,9 @@
                     {% with booking.booking_start_time as start_time %}
                     {% if start_time %}
                     {% comment %} Extract and Format Booking Time {% endcomment %}
-                    {% with start_time|date:"H:i" as time_only %} <!-- Extract HH:MM format -->
-                    {% with time_only|slice:":2" as hour %} <!-- Get the hour -->
-                    {% with time_only|slice:"3:" as minute %} <!-- Get the minute -->
+                    {% with start_time|date:"H:i" as time_only %} 
+                    {% with time_only|slice:":2" as hour %} 
+                    {% with time_only|slice:"3:" as minute %}
                     {% if hour == "12" %}
                     <strong>{{ hour }}:{{ minute }} PM.</strong>
                     {% elif hour == "00" %}
@@ -42,10 +42,11 @@
                 <td>{{ booking.number_of_guests }} guests</td>
                 <td>
                     <a href="{% url 'change_booking' booking.id %}" class="btn btn-link">Change</a>
-                        <button href="{% url 'cancel_booking' booking.id %}" class="delete-booking-button btn btn-danger "
+                        <button class="delete-booking-button btn btn-danger "
                             data-restaurant-name="{{ booking.table_id.at_restaurant.name }}"
                             data-booking-time="{{ booking.booking_start_time|date:'Y-m-d H:i' }}"
-                            data-booking-id="{{ booking.id }}">Cancel</button>
+                            data-booking-id="{{ booking.id }}"
+                            data-delete-url="{% url 'cancel_booking' booking.id %}">Cancel</button>
                 </td>
             </tr>
             {% empty %}
