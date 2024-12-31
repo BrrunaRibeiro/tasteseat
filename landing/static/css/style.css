@@ -52,8 +52,8 @@ a {
     background: white;
     border: 1px solid #ccc;
     max-height: 200px;
-    overflow-y: auto; 
-    z-index: 100; 
+    overflow-y: auto;
+    z-index: 100;
 }
 
 .search-result-item {
@@ -109,45 +109,49 @@ address {
     margin: 2px;
 }
 
-.btn-primary {  
-    background-color: rgb(66, 66, 100);  
+.btn-primary {
+    background-color: rgb(66, 66, 100);
     border: rgb(66, 66, 100);
-    color: white;  
-}  
-
-.btn-primary:hover {
-    background-color: rgb(133, 133, 133);  
     color: white;
 }
 
-.btn-secondary {  
-    background-color: lightgray;  
-    color: black;  
-}  
+.btn-primary:hover {
+    background-color: rgb(133, 133, 133);
+    color: white;
+}
 
-#guest-selection .btn-secondary {  
-    background-color: green;  
-    color: white;  
-}  
+.btn-secondary {
+    background-color: lightgray;
+    color: black;
+}
+
+#guest-selection .btn-secondary {
+    background-color: green;
+    color: white;
+}
+
+#mybookings-table {
+    overflow-x: auto;
+}
 
 .modal {
-    position: fixed;  
-    z-index: 1050;  
+    position: fixed;
+    z-index: 1050;
     left: 0;
     top: 0;
-    width: 100%; 
-    height: 100%; 
-    overflow: auto; 
-    background-color: rgba(90, 90, 90, 0.5); 
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(90, 90, 90, 0.5);
 }
 
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto; 
+    margin: 15% auto;
     padding: 20px;
-    border: 1px solid #888; 
-    width: 100%; 
-    max-width: 500px; 
+    border: 1px solid #888;
+    width: 100%;
+    max-width: 500px;
     text-align: center;
 }
 
@@ -195,25 +199,69 @@ address {
     padding: 13px;
 }
 
-@media screen and (min-width: 576px) {
-    .search-bar {
-        width: 100%; 
-        margin: 0; 
-    }
+@media screen and (max-width: 769px) {
     
-    .header {
-        flex-direction: column; 
-        align-items: flex-start; 
-    }
-
-    .NavBar {
-        width: 100%; 
-        margin-top: 5px; 
-    }
 }
 
 @media screen and (min-width: 576px) {
-    .NavBar{
-        
+    .search-bar {
+        width: 100%;
+        margin: 0;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .NavBar {
+        width: 100%;
+        margin-top: 5px;
+    }
+}
+
+@media screen and (max-width: 426px) {
+    .NavItems {
+        flex-direction: column;
+    }
+
+    .NavItems > li {
+        margin-top: 15px;
+    }
+    #mybookings-table {
+        display: list-item;
+        vertical-align: middle;
+    }
+
+    td {
+        vertical-align: middle;
+    }
+
+    .delete-booking-button,
+    #modify-button {
+        margin: 5px;
+    }
+
+    .restaurant-list{
+        overflow-x: scroll;
+    }
+
+    .card{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-content: center;
+
+    }
+}
+
+@media screen and (max-width: 321px) {
+    .resto-img-list{
+        max-width: 250px;
+        padding-bottom: 5px;
+    }
+
+    .search-bar{
+        max-width: 115px;
     }
 }
