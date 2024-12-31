@@ -6,6 +6,8 @@ body {
     font-family: "bio-sans", sans-serif;
     font-weight: 300;
     font-style: normal;
+    height: 100dvh;
+    text-decoration: none;
 }
 
 .header {
@@ -113,6 +115,11 @@ address {
     color: white;  
 }  
 
+.btn-primary:hover {
+    background-color: rgb(133, 133, 133);  
+    color: white;
+}
+
 .btn-secondary {  
     background-color: lightgray;  
     color: black;  
@@ -139,7 +146,7 @@ address {
     margin: 15% auto; 
     padding: 20px;
     border: 1px solid #888; 
-    width: 80%; 
+    width: 100%; 
     max-width: 500px; 
     text-align: center;
 }
@@ -170,14 +177,22 @@ address {
     cursor: pointer;
 }
 
+.modal .btn {
+    background-color: #5bc0de;
+    color: white;
+}
+
 .modal .btn-danger {
     background-color: #d9534f;
     color: white;
 }
 
-.modal .btn {
-    background-color: #5bc0de;
-    color: white;
+#cancel-delete {
+    background-color: #aaa;
+}
+
+#booking-form {
+    padding: 13px;
 }
 
 @media screen and (min-width: 576px) {
@@ -191,8 +206,14 @@ address {
         align-items: flex-start; 
     }
 
-    .nav {
+    .NavBar {
         width: 100%; 
         margin-top: 5px; 
+    }
+}
+
+@media screen and (min-width: 576px) {
+    .NavBar{
+        
     }
 }

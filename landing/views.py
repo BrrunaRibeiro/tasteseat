@@ -264,7 +264,7 @@ def my_bookings(request):
     increasing user satisfaction and engagement with the
     application.
     """
-    bookings = Booking.objects.filter(user_id=request.user)
+    bookings = [booking for booking in Booking.objects.filter(user_id=request.user) if booking.is_active]
 
     return render(request, 'landing/my_bookings.html', {'bookings': bookings})
 
@@ -282,7 +282,7 @@ def cancel_booking(request, booking_id):
     if request.method == "POST":
         booking = get_object_or_404(Booking, id=booking_id)
         booking.delete()  # Perform the deletion
-        return JsonResponse({"message": "Booking cancelled successfully."})
+        return JsonResponse({"message": "Booking cancelled successfully."}, status=200)
     return JsonResponse({"error": "Invalid request."}, status=400)
 
 

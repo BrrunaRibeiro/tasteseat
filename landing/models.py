@@ -105,3 +105,9 @@ class Booking(models.Model):
     def reset(self):
         self.booking_end_time = self.booking_start_time + timedelta(hours=2)
 
+    @property
+    def is_active(self):
+        """
+        Check if this booking is still valid.
+        """
+        return self.table_id is not None  # Active if table exists  

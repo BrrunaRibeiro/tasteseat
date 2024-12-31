@@ -260,8 +260,9 @@ document.addEventListener("DOMContentLoaded", function () {
         updateAvailability();
     }
 
+    let isListenerAttached = false; // To avoid multiple event listeners
+
     // Function to show confirmation modal for booking deletion
-    // This is necessary to confirm the user's intent before performing a destructive action.
     function showModal(button) {
         const restaurantName = button.getAttribute('data-restaurant-name');
         const bookingTime = button.getAttribute('data-booking-time');
@@ -269,47 +270,81 @@ document.addEventListener("DOMContentLoaded", function () {
         const confirmButton = document.getElementById('confirm-delete');
         const cancelButton = document.getElementById('cancel-delete');
         const bookingToDeleteUrl = button.getAttribute('data-delete-url');
+        const modalElement = document.getElementById('delete-modal');
+        const outsideContent = document.querySelectorAll('body > *:not(#delete-modal)');
 
-
-        confirmButton.addEventListener('click', function () {
-            if (bookingToDeleteUrl) {
-                const formData = new FormData(); // Create a new FormData object
-                formData.append('csrfmiddlewaretoken', csrftoken); // Append CSRF token
-                // Send the fetch request to cancel the booking
-                fetch(bookingToDeleteUrl, {
-                    method: 'POST',
-                    body: formData
-                }).then(response => {
-                    if (!response.ok) {
-                        alert("Error deleting booking."); // Inform the user
-                        return response.text().then(text => {
-                            throw new Error('Network response was not ok');
-                        });
-                    }
-                    return response.json(); // Parse the JSON response
-                }).then(data => {
-                    alert("Deletion successful."); // Inform the user
-                    const modal = bootstrap.Modal.getInstance(document.getElementById('delete-modal'));
-                    modal.hide(); // Hide the modal
-                    document.getElementById('alert-deleted').style.display = 'block'; // Show success alert
-                    location.reload(); // Refresh the page
-                }).catch(error => {
-                    alert("There was a problem with the deletion."); // Inform the user
-                });
-            }
-        });
-
-        cancelButton.addEventListener('click', function (event) {
-            event.preventDefault(); // Prevent default action
-            const modal = bootstrap.Modal.getInstance(document.getElementById('delete-modal'));
-            modal.hide(); // Hide the modal
-        });
         // Update modal message
         modalMessage.textContent = `Are you sure you want to delete the booking for ${restaurantName} on ${bookingTime}?`;
 
+        // Add click listener for "Confirm Delete" button
+        if (!isListenerAttached) {
+            confirmButton.addEventListener('click', async function handleDelete() {
+                if (bookingToDeleteUrl) {
+                    confirmButton.disabled = true; // Disable the button to prevent multiple clicks
+
+                    try {
+                        // Send the fetch request to cancel the booking
+                        console.log("Sending fetch request to:", bookingToDeleteUrl);
+                        const response = await fetch(bookingToDeleteUrl, {
+                            method: 'POST',
+                            headers: { 'X-CSRFToken': csrftoken },
+                        });
+
+                        // Log the response status and headers
+                        console.log("Response status:", response.status);
+                        console.log("Response headers:", response.headers);
+
+                        // Check if the response is successful
+                        if (response.ok) {
+                            const data = await response.json();
+                            console.log("Response JSON (success):", data);
+                            alert(data.message || "Deletion successful."); // Show success message
+
+                            // Close the modal and refresh the page
+                            const modal = bootstrap.Modal.getInstance(modalElement);
+                            modal.hide();
+                            location.reload();
+                        } else {
+                            // Handle server-side errors
+                            const errorData = await response.json();
+                            console.log("Response JSON (error):", errorData);
+                            alert(errorData.error || "Error deleting booking.");
+                            console.error("Server error:", errorData.error || response.statusText);
+                        }
+                    } catch (error) {
+                        // Handle network or unexpected errors
+                        console.error("Unexpected error during fetch:", error);
+                        alert("An unexpected error occurred. Please try again.");
+                    } finally {
+                        confirmButton.disabled = false; // Re-enable the button after completion
+                        confirmButton.removeEventListener('click', handleDelete); // Clean up event listener
+                        isListenerAttached = false; // Reset listener attachment flag
+                    }
+                }
+            });
+
+            // Add click listener for "Cancel" button
+            cancelButton.addEventListener('click', function (event) {
+                event.preventDefault(); // Prevent default action
+                const modal = bootstrap.Modal.getInstance(modalElement);
+                modal.hide(); // Hide the modal
+            });
+
+            isListenerAttached = true; // Mark listener as attached
+        }
+
+        // Manage accessibility: Disable outside content
+        outsideContent.forEach(el => el.setAttribute('inert', 'true'));
+        modalElement.removeAttribute('inert'); // Enable interaction with the modal
+
         // Show the modal
-        const modal = new bootstrap.Modal(document.getElementById('delete-modal'));
+        const modal = new bootstrap.Modal(modalElement);
         modal.show();
-        
+
+        // Remove the "inert" attribute when the modal is hidden
+        modalElement.addEventListener('hidden.bs.modal', () => {
+            outsideContent.forEach(el => el.removeAttribute('inert')); // Re-enable outside content
+            modalElement.setAttribute('inert', 'true'); // Disable the modal content
+        });
     }
 });

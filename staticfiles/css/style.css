@@ -167,6 +167,7 @@ address {
     height: 100%; 
     overflow: auto; 
     background-color: rgba(90, 90, 90, 0.5); 
+    --bs-modal-width: 631px;
 }
 
 .modal-content {
@@ -213,6 +214,10 @@ address {
 .modal .btn {
     background-color: #5bc0de;
     color: white;
+}
+
+#cancel-delete {
+    background-color: #aaa;
 }
 
 #booking-form {

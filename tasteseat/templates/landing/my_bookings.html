@@ -41,15 +41,16 @@
                 </td>
                 <td>{{ booking.number_of_guests }} guests</td>
                 <td>
-                    <a href="{% url 'change_booking' booking.id %}" class="btn btn-link">Change</a>
+                    <a href="{% url 'change_booking' booking.id %}" class="btn btn-primary" id="modify-button">Modify</a>
                         <button class="delete-booking-button btn btn-danger "
                             data-restaurant-name="{{ booking.table_id.at_restaurant.name }}"
                             data-booking-time="{{ booking.booking_start_time|date:'Y-m-d H:i' }}"
                             data-booking-id="{{ booking.id }}"
                             data-delete-url="{% url 'cancel_booking' booking.id %}">Cancel</button>
                 </td>
-            </tr>
             {% empty %}
+            </tr>
+            
             <tr>
                 <td colspan="4">No bookings found.</td>
             </tr>
@@ -72,8 +73,8 @@
                 <p id="modal-message"></p>
             </div>
             <div class="modal-footer">
-                <button type="button" id="cancel-delete" class="btn btn-secondary">Cancel</button>
-                <button type="button" id="confirm-delete" class="btn btn-danger">Delete</button>
+                <button type="button" id="cancel-delete" class="btn">Back to My Bookings</button>
+                <button type="button" id="confirm-delete" class="btn btn-danger">Delete Reservation</button>
             </div>
         </div>
     </div>
