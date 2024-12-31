@@ -23,6 +23,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('', include('landing.urls'), name='landing-urls'),
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),  # Login/logout
+    path('accounts/register/', include('landing.urls')),  # Registration
 ]
 
 if settings.DEBUG:

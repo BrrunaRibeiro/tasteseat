@@ -7,11 +7,36 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import UserInfoForm, ChangeBookingForm
 from .models import Restaurant, Table, Booking
 from django.contrib.auth.models import User
+from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
 import pytz
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
 
+def landing_page(request):
+    """
+    Render the landing page.
+    """
+    return render(request, 'landing/landing_page.html')
+
+def register(request):
+    """
+    Handle user registration with defensive programming.
+    """
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, 'Registration successful.')
+            return redirect('landing_page')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = UserCreationForm()
+    return render(request, 'landing/register.html', {'form': form})
 
 class ShowRestaurants(generic.ListView):
     """
@@ -267,6 +292,12 @@ def my_bookings(request):
     bookings = [booking for booking in Booking.objects.filter(user_id=request.user) if booking.is_active]
 
     return render(request, 'landing/my_bookings.html', {'bookings': bookings})
+
+def booking_forbidden(request):
+    """
+    Error page for forbidden access.
+    """
+    return HttpResponseForbidden("You are not allowed to access this content.")
 
 
 @login_required

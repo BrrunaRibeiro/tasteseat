@@ -15,6 +15,13 @@ from .views import (
 from django.urls import path
 
 urlpatterns = [
+    path('', views.landing_page, name='landing_page'),
+    path('register/', views.register, name='register'),
+    path(
+        'change_booking/<int:booking_id>/',
+        change_booking,
+        name='change_booking'
+    ),
     path(
         'restaurant_list',
         views.ShowRestaurants.as_view(),
