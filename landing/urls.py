@@ -11,12 +11,16 @@ from .views import (
     change_booking,
     booking_success,
     custom_404_view,
+    logout_view,
 )
+from django.contrib.auth.views import LoginView 
 from django.urls import path
 
 urlpatterns = [
     path('', views.landing_page, name='landing_page'),
     path('register/', views.register, name='register'),
+    path('login/', LoginView.as_view(template_name='login')),
+    path('logout/', views.logout_view, name='logout'),
     path(
         'change_booking/<int:booking_id>/',
         change_booking,

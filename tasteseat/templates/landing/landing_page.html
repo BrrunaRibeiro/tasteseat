@@ -1,0 +1,13 @@
+{% extends "landing/base.html" %}
+{% block content %}
+<div class="container text-center mt-5">
+    <h1>Welcome to TasteSeat!</h1>
+    <p>Reserve your favorite restaurants with ease.</p>
+    {% if user.is_authenticated %}
+    <a href="{% url 'my_bookings' %}" class="btn btn-primary">My Bookings</a>
+    {% else %}
+    <a href="{% url 'register' %}" class="btn btn-success">Register</a>
+    <a href="{% url 'login' %}" class="btn btn-secondary">Login</a>
+    {% endif %}
+</div>
+{% endblock %}

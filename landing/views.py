@@ -3,11 +3,12 @@ from datetime import datetime, timedelta
 from django.views import generic
 from django.views.decorators.http import require_POST
 from django.utils import timezone
+from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import UserInfoForm, ChangeBookingForm
 from .models import Restaurant, Table, Booking
 from django.contrib.auth.models import User
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
@@ -37,6 +38,13 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'landing/register.html', {'form': form})
+
+def logout_view(request):
+    """
+    Logs out the user and redirects them to the landing page.
+    """
+    logout(request)
+    return redirect(reverse('landing-page'))
 
 class ShowRestaurants(generic.ListView):
     """

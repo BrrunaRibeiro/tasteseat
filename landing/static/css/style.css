@@ -50,10 +50,12 @@ a {
 .search-results {
     position: absolute;
     background: white;
-    border: 1px solid #ccc;
     max-height: 200px;
     overflow-y: auto;
     z-index: 100;
+    width: 25%; 
+    box-sizing: border-box; 
+    text-align: start;
 }
 
 .search-result-item {

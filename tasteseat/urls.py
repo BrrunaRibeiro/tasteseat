@@ -21,10 +21,9 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    path('', include('landing.urls'), name='landing-urls'),
-    path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls')),  # Login/logout
-    path('accounts/register/', include('landing.urls')),  # Registration
+    path('', include('landing.urls')),  # Landing app handles all its URLs at root
+    path('admin/', admin.site.urls),  # Admin panel
+    path('accounts/', include('django.contrib.auth.urls')),  # Auth login/logout routes
 ]
 
 if settings.DEBUG:

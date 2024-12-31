@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (currentPath.includes('/restaurant_list')) {
-        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         const searchInput = document.getElementById('search-input');
         const resultsContainer = document.createElement('div'); // A container for showing results  
         resultsContainer.classList.add('search-results');
@@ -104,10 +104,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         searchInput.addEventListener('input', function () {
             const query = searchInput.value.trim(); // Use trim to remove whitespace
-
+        
             if (query.length >= 2) { // To start searching after 2 characters  
                 const encodedQuery = encodeURIComponent(query);
-
+        
                 fetch(`/search/?q=${encodedQuery}`, {
                     headers: {
                         'X-CSRFToken': csrftoken,
@@ -123,6 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     })
                     .then(data => {
                         resultsContainer.innerHTML = ''; // Clear previous results  
+        
                         if (data.length > 0) {
                             resultsContainer.style.display = 'block'; // Show results container  
                             data.forEach(restaurant => {
@@ -136,7 +137,9 @@ document.addEventListener("DOMContentLoaded", function () {
                                 resultsContainer.appendChild(resultItem);
                             });
                         } else {
-                            resultsContainer.style.display = 'none'; // Hide if no results  
+                            // Display "No Restaurants Found"
+                            resultsContainer.style.display = 'block'; // Ensure it's visible
+                            resultsContainer.innerHTML = '<div>No restaurants found</div>';
                         }
                     })
                     .catch(error => {
