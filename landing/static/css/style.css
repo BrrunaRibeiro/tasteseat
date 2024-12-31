@@ -199,6 +199,10 @@ address {
     padding: 13px;
 }
 
+#small-center {
+    justify-self: center;
+}
+
 @media screen and (max-width: 769px) {
     
 }

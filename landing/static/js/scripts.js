@@ -96,12 +96,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
         //Conditionally set the placeholder for input field based on media queries
         function updatePlaceholder() {
-            if (window.matchMedia('(max-width: 769px)').matches) {
+            if (window.matchMedia('(max-width: 768px)').matches) {
                 searchInput.setAttribute('placeholder', 'Search');
             }
         }
         updatePlaceholder();
-        
+
         searchInput.addEventListener('input', function () {
             const query = searchInput.value.trim(); // Use trim to remove whitespace
 
