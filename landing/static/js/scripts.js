@@ -1,6 +1,62 @@
 document.addEventListener("DOMContentLoaded", function () {
     const currentPath = window.location.pathname;
 
+     // Password validation for the registration form
+     const registrationForm = document.getElementById("registration-form");
+    if (registrationForm) {
+        const password1 = document.getElementById("id_password1");
+        const password2 = document.getElementById("id_password2");
+        const errorContainer = document.createElement("div");
+
+        errorContainer.classList.add("errorlist");
+        password2.after(errorContainer);
+
+        password2.addEventListener("input", function () {
+            if (password1.value !== password2.value) {
+                errorContainer.innerHTML = "<li>Passwords must match.</li>";
+            } else {
+                errorContainer.innerHTML = "";
+            }
+        });
+
+        // Validation logic for displaying errors dynamically
+        const fields = registrationForm.querySelectorAll("input");
+        fields.forEach((field) => {
+            const errorContainer = field.nextElementSibling; // Assumes error container is next to the input field
+
+            // Add blur event listener to validate fields individually
+            field.addEventListener("blur", function () {
+                if (!field.checkValidity()) {
+                    errorContainer?.classList.remove("hidden");
+                    errorContainer.textContent = field.validationMessage;
+                } else {
+                    errorContainer?.classList.add("hidden");
+                    errorContainer.textContent = "";
+                }
+            });
+        });
+
+        // Validate all fields on form submission
+        registrationForm.addEventListener("submit", function (e) {
+            let isValid = true;
+            fields.forEach((field) => {
+                const errorContainer = field.nextElementSibling;
+                if (!field.checkValidity()) {
+                    errorContainer?.classList.remove("hidden");
+                    errorContainer.textContent = field.validationMessage;
+                    isValid = false;
+                } else {
+                    errorContainer?.classList.add("hidden");
+                    errorContainer.textContent = "";
+                }
+            });
+
+            if (!isValid) {
+                e.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    }
+
     // Function to handle selection of a time slot  
     // This is necessary to ensure that the user can select a valid time for booking.
     function selectTime(element, available) {
@@ -11,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Show the booking form  
             document.getElementById('booking-form').style.display = 'block';
         } else {
-            alert('This time is not available. Please select another.'); // Inform the user
+            alert('This time is not available. Please select another time.'); // Inform the user
         }
     }
 
@@ -156,9 +212,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
     // Initialize guestCount based on the default selected button
-    let guestCount; // Declare the variable without initializing it
+    let guestCount; 
 
-    // This function will run to initialize the guest count
+    // Initialize the guest count
     // It ensures that the application starts with a valid guest count based on user selection.
     function initializeGuestCount() {
         const guestButtons = document.querySelectorAll('#guest-selection button');
@@ -252,20 +308,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     try {
                         // Send the fetch request to cancel the booking
-                        console.log("Sending fetch request to:", bookingToDeleteUrl);
                         const response = await fetch(bookingToDeleteUrl, {
                             method: 'POST',
                             headers: { 'X-CSRFToken': csrftoken },
                         });
 
-                        // Log the response status and headers
-                        console.log("Response status:", response.status);
-                        console.log("Response headers:", response.headers);
-
                         // Check if the response is successful
                         if (response.ok) {
                             const data = await response.json();
-                            console.log("Response JSON (success):", data);
                             alert(data.message || "Deletion successful."); // Show success message
 
                             // Close the modal and refresh the page
@@ -275,13 +325,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         } else {
                             // Handle server-side errors
                             const errorData = await response.json();
-                            console.log("Response JSON (error):", errorData);
                             alert(errorData.error || "Error deleting booking.");
-                            console.error("Server error:", errorData.error || response.statusText);
                         }
                     } catch (error) {
                         // Handle network or unexpected errors
-                        console.error("Unexpected error during fetch:", error);
                         alert("An unexpected error occurred. Please try again.");
                     } finally {
                         confirmButton.disabled = false; // Re-enable the button after completion

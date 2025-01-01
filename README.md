@@ -56,10 +56,7 @@ Link to the deployed project: []()
 - Users that are looking to reserve a table in a restaurant, food-lovers, users that are in a unknown area and need to book a table, and users looking to try new restaurants.
 
 ## User Stories
-
-### New visitors goals
-
-### Existing visitors goals
+- Please see the 
 
 # Design
 

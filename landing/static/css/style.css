@@ -6,7 +6,7 @@ body {
     font-family: "bio-sans", sans-serif;
     font-weight: 300;
     font-style: normal;
-    height: 100dvh;
+    height: 100%;
     text-decoration: none;
 }
 
@@ -66,6 +66,11 @@ a {
 .search-result-item:hover {
     background-color: #f0f0f0;
 }
+.form-control:focus {
+    border-color: #888;
+    box-shadow: 0 0 0 .25rem rgba(87, 87, 87, 0.25);
+}
+
 
 .resto-img-list {
     width: 300px;
@@ -111,13 +116,13 @@ address {
     margin: 2px;
 }
 
-.btn-primary {
-    background-color: rgb(66, 66, 100);
+.btn-primary, .btn {
+    background-color: rgb(149, 166, 202);
     border: rgb(66, 66, 100);
     color: white;
 }
 
-.btn-primary:hover {
+.btn-primary:hover, .btn:hover {
     background-color: rgb(133, 133, 133);
     color: white;
 }
@@ -205,9 +210,90 @@ address {
     justify-self: center;
 }
 
-@media screen and (max-width: 769px) {
-    
+/* Form */
+
+form {
+    max-width: 400px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 20px;
+    border: 1px solid #e3e3e3;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+
+form input[type="text"]:focus,
+form input[type="password"]:focus,
+form input[type="email"]:focus {
+    border: 1px solid #ccc;
+    box-shadow: 0 0 0.25rem rgba(161, 161, 161, 0.25);
+}
+form .btn {
+    width: 100%;
+    padding: 10px;
+    background-color: rgb(149, 166, 202);
+    border: rgb(66, 66, 100);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+form .btn:hover {
+    background-color: rgb(114, 140, 196);
+}
+
+form .errorlist {
+    margin-bottom: 10px;
+    color: #d9534f;
+    font-weight: bold;
+}
+
+form .errorlist li {
+    font-size: 14px;
+}
+
+form .success-message {
+    color: #28a745;
+    font-weight: bold;
+}
+
+form .field-container {
+    margin-bottom: 20px;
+}
+
+form .helptext {
+    display: none;
+}
+
+/* @media screen and (max-width: 769px) {
+    
+} */
 
 @media screen and (min-width: 576px) {
     .search-bar {

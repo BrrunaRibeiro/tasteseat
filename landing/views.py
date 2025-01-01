@@ -5,7 +5,7 @@ from django.views.decorators.http import require_POST
 from django.utils import timezone
 from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import UserInfoForm, ChangeBookingForm
+from .forms import UserInfoForm, ChangeBookingForm, CustomUserCreationForm
 from .models import Restaurant, Table, Booking
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
@@ -15,6 +15,7 @@ from django.contrib import messages
 import pytz
 from django.http import JsonResponse, HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
+from django.db import IntegrityError
 
 def landing_page(request):
     """
@@ -22,29 +23,36 @@ def landing_page(request):
     """
     return render(request, 'landing/landing_page.html')
 
+
 def register(request):
     """
-    Handle user registration with defensive programming.
+    Handle user registration with full name and email.
     """
+    form = CustomUserCreationForm()
+
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            messages.success(request, 'Registration successful.')
-            return redirect('landing_page')
-        else:
-            messages.error(request, 'Please correct the errors below.')
-    else:
-        form = UserCreationForm()
+            try:
+                user = form.save()
+                login(request, user)
+                messages.success(request, 'Registration successful. Welcome to TasteSeat!')
+                # return redirect('restaurant-list.html')
+            except IntegrityError:
+                # Add an error directly to the email field if it already exists
+                form.add_error('email', 'This email address is already registered.')
+
     return render(request, 'landing/register.html', {'form': form})
+    
 
 def logout_view(request):
     """
-    Logs out the user and redirects them to the landing page.
+    Logs out the user and terminates the session.
     """
-    logout(request)
-    return redirect(reverse('landing-page'))
+    logout(request)  # Logs out the user
+    request.session.flush()  # Completely clear the session data
+    return redirect('landing_page')
+
 
 class ShowRestaurants(generic.ListView):
     """
@@ -169,58 +177,58 @@ def fetch_available_times(request):
 
 @require_POST
 def book_table(request):
-    """
-    Handle the booking of a table at a restaurant.
+    # If user is authenticated, pre-populate form with their info
+    initial_data = {}
+    if request.user.is_authenticated:
+        initial_data = {
+            'name': request.user.get_full_name(),
+            'email': request.user.email,
+            'phone': getattr(request.user, 'profile', {}).get('phone', ''),
+        }
 
-    This view processes the user's booking request, ensuring
-    that only authenticated users can make reservations. By
-    validating the user's input and checking for table
-    availability, it ensures a reliable booking process,
-    contributing to the overall quality and integrity of
-    reservations managed by the application.
-    """
-    form = UserInfoForm(request.POST)
+    # Handle form submission
+    if request.method == "POST":
+        form = UserInfoForm(request.POST)
+    else:
+        form = UserInfoForm(initial=initial_data)
+
     booking_time_start = request.POST.get('booking_start_time')
     restaurant_id = request.POST.get('restaurant_id')
-    guests = int(request.POST.get('guests', 2))
+    guests = request.POST.get('guests', 2)
     try:
         timezone_offset = int(request.POST.get('timezone_offset', 0))
     except ValueError:
         timezone_offset = 0
 
+    if not booking_time_start or not restaurant_id or not guests:
+        form.add_error(None, "Missing booking details. Please fill all required fields.")
+        return render(request, 'landing/restaurant_detail.html', {'form': form})
+
     if form.is_valid():
-        # Check if the user is authenticated,
-        # adjust this logic if non-authenticated can book
         if request.user.is_authenticated:
             # Extract user information
             name = form.cleaned_data['name']
             email = form.cleaned_data['email']
             phone = form.cleaned_data['phone']
 
-            # Ensure booking_time is valid and parse it
+            # Parse booking time
             try:
-                naive_booking_time = datetime.strptime(
-                    booking_time_start, '%H:%M')
+                naive_booking_time = datetime.strptime(booking_time_start, '%H:%M')
             except ValueError:
                 form.add_error(None, 'Invalid time format. Please use HH:MM.')
-                return render(request, 'landing/restaurant_detail.html', {
-                    'form': form})
+                return render(request, 'landing/restaurant_detail.html', {'form': form})
 
             # Localize booking time
             today = timezone.localtime().date()
-            complete_booking_time = datetime.combine(today,
-                                                      naive_booking_time.time())
-            booking_time_utc = timezone.make_aware(
-                complete_booking_time, timezone.utc)
+            complete_booking_time = datetime.combine(today, naive_booking_time.time())
+            booking_time_utc = timezone.make_aware(complete_booking_time, timezone.utc)
             booking_end_time_utc = booking_time_utc + timedelta(hours=2)
 
-            # Query for the restaurant and check for an available table
+            # Query restaurant and check availability
             restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
-
-            # Find an available table
             table = Table.objects.filter(
                 at_restaurant=restaurant,
-                capacity__gte=guests
+                capacity__gte=int(guests)
             ).exclude(
                 booking__booking_start_time__lt=booking_end_time_utc,
                 booking__booking_end_time__gt=booking_time_utc
@@ -233,22 +241,18 @@ def book_table(request):
                     table_id=table,
                     booking_start_time=booking_time_utc,
                     booking_end_time=booking_end_time_utc,
-                    number_of_guests=guests,
-                    # Optional fields like food_restrictions
+                    number_of_guests=int(guests),
                 )
                 return redirect('booking_confirmation', booking_id=booking.id)
             else:
-                form.add_error(None,
-                               "No tables available for the selected time.")
+                form.add_error(None, "No tables available for the selected time.")
         else:
             form.add_error(None, "User is not authenticated.")
-    else:
-        print("Form errors:", form.errors)
 
-    # If the form is invalid or no table is found, re-render the detail page
     return render(request, 'landing/restaurant_detail.html', {
-        'form': form,  # Necessary context data for the template
+        'form': form,
     })
+
 
 
 def booking_confirmation(request, booking_id):

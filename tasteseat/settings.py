@@ -29,6 +29,7 @@ ALLOWED_HOSTS = [
 # Redirect URLs
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL = '/restaurant_list'
+REGISTER_REDIRECT_URL = '/restaurant_list'
 
 
 # Application definition
@@ -96,7 +97,10 @@ CSRF_TRUSTED_ORIGINS = [
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
+        'OPTIONS': {
+            'user_attributes': ('username', 'first_name', 'last_name'),  # Exclude email
+        },
+    },  
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
