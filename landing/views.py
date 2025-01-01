@@ -1,4 +1,4 @@
-import json
+import json, logging
 from datetime import datetime, timedelta
 from django.views import generic
 from django.views.decorators.http import require_POST
@@ -10,12 +10,14 @@ from .models import Restaurant, Table, Booking
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 import pytz
-from django.http import JsonResponse, HttpResponseForbidden
+from django.http import HttpResponseForbidden, HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
 from django.db import IntegrityError
+from django.contrib.auth.views import LoginView
+from django import forms
 
 def landing_page(request):
     """
@@ -43,7 +45,73 @@ def register(request):
                 form.add_error('email', 'This email address is already registered.')
 
     return render(request, 'landing/register.html', {'form': form})
-    
+
+
+class CustomLoginView(LoginView):
+    template_name = 'registration/login.html'
+
+    def get_form_class(self):
+        # Return the custom form that uses email instead of username
+        return CustomAuthenticationForm
+
+    def form_valid(self, form):
+        print("Login successful")  # Debugging
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        print("Login failed")  # Debugging
+        return super().form_invalid(form)
+
+class CustomAuthenticationForm(AuthenticationForm):
+    username = forms.EmailField(label='Email')
+
+    def clean_username(self):
+        email = self.cleaned_data['username']
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            raise forms.ValidationError("This email address is not registered. Please register an account.")
+        return email
+
+    def clean_password(self):
+        password = self.cleaned_data['password']
+        return password
+
+def login_view(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        # Log the input for debugging
+        logger.debug(f"Attempting to log in with email: {email}")
+
+        try:
+            # Try to get the user by email
+            user = User.objects.get(email=email)
+            logger.debug(f"User found: {user.username}")
+        except User.DoesNotExist:
+            # Email not registered
+            logger.debug(f"User with email {email} does not exist")
+            messages.error(request, "This email is not registered. Please register an account.")
+            return render(request, 'landing/login.html')
+
+        # Now authenticate using the email as the username
+        user = authenticate(request, username=email, password=password)
+
+        if user is not None:
+            # If authentication is successful, log the user in
+            logger.debug(f"User {user.username} authenticated successfully")
+            login(request, user)
+            messages.success(request, "Login successful. Welcome back!")
+            return redirect('restaurant_list')  # Redirect to the main page
+        else:
+            # Invalid password
+            logger.debug(f"Invalid password for user {email}")
+            messages.error(request, "Invalid password. Please try again.")
+            return render(request, 'landing/login.html')
+
+    return render(request, 'landing/login.html')
+
 
 def logout_view(request):
     """
@@ -328,7 +396,7 @@ def cancel_booking(request, booking_id):
         return JsonResponse({"message": "Booking cancelled successfully."}, status=200)
     return JsonResponse({"error": "Invalid request."}, status=400)
 
-
+@login_required
 def change_booking(request, booking_id):
     """
     Change details of an existing booking.

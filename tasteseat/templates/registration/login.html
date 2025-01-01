@@ -3,9 +3,12 @@
 {% block content %}
 <div class="container mt-5">
     <h2>Login</h2>
+
     <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
+        <!-- Render the form fields -->
+        {{ form.as_p }}  <!-- Ensures the form fields are rendered -->
+
         <button type="submit" class="btn btn-primary">Login</button>
     </form>
 </div>

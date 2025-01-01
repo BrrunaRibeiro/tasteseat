@@ -32,7 +32,7 @@ class CustomUserCreationForm(UserCreationForm):
     with email validation to prevent duplicates.
     """
     email = forms.EmailField(
-        max_length=35,
+        max_length=254,
         required=True,
         widget=forms.EmailInput(attrs={'placeholder': 'Enter your email'}),
     )
