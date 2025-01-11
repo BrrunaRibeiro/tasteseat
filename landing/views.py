@@ -1,11 +1,11 @@
-import json, logging
+import json, logging, time
 from datetime import datetime, timedelta
 from django.views import generic
 from django.views.decorators.http import require_POST
 from django.utils import timezone
 from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import UserInfoForm, ChangeBookingForm, CustomUserCreationForm
+from .forms import UserInfoForm, ChangeBookingForm, UserRegistrationForm
 from .models import Restaurant, Table, Booking
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 import pytz
-from django.http import HttpResponseForbidden, HttpResponseBadRequest
+from django.http import HttpResponseForbidden, HttpResponseBadRequest, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.db import IntegrityError
 from django.contrib.auth.views import LoginView
@@ -28,56 +28,27 @@ def landing_page(request):
 
 def register(request):
     """
-    Handle user registration with full name and email.
+    Handle user registration with email and full name.
     """
-    form = CustomUserCreationForm()
-
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
+        form = UserRegistrationForm(request.POST)
         if form.is_valid():
             try:
                 user = form.save()
                 login(request, user)
-                messages.success(request, 'Registration successful. '
-                                         'Welcome to TasteSeat!')
-                time.sleep(3)  # Delays the redirect for 3 seconds
-                return HttpResponseRedirect('/restaurant_list')
+                messages.success(request, 'Registration successful. Welcome to TasteSeat!')
+                time.sleep(3)
+                return HttpResponseRedirect('/restaurant_list')  # Redirect to restaurant list after registration
             except IntegrityError:
-                form.add_error('email', 'This email address is already '
-                                         'registered.')
+                form.add_error('email', 'This email address is already registered.')
+        else:
+            # Debugging print to log errors
+            print(form.errors)  # This will print all the form validation errors in the console
+    else:
+        form = UserRegistrationForm()
 
     return render(request, 'landing/register.html', {'form': form})
 
-
-class CustomLoginView(LoginView):
-    template_name = 'registration/login.html'
-
-    def get_form_class(self):
-        # Return the custom form that uses email instead of username
-        return CustomAuthenticationForm
-
-    def form_valid(self, form):
-        print("Login successful")  # Debugging
-        return super().form_valid(form)
-
-    def form_invalid(self, form):
-        print("Login failed")  # Debugging
-        return super().form_invalid(form)
-
-class CustomAuthenticationForm(AuthenticationForm):
-    username = forms.EmailField(label='Email')
-
-    def clean_username(self):
-        email = self.cleaned_data['username']
-        try:
-            user = User.objects.get(email=email)
-        except User.DoesNotExist:
-            raise forms.ValidationError("This email address is not registered. Please register an account.")
-        return email
-
-    def clean_password(self):
-        password = self.cleaned_data['password']
-        return password
 
 def login_view(request):
     if request.method == 'POST':

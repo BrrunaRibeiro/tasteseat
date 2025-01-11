@@ -3,33 +3,11 @@ from .models import Booking
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
+import re
 
-# class UserInfoForm(forms.Form):
-#     name = forms.CharField(max_length=100, required=True)
-#     email = forms.EmailField(required=True)
-#     phone = forms.CharField(max_length=20, required=False)
-
-#     def __init__(self, *args, **kwargs):
-#         user = kwargs.pop('user', None)
-#         super().__init__(*args, **kwargs)
-#         if user:
-#             self.fields['name'].initial = user.get_full_name()
-#             self.fields['email'].initial = user.email
-
-
-# class ChangeBookingForm(forms.Form):
-#     booking_start_time = forms.DateTimeField(
-#         widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}),
-#         required=True,
-#     )
-#     number_of_guests = forms.IntegerField(
-#         min_value=1,
-#         required=True,
-#     )   
-class CustomUserCreationForm(UserCreationForm):
+class UserRegistrationForm(UserCreationForm):
     """
-    A custom user creation form that includes email and full name, 
-    with email validation to prevent duplicates.
+    A form that uses the email as the username.
     """
     email = forms.EmailField(
         max_length=254,
@@ -37,7 +15,7 @@ class CustomUserCreationForm(UserCreationForm):
         widget=forms.EmailInput(attrs={'placeholder': 'Enter your email'}),
     )
     full_name = forms.CharField(
-        max_length=25,
+        max_length=100,
         required=True,
         widget=forms.TextInput(attrs={'placeholder': 'Full Name'}),
     )
@@ -48,7 +26,7 @@ class CustomUserCreationForm(UserCreationForm):
 
     def clean_email(self):
         """
-        Validate that the email is unique.
+        Ensure the email is unique.
         """
         email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():

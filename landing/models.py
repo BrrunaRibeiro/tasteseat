@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import timedelta
 from cloudinary.models import CloudinaryField
+from django.core.exceptions import ValidationError
+import re
 
 CUISINES = (
     (1, 'American'),
@@ -111,3 +113,28 @@ class Booking(models.Model):
         Check if this booking is still valid.
         """
         return self.table_id is not None  # Active if table exists  
+
+class UserProfile(models.Model):
+    """
+    Profile model to store additional information for the user such as phone number
+    and full name. This is related to the default User model via a one-to-one relationship.
+    """
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    phone_number = models.CharField(
+        max_length=20, blank=True, null=True,
+        help_text="Optional phone number of the user."
+    )
+    full_name = models.CharField(
+        max_length=255, blank=True, null=True,
+        help_text="Optional full name of the user."
+    )
+
+    def __str__(self):
+        return f"Profile of {self.user.username}"
+
+    def clean(self):
+        """
+        Custom validation for phone number. It checks if the phone number format is valid.
+        """
+        if self.phone_number and not re.match(r'^\+?\d{10,15}$', self.phone_number):
+            raise ValidationError("Phone number must be a valid format with 10 to 15 digits.")

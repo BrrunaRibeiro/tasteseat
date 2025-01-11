@@ -12,7 +12,7 @@ from .views import (
     booking_success,
     custom_404_view,
     logout_view,
-    CustomLoginView,
+    LoginView,
 )
 from django.contrib.auth.views import LoginView 
 from django.urls import path
@@ -20,7 +20,7 @@ from django.urls import path
 urlpatterns = [
     path('', views.landing_page, name='landing_page'),
     path('register/', views.register, name='register'),
-    path('login/', CustomLoginView.as_view(), name='login'),    
+    path('login/', LoginView.as_view(), name='login'),    
     path('logout/', views.logout_view, name='logout'),
     path(
         'change_booking/<int:booking_id>/',
