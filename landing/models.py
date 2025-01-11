@@ -93,7 +93,7 @@ class Booking(models.Model):
     booking_end_time = models.DateTimeField(blank=True, null=True)
     number_of_guests = models.IntegerField()
     status = models.CharField(choices=RSV_STATUS,
-                              max_length=20, default='pending')
+                              max_length=20, default='confirmed')
     food_restrictions = models.CharField(max_length=200, blank=True, null=True)
     special_requests = models.CharField(max_length=200, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)

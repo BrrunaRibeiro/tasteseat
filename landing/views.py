@@ -38,11 +38,13 @@ def register(request):
             try:
                 user = form.save()
                 login(request, user)
-                messages.success(request, 'Registration successful. Welcome to TasteSeat!')
-                # return redirect('restaurant-list.html')
+                messages.success(request, 'Registration successful. '
+                                         'Welcome to TasteSeat!')
+                time.sleep(3)  # Delays the redirect for 3 seconds
+                return HttpResponseRedirect('/restaurant_list')
             except IntegrityError:
-                # Add an error directly to the email field if it already exists
-                form.add_error('email', 'This email address is already registered.')
+                form.add_error('email', 'This email address is already '
+                                         'registered.')
 
     return render(request, 'landing/register.html', {'form': form})
 
