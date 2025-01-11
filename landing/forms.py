@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
+from .models import UserProfile
 
 
 class UserRegistrationForm(UserCreationForm):
@@ -42,8 +43,10 @@ class UserRegistrationForm(UserCreationForm):
         Ensure the phone number is unique if provided.
         """
         phone = self.cleaned_data.get('phone')
-        if phone and User.objects.filter(profile__phone=phone).exists():  # Assuming UserProfile is related to User
-            raise ValidationError("This phone number is already registered.")
+        if phone:
+            # Check if a user profile exists for any user with the same phone number
+            if UserProfile.objects.filter(phone_number=phone).exists():
+                raise ValidationError("This phone number is already registered.")
         return phone
 
     def save(self, commit=True):
@@ -59,8 +62,15 @@ class UserRegistrationForm(UserCreationForm):
         )
         if commit:
             user.save()
-        return user
 
+        # Create the UserProfile instance with phone_number
+        UserProfile.objects.create(
+            user=user,
+            full_name=user.first_name + " " + user.last_name,
+            phone_number=self.cleaned_data.get('phone')  # Save phone number
+        )
+
+        return user
 
 class UserInfoForm(forms.Form):
     """

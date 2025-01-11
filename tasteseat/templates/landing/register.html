@@ -1,4 +1,5 @@
 {% extends "landing/base.html" %}
+
 {% block content %}
 <div class="container mt-5">
     <form method="POST" action="" id="registration-form" novalidate>
@@ -22,6 +23,17 @@
             {{ form.full_name }}
             <div class="text-danger small">
                 {% for error in form.full_name.errors %}
+                <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Phone Number Field -->
+        <div class="mb-3">
+            <label for="id_phone" class="form-label">Phone Number</label>
+            {{ form.phone }}
+            <div class="text-danger small">
+                {% for error in form.phone.errors %}
                 <p>{{ error }}</p>
                 {% endfor %}
             </div>

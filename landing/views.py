@@ -91,8 +91,8 @@ def logout_view(request):
     Logs out the user and terminates the session.
     """
     logout(request)  # Logs out the user
-    messages.clear(request)
     request.session.flush()  # Completely clear the session data
+    messages.clear(request)
     return redirect('landing_page')
 
 
