@@ -302,22 +302,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Add click listener for "Confirm Delete" button
         if (!isListenerAttached) {
-            confirmButton.addEventListener('click', async function handleDelete() {
+            confirmButton.addEventListener('click', async function handleDelete(event) {
                 if (bookingToDeleteUrl) {
                     confirmButton.disabled = true; // Disable the button to prevent multiple clicks
-
+        
                     try {
                         // Send the fetch request to cancel the booking
                         const response = await fetch(bookingToDeleteUrl, {
-                            method: 'POST',
-                            headers: { 'X-CSRFToken': csrftoken },
+                            method: 'POST', // We are sending a POST request to cancel the booking
+                            headers: {
+                                'X-CSRFToken': csrftoken, // Ensure CSRF token is included for security
+                                'Content-Type': 'application/json' // Send JSON data
+                            },
+                            body: JSON.stringify({
+                                // Sending relevant data such as booking ID, status to be updated, etc.
+                                booking_id: button.getAttribute('data-booking-id')
+                            })
                         });
-
+        
                         // Check if the response is successful
                         if (response.ok) {
                             const data = await response.json();
-                            alert(data.message || "Deletion successful."); // Show success message
-
+                            alert(data.message || "Booking cancelled successfully."); // Show success message
+        
                             // Close the modal and refresh the page
                             const modal = bootstrap.Modal.getInstance(modalElement);
                             modal.hide();

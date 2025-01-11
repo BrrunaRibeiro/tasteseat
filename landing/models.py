@@ -4,6 +4,7 @@ from datetime import timedelta
 from cloudinary.models import CloudinaryField
 from django.core.exceptions import ValidationError
 import re
+from django.utils import timezone
 
 CUISINES = (
     (1, 'American'),
@@ -100,6 +101,7 @@ class Booking(models.Model):
     special_requests = models.CharField(max_length=200, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    cancelled_at = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return f"Bkg ID #{self.id}, Booked by {self.user_id}"
@@ -110,9 +112,9 @@ class Booking(models.Model):
     @property
     def is_active(self):
         """
-        Check if this booking is still valid.
+        Check if this booking is active or cancelled.
         """
-        return self.table_id is not None  # Active if table exists  
+        return self.status != 'cancelled'
 
 class UserProfile(models.Model):
     """

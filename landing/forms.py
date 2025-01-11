@@ -1,13 +1,12 @@
 from django import forms
-from .models import Booking
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
-import re
+
 
 class UserRegistrationForm(UserCreationForm):
     """
-    A form that uses the email as the username.
+    A form that uses the email as the username and allows for full name and phone number.
     """
     email = forms.EmailField(
         max_length=254,
@@ -19,10 +18,15 @@ class UserRegistrationForm(UserCreationForm):
         required=True,
         widget=forms.TextInput(attrs={'placeholder': 'Full Name'}),
     )
+    phone = forms.CharField(
+        max_length=20,
+        required=False,  # Make phone optional
+        widget=forms.TextInput(attrs={'placeholder': 'Phone Number'}),
+    )
 
     class Meta:
         model = User
-        fields = ['email', 'full_name', 'password1', 'password2']
+        fields = ['email', 'full_name', 'phone', 'password1', 'password2']
 
     def clean_email(self):
         """
@@ -32,6 +36,15 @@ class UserRegistrationForm(UserCreationForm):
         if User.objects.filter(email=email).exists():
             raise ValidationError("This email address is already registered.")
         return email
+
+    def clean_phone(self):
+        """
+        Ensure the phone number is unique if provided.
+        """
+        phone = self.cleaned_data.get('phone')
+        if phone and User.objects.filter(profile__phone=phone).exists():  # Assuming UserProfile is related to User
+            raise ValidationError("This phone number is already registered.")
+        return phone
 
     def save(self, commit=True):
         """
@@ -64,16 +77,23 @@ class UserInfoForm(forms.Form):
     )
     phone = forms.CharField(
         max_length=20,
-        required=False,
+        required=False,  # Make phone optional
         widget=forms.TextInput(attrs={'placeholder': 'Phone Number'}),
     )
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
+        phone = kwargs.pop('phone', None)  # Optionally get the phone number if passed
+
         super().__init__(*args, **kwargs)
+        
         if user:
             self.fields['name'].initial = user.get_full_name()
             self.fields['email'].initial = user.email
+
+        # If the phone number is passed, fill it in
+        if phone:
+            self.fields['phone'].initial = phone
 
 
 class ChangeBookingForm(forms.Form):

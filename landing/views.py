@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 import pytz
-from django.http import HttpResponseForbidden, HttpResponseBadRequest, HttpResponseRedirect
+from django.http import HttpResponseForbidden, HttpResponseBadRequest, HttpResponseRedirect, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db import IntegrityError
 from django.contrib.auth.views import LoginView
@@ -36,7 +36,7 @@ def register(request):
             try:
                 user = form.save()
                 login(request, user)
-                messages.success(request, 'Registration successful. Welcome to TasteSeat!')
+                messages.success(request, 'Registration successful. You are now logged in. Welcome to TasteSeat!')
                 time.sleep(3)
                 return HttpResponseRedirect('/restaurant_list')  # Redirect to restaurant list after registration
             except IntegrityError:
@@ -91,6 +91,7 @@ def logout_view(request):
     Logs out the user and terminates the session.
     """
     logout(request)  # Logs out the user
+    messages.clear(request)
     request.session.flush()  # Completely clear the session data
     return redirect('landing_page')
 
@@ -224,7 +225,7 @@ def book_table(request):
         initial_data = {
             'name': request.user.get_full_name(),
             'email': request.user.email,
-            'phone': getattr(request.user, 'profile', {}).get('phone', ''),
+            'phone': request.user.profile.phone_number if request.user.profile.phone_number else '',
         }
 
     # Handle form submission
@@ -342,7 +343,7 @@ def my_bookings(request):
     increasing user satisfaction and engagement with the
     application.
     """
-    bookings = [booking for booking in Booking.objects.filter(user_id=request.user) if booking.is_active]
+    bookings = Booking.objects.filter(user_id=request.user, status='confirmed')
 
     return render(request, 'landing/my_bookings.html', {'bookings': bookings})
 
@@ -356,18 +357,34 @@ def booking_forbidden(request):
 @login_required
 def cancel_booking(request, booking_id):
     """
-    Cancel a user's existing booking.
+    Cancel a user's existing booking by updating the status and setting the cancellation timestamp.
 
-    This view allows users to cancel their bookings as needed,
-    providing flexibility and control over their dining plans.
-    Managing bookings effectively contributes to user trust
-    and enhances their overall experience with the service.
+    This view allows users to cancel their bookings, providing
+    flexibility and control over their dining plans. By updating
+    the booking status instead of deleting it, we maintain a history
+    of booking actions which contributes to better data tracking and
+    user trust.
     """
     if request.method == "POST":
         booking = get_object_or_404(Booking, id=booking_id)
-        booking.delete()  # Perform the deletion
+        
+        # Check if the booking belongs to the logged-in user
+        if booking.user_id != request.user:
+            return booking_forbidden(request)  # Forbidden access
+
+        # Check if the booking is already cancelled
+        if booking.status == 'cancelled':
+            return JsonResponse({"error": "This booking has already been cancelled."}, status=400)
+        
+        # Update the booking's status to 'cancelled' and set the cancellation timestamp
+        booking.status = 'cancelled'
+        booking.cancelled_at = timezone.now()  # Set the current time for cancellation
+        booking.save()
+
         return JsonResponse({"message": "Booking cancelled successfully."}, status=200)
+
     return JsonResponse({"error": "Invalid request."}, status=400)
+
 
 @login_required
 def change_booking(request, booking_id):
