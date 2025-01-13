@@ -1,62 +1,134 @@
 document.addEventListener("DOMContentLoaded", function () {
+
+    // Password validation for the registration form
     const currentPath = window.location.pathname;
 
-     // Password validation for the registration form
-     const registrationForm = document.getElementById("registration-form");
+    // Password validation for the registration form
+    const registrationForm = document.getElementById("registration-form");
     if (registrationForm) {
         const password1 = document.getElementById("id_password1");
         const password2 = document.getElementById("id_password2");
-        const errorContainer = document.createElement("div");
+        const emailField = document.getElementById("id_email");
+        const registerButton = registrationForm.querySelector('button[type="submit"]');
 
-        errorContainer.classList.add("errorlist");
-        password2.after(errorContainer);
+        // Initially disable the register button
+        registerButton.disabled = true;
+        registerButton.classList.add("disabled");
 
-        password2.addEventListener("input", function () {
-            if (password1.value !== password2.value) {
-                errorContainer.innerHTML = "<li>Passwords must match.</li>";
+        // Create error message containers if not present
+        function ensureErrorContainer(field) {
+            let errorContainer = field.nextElementSibling;
+            if (!errorContainer || !errorContainer.classList.contains("errorlist")) {
+                errorContainer = document.createElement("div");
+                errorContainer.classList.add("errorlist");
+                field.after(errorContainer);
+            }
+            return errorContainer;
+        }
+
+        // Real-time email validation via AJAX
+        emailField.addEventListener("blur", function () {
+            const email = emailField.value.trim();
+            const errorContainer = ensureErrorContainer(emailField);
+
+            if (email) {
+                fetch('/check_email/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    },
+                    body: JSON.stringify({ email: email })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.exists) {
+                        errorContainer.textContent = "This email is already registered.";
+                        emailField.style.borderColor = "red";
+                    } else {
+                        errorContainer.textContent = "";
+                        emailField.style.borderColor = "green";
+                    }
+                    validateForm(); // Re-check form validity
+                })
+                .catch(error => {
+                    errorContainer.textContent = "Error checking email. Please try again.";
+                    emailField.style.borderColor = "red";
+                });
             } else {
-                errorContainer.innerHTML = "";
+                errorContainer.textContent = "Email cannot be empty.";
+                emailField.style.borderColor = "red";
+                validateForm(); // Re-check form validity
             }
         });
 
-        // Validation logic for displaying errors dynamically
-        const fields = registrationForm.querySelectorAll("input");
-        fields.forEach((field) => {
-            const errorContainer = field.nextElementSibling; // Assumes error container is next to the input field
-
-            // Add blur event listener to validate fields individually
-            field.addEventListener("blur", function () {
-                if (!field.checkValidity()) {
-                    errorContainer?.classList.remove("hidden");
-                    errorContainer.textContent = field.validationMessage;
-                } else {
-                    errorContainer?.classList.add("hidden");
-                    errorContainer.textContent = "";
-                }
-            });
+        // Password matching validation
+        const passwordErrorContainer = ensureErrorContainer(password2);
+        password2.addEventListener("input", function () {
+            if (password1.value !== password2.value) {
+                passwordErrorContainer.innerHTML = "<li>Passwords must match.</li>";
+            } else {
+                passwordErrorContainer.innerHTML = "";
+            }
+            validateForm(); // Re-check form validity
         });
 
-        // Validate all fields on form submission
-        registrationForm.addEventListener("submit", function (e) {
-            let isValid = true;
-            fields.forEach((field) => {
-                const errorContainer = field.nextElementSibling;
+        // General validation for all fields
+        const fields = registrationForm.querySelectorAll("input");
+        fields.forEach((field) => {
+            const errorContainer = ensureErrorContainer(field);
+
+            // Validate field on blur
+            field.addEventListener("blur", function () {
                 if (!field.checkValidity()) {
-                    errorContainer?.classList.remove("hidden");
+                    errorContainer.textContent = field.validationMessage;
+                } else {
+                    errorContainer.textContent = "";
+                }
+                validateForm(); // Re-check form validity
+            });
+
+            // Revalidate form on input for dynamic fields
+            field.addEventListener("input", validateForm);
+        });
+
+        // Validate the form and toggle the register button
+        function validateForm() {
+            let isValid = true;
+
+            fields.forEach((field) => {
+                const errorContainer = ensureErrorContainer(field);
+
+                if (!field.checkValidity()) {
                     errorContainer.textContent = field.validationMessage;
                     isValid = false;
-                } else {
-                    errorContainer?.classList.add("hidden");
-                    errorContainer.textContent = "";
+                } else if (field === emailField && emailField.style.borderColor === "red") {
+                    // Special case for email if validation is ongoing
+                    isValid = false;
                 }
             });
 
+            // Enable or disable the register button based on form validity
+            registerButton.disabled = !isValid;
+            if (isValid) {
+                registerButton.classList.remove("disabled");
+            } else {
+                registerButton.classList.add("disabled");
+            }
+        }
+
+        // Prevent multiple submissions
+        registrationForm.addEventListener("submit", function (e) {
+            const isValid = !registerButton.disabled;
             if (!isValid) {
-                e.preventDefault(); // Prevent form submission if validation fails
+                e.preventDefault(); // Stop submission if form is invalid
+            } else {
+                // Disable the button to prevent multiple submissions
+                registerButton.disabled = true;
             }
         });
     }
-
+    
     // Function to handle selection of a time slot  
     // This is necessary to ensure that the user can select a valid time for booking.
     function selectTime(element, available) {
@@ -79,13 +151,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-
     if (currentPath.startsWith('/restaurant/') && !isNaN(currentPath.split('/')[2])) {
         // Function to capture the user's timezone offset
-        // This is essential for correctly managing booking times across different time zones.
         function captureTimezoneOffset() {
             const timezoneOffset = new Date().getTimezoneOffset(); // in minutes  
-            const timezoneOffsetInput = document.getElementById('timezone-offset'); // Fix the ID here  
+            const timezoneOffsetInput = document.getElementById('timezone-offset');  
             if (timezoneOffsetInput) {
                 timezoneOffsetInput.value = timezoneOffset;
             }
@@ -94,7 +164,6 @@ document.addEventListener("DOMContentLoaded", function () {
         captureTimezoneOffset();
 
         // Function to set the default date in the date picker
-        // This ensures that users have a sensible starting point when selecting a date.
         function setDefaultDate() {
             const datePicker = document.getElementById('date-picker');
 
@@ -102,22 +171,21 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!datePicker.value) {
                 const today = new Date();
                 const year = today.getFullYear();
-                const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+                const month = String(today.getMonth() + 1).padStart(2, '0');
                 const day = String(today.getDate()).padStart(2, '0');
-                datePicker.value = `${year}-${month}-${day}`; // Set the value in YYYY-MM-DD format
+                datePicker.value = `${year}-${month}-${day}`; 
             }
         }
 
         setDefaultDate();
 
         // Function to update availability based on the selected date
-        // This is crucial for ensuring that the user can only book available slots.
         function updateAvailability() {
             const selectedDate = document.getElementById('date-picker').value;
             if (selectedDate) {
                 window.location.href = window.location.pathname + `?guests=${guestCount}&date=${selectedDate}`;
             } else {
-                alert("No date selected."); // Inform the user
+                alert("No date selected.");
             }
         }
 
@@ -126,29 +194,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const guestButtons = document.querySelectorAll('#guest-selection button');
         guestButtons.forEach(button => {
-            // Attach event listeners to update the guest count when a button is clicked
             button.addEventListener('click', function () {
                 selectGuest(this);
             });
         });
 
-
-        // Access the hidden div to get available times data  
         const availableTimesData = document.getElementById("available-times-data");
         if (availableTimesData) {
             const availableTimes = JSON.parse(availableTimesData.textContent);
-            initializeTimeSlots(availableTimes); // Initialize time slots based on available data
+            initializeTimeSlots(availableTimes); 
         } else {
-            alert("No available Tables for this Restaurant."); // Inform the user
+            alert("No available Tables for this Restaurant.");
         }
     }
 
     if (currentPath.includes('/restaurant_list')) {
         const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         const searchInput = document.getElementById('search-input');
-        const resultsContainer = document.createElement('div'); // A container for showing results  
+        const resultsContainer = document.createElement('div');  
         resultsContainer.classList.add('search-results');
-        document.querySelector('.search-bar').appendChild(resultsContainer); // Add to search bar  
+        document.querySelector('.search-bar').appendChild(resultsContainer); 
 
         //Conditionally set the placeholder for input field based on media queries
         function updatePlaceholder() {
@@ -159,9 +224,9 @@ document.addEventListener("DOMContentLoaded", function () {
         updatePlaceholder();
 
         searchInput.addEventListener('input', function () {
-            const query = searchInput.value.trim(); // Use trim to remove whitespace
+            const query = searchInput.value.trim(); 
         
-            if (query.length >= 2) { // To start searching after 2 characters  
+            if (query.length >= 2) {
                 const encodedQuery = encodeURIComponent(query);
         
                 fetch(`/search/?q=${encodedQuery}`, {
@@ -172,75 +237,64 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
                     .then(response => {
                         if (!response.ok) {
-                            alert("Error fetching data."); // Inform the user
+                            alert("Error fetching data.");
                             throw new Error('Network response was not ok');
                         }
                         return response.json();
                     })
                     .then(data => {
-                        resultsContainer.innerHTML = ''; // Clear previous results  
+                        resultsContainer.innerHTML = ''; 
         
                         if (data.length > 0) {
-                            resultsContainer.style.display = 'block'; // Show results container  
+                            resultsContainer.style.display = 'block'; 
                             data.forEach(restaurant => {
                                 const resultItem = document.createElement('div');
                                 resultItem.classList.add('search-result-item');
                                 resultItem.textContent = restaurant.name;
-                                resultItem.dataset.id = restaurant.id; // Store restaurant ID for further actions  
+                                resultItem.dataset.id = restaurant.id;  
                                 resultItem.addEventListener('click', function () {
-                                    window.location.href = `/restaurant/${restaurant.id}/`; // Redirect to restaurant detail page  
+                                    window.location.href = `/restaurant/${restaurant.id}/`;  
                                 });
                                 resultsContainer.appendChild(resultItem);
                             });
                         } else {
-                            // Display "No Restaurants Found"
-                            resultsContainer.style.display = 'block'; // Ensure it's visible
+                            resultsContainer.style.display = 'block'; 
                             resultsContainer.innerHTML = '<div>No restaurants found</div>';
                         }
                     })
                     .catch(error => {
-                        alert("Error fetching data."); // Inform the user
+                        alert("Error fetching data.");
                     });
             } else {
-                resultsContainer.innerHTML = ''; // Clear results if less than 2 characters  
-                resultsContainer.style.display = 'none'; // Hide results container  
+                resultsContainer.innerHTML = ''; 
+                resultsContainer.style.display = 'none'; 
             }
         });
     }
 
-    // Get the CSRF token 
     const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-    // Initialize guestCount based on the default selected button
-    let guestCount; 
+    let guestCount;
 
-    // Initialize the guest count
-    // It ensures that the application starts with a valid guest count based on user selection.
     function initializeGuestCount() {
         const guestButtons = document.querySelectorAll('#guest-selection button');
         guestButtons.forEach(button => {
-            if (button.classList.contains('btn-secondary')) { // Check for the active button
-                guestCount = button.value; // Set guestCount to the value of this button
+            if (button.classList.contains('btn-secondary')) {
+                guestCount = button.value;
             }
         });
 
-        // If no button is found with 'btn-secondary', fall back to 2 as default.
         if (!guestCount) {
-            guestCount = 2; // Fallback default
+            guestCount = 2;
         }
     }
 
     initializeGuestCount();
 
-    // Function to initialize time slots with available times  
-    // This is necessary for displaying the available booking times to the user.
     function initializeTimeSlots(availableTimes) {
         const timeSlotsContainer = document.getElementById('time-slots');
-
-        // Clear the container first  
         timeSlotsContainer.innerHTML = '';
 
-        // Populate the time slots  
         for (const [time, available] of Object.entries(availableTimes)) {
             const timeSlot = document.createElement('span');
             timeSlot.className = 'time-slot ' + (available ? 'btn btn-primary' : 'btn btn-secondary disabled');
@@ -249,12 +303,12 @@ document.addEventListener("DOMContentLoaded", function () {
             if (available) {
                 timeSlot.setAttribute('data-time', time);
                 timeSlot.onclick = function () {
-                    selectTime(this, true); // Allow selection of available time slots
+                    selectTime(this, true); 
                 };
             } else {
                 timeSlot.style.cursor = 'not-allowed';
                 timeSlot.onclick = function (event) {
-                    event.stopPropagation(); // Prevent interaction with unavailable slots
+                    event.stopPropagation(); 
                     return false;
                 };
             }
@@ -263,30 +317,23 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Function to handle guest selection
-    // This updates the selected guest count and ensures the UI reflects the current selection.
     function selectGuest(button) {
-        // Deselect all buttons
         const buttons = document.querySelectorAll('#guest-selection button');
         buttons.forEach(btn => {
-            btn.classList.remove('btn-secondary');  // Unselect previous buttons
+            btn.classList.remove('btn-secondary'); 
             btn.classList.add('btn-primary');
         });
 
-        // Update the guestCount variable from the clicked button
-        guestCount = button.value; // Set the selected guest count
+        guestCount = button.value; 
 
-        // Mark the selected button
         button.classList.remove('btn-primary');
         button.classList.add('btn-secondary');
 
-        // Call the function to update availability
         updateAvailability();
     }
 
-    let isListenerAttached = false; // To avoid multiple event listeners
+    let isListenerAttached = false;
 
-    // Function to show confirmation modal for booking deletion
     function showModal(button) {
         const restaurantName = button.getAttribute('data-restaurant-name');
         const bookingTime = button.getAttribute('data-booking-time');
@@ -297,76 +344,63 @@ document.addEventListener("DOMContentLoaded", function () {
         const modalElement = document.getElementById('delete-modal');
         const outsideContent = document.querySelectorAll('body > *:not(#delete-modal)');
 
-        // Update modal message
         modalMessage.textContent = `Are you sure you want to delete the booking for ${restaurantName} on ${bookingTime}?`;
 
-        // Add click listener for "Confirm Delete" button
         if (!isListenerAttached) {
             confirmButton.addEventListener('click', async function handleDelete(event) {
                 if (bookingToDeleteUrl) {
-                    confirmButton.disabled = true; // Disable the button to prevent multiple clicks
+                    confirmButton.disabled = true;
         
                     try {
-                        // Send the fetch request to cancel the booking
                         const response = await fetch(bookingToDeleteUrl, {
-                            method: 'POST', // We are sending a POST request to cancel the booking
+                            method: 'POST',
                             headers: {
-                                'X-CSRFToken': csrftoken, // Ensure CSRF token is included for security
-                                'Content-Type': 'application/json' // Send JSON data
+                                'X-CSRFToken': csrftoken,
+                                'Content-Type': 'application/json'
                             },
                             body: JSON.stringify({
-                                // Sending relevant data such as booking ID, status to be updated, etc.
                                 booking_id: button.getAttribute('data-booking-id')
                             })
                         });
-        
-                        // Check if the response is successful
+
                         if (response.ok) {
                             const data = await response.json();
-                            alert(data.message || "Booking cancelled successfully."); // Show success message
-        
-                            // Close the modal and refresh the page
+                            alert(data.message || "Booking cancelled successfully.");
                             const modal = bootstrap.Modal.getInstance(modalElement);
                             modal.hide();
                             location.reload();
                         } else {
-                            // Handle server-side errors
                             const errorData = await response.json();
                             alert(errorData.error || "Error deleting booking.");
                         }
                     } catch (error) {
-                        // Handle network or unexpected errors
                         alert("An unexpected error occurred. Please try again.");
                     } finally {
-                        confirmButton.disabled = false; // Re-enable the button after completion
-                        confirmButton.removeEventListener('click', handleDelete); // Clean up event listener
-                        isListenerAttached = false; // Reset listener attachment flag
+                        confirmButton.disabled = false;
+                        confirmButton.removeEventListener('click', handleDelete);
+                        isListenerAttached = false;
                     }
                 }
             });
 
-            // Add click listener for "Cancel" button
             cancelButton.addEventListener('click', function (event) {
-                event.preventDefault(); // Prevent default action
+                event.preventDefault();
                 const modal = bootstrap.Modal.getInstance(modalElement);
-                modal.hide(); // Hide the modal
+                modal.hide();
             });
 
-            isListenerAttached = true; // Mark listener as attached
+            isListenerAttached = true;
         }
 
-        // Manage accessibility: Disable outside content
         outsideContent.forEach(el => el.setAttribute('inert', 'true'));
-        modalElement.removeAttribute('inert'); // Enable interaction with the modal
+        modalElement.removeAttribute('inert'); 
 
-        // Show the modal
         const modal = new bootstrap.Modal(modalElement);
         modal.show();
 
-        // Remove the "inert" attribute when the modal is hidden
         modalElement.addEventListener('hidden.bs.modal', () => {
-            outsideContent.forEach(el => el.removeAttribute('inert')); // Re-enable outside content
-            modalElement.setAttribute('inert', 'true'); // Disable the modal content
+            outsideContent.forEach(el => el.removeAttribute('inert'));
+            modalElement.setAttribute('inert', 'true');
         });
     }
 });

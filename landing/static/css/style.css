@@ -132,6 +132,11 @@ address {
     color: black;
 }
 
+.disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
 #guest-selection .btn-secondary {
     background-color: green;
     color: white;

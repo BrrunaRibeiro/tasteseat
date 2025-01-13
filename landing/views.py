@@ -26,25 +26,36 @@ def landing_page(request):
     return render(request, 'landing/landing_page.html')
 
 
+@csrf_exempt
+def check_email(request):
+    """
+    Checks if the given email is already registered.
+    """
+    if request.method == "POST":
+        email = json.loads(request.body).get("email")
+        if User.objects.filter(email=email).exists():
+            return JsonResponse({"exists": True})
+        return JsonResponse({"exists": False})
+    return JsonResponse({"error": "Invalid request"}, status=400)
+
+
 def register(request):
     """
-    Handle user registration with email and full name.
+    Handle user registration.
     """
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
-        if form.is_valid():
-            try:
-                user = form.save()
-                login(request, user)
-                messages.success(request, 'Registration successful. You are now logged in. Welcome to TasteSeat!')
-                time.sleep(3)
-                return HttpResponseRedirect('/restaurant_list')  # Redirect to restaurant list after registration
-            except IntegrityError:
-                form.add_error('email', 'This email address is already registered.')
+        if form.is_valid():  # Process form data if it's valid
+            user = form.save()  # Create user from the form data
+            login(request, user)  # Log the user in
+            messages.success(request, 'Registration successful. You are now logged in. Welcome to TasteSeat!')  # Success message
+            return HttpResponseRedirect('/restaurant_list')  # Redirect to restaurant list
+            message.sucess(request, '')
         else:
-            # Debugging print to log errors
-            print(form.errors)  # This will print all the form validation errors in the console
+            # Handle form errors, if any
+            return render(request, 'landing/register.html', {'form': form})
     else:
+        # If the request is not POST, render an empty form
         form = UserRegistrationForm()
 
     return render(request, 'landing/register.html', {'form': form})

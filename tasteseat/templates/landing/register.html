@@ -10,11 +10,6 @@
         <div class="mb-3">
             <label for="id_email" class="form-label">Email*</label>
             {{ form.email }}
-            <div class="text-danger small">
-                {% for error in form.email.errors %}
-                <p>{{ error }}</p>
-                {% endfor %}
-            </div>
         </div>
 
         <!-- Full Name Field -->
@@ -65,7 +60,7 @@
         <button type="submit" class="btn btn-primary w-100">Register</button>
 
         <!-- General Form Errors -->
-        {% if form.non_field_errors %}
+        <!-- {% if form.non_field_errors %}
         <div class="alert alert-danger mt-3">
             <ul>
                 {% for error in form.non_field_errors %}
@@ -73,7 +68,7 @@
                 {% endfor %}
             </ul>
         </div>
-        {% endif %}
+        {% endif %} -->
 
         {% block messages %}
         {% if messages %}

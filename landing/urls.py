@@ -20,6 +20,7 @@ from django.urls import path
 urlpatterns = [
     path('', views.landing_page, name='landing_page'),
     path('register/', views.register, name='register'),
+    path('check_email/', views.check_email, name='check_email'),
     path('login/', LoginView.as_view(), name='login'),    
     path('logout/', views.logout_view, name='logout'),
     path(
