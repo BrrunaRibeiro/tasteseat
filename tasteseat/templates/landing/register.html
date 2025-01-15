@@ -25,8 +25,8 @@
 
         <!-- Phone Number Field -->
         <div class="mb-3">
-            <label for="id_phone" class="form-label">Phone Number</label>
-            {{ form.phone }}
+            <label for="id_phone" class="form-label">Phone Number*</label>
+            {{ form.phone_number }}
             <div class="text-danger small">
                 {% for error in form.phone.errors %}
                 <p>{{ error }}</p>

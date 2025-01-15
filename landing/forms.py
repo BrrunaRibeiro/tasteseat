@@ -4,44 +4,60 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 from .models import UserProfile
 
+
 class UserRegistrationForm(UserCreationForm):
-    """
-    A form that uses the email as the username and allows for full name and phone number.
-    """
-    email = forms.EmailField(max_length=254, required=True)
-    full_name = forms.CharField(max_length=100, required=True)
-    phone = forms.CharField(max_length=20, required=False)
+    email = forms.EmailField(
+        max_length=254,
+        required=True,
+        widget=forms.EmailInput(attrs={'placeholder': 'Enter your email'}), 
+    )
+    full_name = forms.CharField(
+        max_length=100,
+        required=True,  # Make it required
+        widget=forms.TextInput(attrs={'placeholder': 'Full Name'}), 
+    )
+    phone_number = forms.CharField(  
+        max_length=20,
+        required=True,  # Make it required
+        widget=forms.TextInput(attrs={'placeholder': 'Phone Number'}), 
+    )
 
     class Meta:
         model = User
-        fields = ['email', 'full_name', 'phone', 'password1', 'password2']
+        fields = ['email', 'full_name', 'phone_number', 'password1', 'password2']
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise ValidationError("This email address is already registered.")
+        return email
 
     def save(self, commit=True):
         """
         Save the user with the email as the username and full name split into first/last name.
-        Additionally, create or update the UserProfile.
         """
-        # Create user from form data
         user = super().save(commit=False)
         user.username = self.cleaned_data['email']  # Use email as the username
         user.first_name, user.last_name = (
-            self.cleaned_data['full_name'].split(' ', 1) if ' ' in self.cleaned_data['full_name']
+            self.cleaned_data['full_name'].split(' ', 1)
+            if ' ' in self.cleaned_data['full_name']
             else (self.cleaned_data['full_name'], '')
         )
-        
+
         if commit:
             user.save()
 
-        # Check if UserProfile exists for the user, and create or update it
-        profile, created = UserProfile.objects.get_or_create(user=user)
-        profile.full_name = user.first_name + " " + user.last_name
-        profile.phone_number = self.cleaned_data.get('phone')
-        
-        # Only save profile if it was created or updated
-        if created or profile.phone_number != self.cleaned_data.get('phone'):
-            profile.save()
+        # Create or update the user profile
+        user_profile, created = UserProfile.objects.get_or_create(user=user)
 
-        return user
+        # Only update if profile exists, otherwise create new one
+        if not created:  
+            user_profile.phone_number = self.cleaned_data['phone_number']
+            user_profile.full_name = self.cleaned_data['full_name']
+            user_profile.save()
+
+        return user, user_profile
+
 
 class UserInfoForm(forms.Form):
     """
@@ -56,7 +72,7 @@ class UserInfoForm(forms.Form):
         required=True,
         widget=forms.EmailInput(attrs={'placeholder': 'Email Address'}),
     )
-    phone = forms.CharField(
+    phone_number = forms.CharField(
         max_length=20,
         required=False,  # Make phone optional
         widget=forms.TextInput(attrs={'placeholder': 'Phone Number'}),
@@ -64,7 +80,7 @@ class UserInfoForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
-        phone = kwargs.pop('phone', None)  # Optionally get the phone number if passed
+        phone_number = kwargs.pop('phone_number', None)  # Optionally get the phone number if passed
 
         super().__init__(*args, **kwargs)
         
@@ -73,8 +89,8 @@ class UserInfoForm(forms.Form):
             self.fields['email'].initial = user.email
 
         # If the phone number is passed, fill it in
-        if phone:
-            self.fields['phone'].initial = phone
+        if phone_number:
+            self.fields['phone_number'].initial = phone_number
 
 
 class ChangeBookingForm(forms.Form):

@@ -72,7 +72,7 @@
                         name="phone"
                         id="phone"
                         class="form-control"
-                        value="{{ form.phone.value|default:'' }}"
+                        value="{{ form.phone.value|default:user.profile.phone_number|default:'' }}"
                         required
                     >
                 </div>

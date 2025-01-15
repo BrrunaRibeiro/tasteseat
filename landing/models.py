@@ -123,12 +123,12 @@ class UserProfile(models.Model):
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     phone_number = models.CharField(
-        max_length=20, blank=True, null=True,
-        help_text="Optional phone number of the user."
+        max_length=20, blank=False,  # Required field
+        help_text="Phone number of the user."
     )
     full_name = models.CharField(
-        max_length=255, blank=True, null=True,
-        help_text="Optional full name of the user."
+        max_length=255, blank=False,  # Required field
+        help_text="Full name of the user."
     )
 
     def __str__(self):

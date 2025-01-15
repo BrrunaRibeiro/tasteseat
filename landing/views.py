@@ -6,7 +6,7 @@ from django.utils import timezone
 from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import UserInfoForm, ChangeBookingForm, UserRegistrationForm
-from .models import Restaurant, Table, Booking
+from .models import Restaurant, Table, Booking, UserProfile
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
@@ -39,23 +39,61 @@ def check_email(request):
     return JsonResponse({"error": "Invalid request"}, status=400)
 
 
+# def register(request):
+#     if request.method == 'POST':
+#         form = UserRegistrationForm(request.POST)
+#         if form.is_valid():
+#             # Save the user and the user profile (save returns a tuple)
+#             user, user_profile = form.save(commit=True)  # This returns a tuple (user, user_profile)
+            
+#             # Assign username and name fields
+#             user.username = form.cleaned_data['email']  # Use email as username
+#             user.first_name, user.last_name = (
+#                 form.cleaned_data['full_name'].split(' ', 1)
+#                 if ' ' in form.cleaned_data['full_name']
+#                 else (form.cleaned_data['full_name'], '')
+#             )
+            
+#             # Now the user profile has already been created by the form, but you can update it if necessary
+#             if user_profile:
+#                 user_profile.phone_number = form.cleaned_data['phone_number']
+#                 user_profile.full_name = form.cleaned_data['full_name']
+
+            
+#             login(request, user) # Automatically log the user in after registration
+#             return redirect('restaurant_list')  # Redirect to some page after successful registration  
+#             user.save()
+#             user_profile.save()
+#     else:
+#         form = UserRegistrationForm()
+
+#     return render(request, 'landing/register.html', {'form': form})
+
 def register(request):
-    """
-    Handle user registration.
-    """
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
-        if form.is_valid():  # Process form data if it's valid
-            user = form.save()  # Create user from the form data
-            login(request, user)  # Log the user in
-            messages.success(request, 'Registration successful. You are now logged in. Welcome to TasteSeat!')  # Success message
-            return HttpResponseRedirect('/restaurant_list')  # Redirect to restaurant list
-            message.sucess(request, '')
-        else:
-            # Handle form errors, if any
-            return render(request, 'landing/register.html', {'form': form})
+        if form.is_valid():
+            # Save the user and the user profile (save returns a tuple)
+            user, user_profile = form.save(commit=True)  # This returns a tuple (user, user_profile)
+            
+            # Assign username and name fields
+            user.username = form.cleaned_data['email']  # Use email as username
+            user.first_name, user.last_name = (
+                form.cleaned_data['full_name'].split(' ', 1)
+                if ' ' in form.cleaned_data['full_name']
+                else (form.cleaned_data['full_name'], '')
+            )
+            user.save()
+
+            # Now the user profile has already been created by the form, but you can update it if necessary
+            if user_profile:
+                user_profile.phone_number = form.cleaned_data['phone_number']
+                user_profile.full_name = form.cleaned_data['full_name']
+                user_profile.save()
+                return redirect('login  ')  # Redirect to some page after successful registration
+            
+            login(request, user) # Automatically log the user in after registration
     else:
-        # If the request is not POST, render an empty form
         form = UserRegistrationForm()
 
     return render(request, 'landing/register.html', {'form': form})
