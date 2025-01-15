@@ -39,36 +39,6 @@ def check_email(request):
     return JsonResponse({"error": "Invalid request"}, status=400)
 
 
-# def register(request):
-#     if request.method == 'POST':
-#         form = UserRegistrationForm(request.POST)
-#         if form.is_valid():
-#             # Save the user and the user profile (save returns a tuple)
-#             user, user_profile = form.save(commit=True)  # This returns a tuple (user, user_profile)
-            
-#             # Assign username and name fields
-#             user.username = form.cleaned_data['email']  # Use email as username
-#             user.first_name, user.last_name = (
-#                 form.cleaned_data['full_name'].split(' ', 1)
-#                 if ' ' in form.cleaned_data['full_name']
-#                 else (form.cleaned_data['full_name'], '')
-#             )
-            
-#             # Now the user profile has already been created by the form, but you can update it if necessary
-#             if user_profile:
-#                 user_profile.phone_number = form.cleaned_data['phone_number']
-#                 user_profile.full_name = form.cleaned_data['full_name']
-
-            
-#             login(request, user) # Automatically log the user in after registration
-#             return redirect('restaurant_list')  # Redirect to some page after successful registration  
-#             user.save()
-#             user_profile.save()
-#     else:
-#         form = UserRegistrationForm()
-
-#     return render(request, 'landing/register.html', {'form': form})
-
 def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
@@ -90,7 +60,7 @@ def register(request):
                 user_profile.phone_number = form.cleaned_data['phone_number']
                 user_profile.full_name = form.cleaned_data['full_name']
                 user_profile.save()
-                return redirect('login  ')  # Redirect to some page after successful registration
+                return redirect('login')  # Redirect to some page after successful registration
             
             login(request, user) # Automatically log the user in after registration
     else:
@@ -274,7 +244,7 @@ def book_table(request):
         initial_data = {
             'name': request.user.get_full_name(),
             'email': request.user.email,
-            'phone': request.user.profile.phone_number if request.user.profile.phone_number else '',
+            'phone_number': request.user.profile.phone_number if request.user.profile.phone_number else '',
         }
 
     # Handle form submission
@@ -300,7 +270,7 @@ def book_table(request):
             # Extract user information
             name = form.cleaned_data['name']
             email = form.cleaned_data['email']
-            phone = form.cleaned_data['phone']
+            phone_number = form.cleaned_data['phone_number']
 
             # Parse booking time
             try:
