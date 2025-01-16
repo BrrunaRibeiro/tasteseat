@@ -32,6 +32,16 @@ a {
     color: rgb(44, 44, 132);
 }
 
+#greeting {
+    margin-right: 10px;
+}
+
+#logoutbtn {
+    border: #888 1px solid;
+    border-radius: 8px;
+    padding: 5px;
+}
+
 .logo {
     font-family: "new-spirit", serif;
     font-weight: 700;
@@ -57,7 +67,7 @@ a {
     max-height: 200px;
     overflow-y: auto;
     z-index: 100;
-    width: 25%; 
+    width: 20%; 
     box-sizing: border-box; 
     text-align: start;
 }
@@ -74,7 +84,6 @@ a {
     border-color: #888;
     box-shadow: 0 0 0 .25rem rgba(87, 87, 87, 0.25);
 }
-
 
 .resto-img-list {
     width: 300px;
