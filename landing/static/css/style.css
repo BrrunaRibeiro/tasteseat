@@ -373,5 +373,22 @@ form .helptext {
 
     .search-bar{
         max-width: 115px;
+        margin: 0;
+    }
+
+    .search-input
+    .nav-item {
+        line-height: 56px;
+        padding: 0 8px;
+        margin-bottom: 0;
+    }
+
+    .nav-link {
+        padding: 0;
+    }
+
+    #logoutbtn{
+        padding: 0 5px;
+        border: 0;
     }
 }
