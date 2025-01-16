@@ -12,8 +12,10 @@ document.addEventListener("DOMContentLoaded", function () {
         const registerButton = registrationForm.querySelector('button[type="submit"]');
 
         // Initially disable the register button
-        registerButton.disabled = true;
-        registerButton.classList.add("disabled");
+        if (registerButton) {
+            registerButton.disabled = true;
+            registerButton.classList.add("disabled");
+        }
 
         // Create error message containers if not present
         function ensureErrorContainer(field) {
@@ -27,51 +29,55 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         // Real-time email validation via AJAX
-        emailField.addEventListener("blur", function () {
-            const email = emailField.value.trim();
-            const errorContainer = ensureErrorContainer(emailField);
+        if (emailField) {
+            emailField.addEventListener("blur", function () {
+                const email = emailField.value.trim();
+                const errorContainer = ensureErrorContainer(emailField);
 
-            if (email) {
-                fetch('/check_email/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-                    },
-                    body: JSON.stringify({ email: email })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.exists) {
-                        errorContainer.textContent = "This email is already registered.";
+                if (email) {
+                    fetch('/check_email/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                        },
+                        body: JSON.stringify({ email: email })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.exists) {
+                            errorContainer.textContent = "This email is already registered.";
+                            emailField.style.borderColor = "red";
+                        } else {
+                            errorContainer.textContent = "";
+                            emailField.style.borderColor = "green";
+                        }
+                        validateForm(); // Re-check form validity
+                    })
+                    .catch(error => {
+                        errorContainer.textContent = "Error checking email. Please try again.";
                         emailField.style.borderColor = "red";
-                    } else {
-                        errorContainer.textContent = "";
-                        emailField.style.borderColor = "green";
-                    }
-                    validateForm(); // Re-check form validity
-                })
-                .catch(error => {
-                    errorContainer.textContent = "Error checking email. Please try again.";
+                    });
+                } else {
+                    errorContainer.textContent = "Email cannot be empty.";
                     emailField.style.borderColor = "red";
-                });
-            } else {
-                errorContainer.textContent = "Email cannot be empty.";
-                emailField.style.borderColor = "red";
-                validateForm(); // Re-check form validity
-            }
-        });
+                    validateForm(); // Re-check form validity
+                }
+            });
+        }
 
         // Password matching validation
-        const passwordErrorContainer = ensureErrorContainer(password2);
-        password2.addEventListener("input", function () {
-            if (password1.value !== password2.value) {
-                passwordErrorContainer.innerHTML = "<li>Passwords must match.</li>";
-            } else {
-                passwordErrorContainer.innerHTML = "";
-            }
-            validateForm(); // Re-check form validity
-        });
+        if (password2 && password1) {
+            const passwordErrorContainer = ensureErrorContainer(password2);
+            password2.addEventListener("input", function () {
+                if (password1.value !== password2.value) {
+                    passwordErrorContainer.innerHTML = "<li>Passwords must match.</li>";
+                } else {
+                    passwordErrorContainer.innerHTML = "";
+                }
+                validateForm(); // Re-check form validity
+            });
+        }
 
         // General validation for all fields
         const fields = registrationForm.querySelectorAll("input");
@@ -79,17 +85,19 @@ document.addEventListener("DOMContentLoaded", function () {
             const errorContainer = ensureErrorContainer(field);
 
             // Validate field on blur
-            field.addEventListener("blur", function () {
-                if (!field.checkValidity()) {
-                    errorContainer.textContent = field.validationMessage;
-                } else {
-                    errorContainer.textContent = "";
-                }
-                validateForm(); // Re-check form validity
-            });
+            if (field) {
+                field.addEventListener("blur", function () {
+                    if (!field.checkValidity()) {
+                        errorContainer.textContent = field.validationMessage;
+                    } else {
+                        errorContainer.textContent = "";
+                    }
+                    validateForm(); // Re-check form validity
+                });
 
-            // Revalidate form on input for dynamic fields
-            field.addEventListener("input", validateForm);
+                // Revalidate form on input for dynamic fields
+                field.addEventListener("input", validateForm);
+            }
         });
 
         // Validate the form and toggle the register button
@@ -109,24 +117,28 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             // Enable or disable the register button based on form validity
-            registerButton.disabled = !isValid;
-            if (isValid) {
-                registerButton.classList.remove("disabled");
-            } else {
-                registerButton.classList.add("disabled");
+            if (registerButton) {
+                registerButton.disabled = !isValid;
+                if (isValid) {
+                    registerButton.classList.remove("disabled");
+                } else {
+                    registerButton.classList.add("disabled");
+                }
             }
         }
 
         // Prevent multiple submissions
-        registrationForm.addEventListener("submit", function (e) {
-            const isValid = !registerButton.disabled;
-            if (!isValid) {
-                e.preventDefault(); // Stop submission if form is invalid
-            } else {
-                // Disable the button to prevent multiple submissions
-                registerButton.disabled = true;
-            }
-        });
+        if (registrationForm) {
+            registrationForm.addEventListener("submit", function (e) {
+                const isValid = !registerButton.disabled;
+                if (!isValid) {
+                    e.preventDefault(); // Stop submission if form is invalid
+                } else {
+                    // Disable the button to prevent multiple submissions
+                    registerButton.disabled = true;
+                }
+            });
+        }
     }
 
     // Function to handle selection of a time slot  
@@ -134,19 +146,26 @@ document.addEventListener("DOMContentLoaded", function () {
     function selectTime(element, available) {
         if (available) {
             // Set the selected booking time  
-            document.getElementById('booking_start_time').value = element.getAttribute('data-time');
+            const bookingStartTime = document.getElementById('booking_start_time');
+            if (bookingStartTime && element) {
+                bookingStartTime.value = element.getAttribute('data-time');
+            }
 
             // Highlight the selected time slot (make it green)
             const timeSlots = document.querySelectorAll('.time-slot');
             element.classList.remove('btn-primary'); // Remove blue background from selected
             element.classList.add('btn-success'); // Apply green background to selected time slot
             // Show the booking form  
-            document.getElementById('booking-form').style.display = 'block';
-            document.getElementById('booking-form').scrollIntoView({ behavior: 'smooth' });
+            const bookingForm = document.getElementById('booking-form');
+            if (bookingForm) {
+                bookingForm.style.display = 'block';
+                bookingForm.scrollIntoView({ behavior: 'smooth' });
+            }
         } else {
             alert('This time is not available. Please select another time.'); // Inform the user
         }
     }
+
     // Function to ensure that only valid times can be selected and submitted
     function validateSelectedTime() {
         const selectedTime = document.getElementById('booking_start_time').value;
@@ -162,11 +181,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Prevent form submission if an invalid time is selected
-    document.getElementById('booking-form').addEventListener('submit', function (event) {
-        if (!validateSelectedTime()) {
-            event.preventDefault(); // Stop form submission if time is not valid
-        }
-    });
+    const bookingForm = document.getElementById('booking-form');
+    if (bookingForm) {
+        bookingForm.addEventListener('submit', function (event) {
+            if (!validateSelectedTime()) {
+                event.preventDefault(); // Stop form submission if time is not valid
+            }
+        });
+    }
 
     // Attach click listeners to the container of buttons
     document.querySelectorAll('.delete-booking-button').forEach(button => {
@@ -193,7 +215,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const datePicker = document.getElementById('date-picker');
 
             // If the value is empty or undefined, set it to today's date
-            if (!datePicker.value) {
+            if (datePicker && !datePicker.value) {
                 const today = new Date();
                 const year = today.getFullYear();
                 const month = String(today.getMonth() + 1).padStart(2, '0');
@@ -229,7 +251,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         // Event listener for date change  
-        document.getElementById('date-picker').addEventListener('change', updateAvailability);
+        const datePicker = document.getElementById('date-picker');
+        if (datePicker) {
+            datePicker.addEventListener('change', updateAvailability);
+        }
 
         const guestButtons = document.querySelectorAll('#guest-selection button');
         guestButtons.forEach(button => {
@@ -247,27 +272,17 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    if (currentPath.includes('/restaurant_list')) {
-        const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-        const searchInput = document.getElementById('search-input');
+    const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
         const resultsContainer = document.createElement('div');  
         resultsContainer.classList.add('search-results');
         document.querySelector('.search-bar').appendChild(resultsContainer); 
 
-        //Conditionally set the placeholder for input field based on media queries
-        function updatePlaceholder() {
-            if (window.matchMedia('(max-width: 768px)').matches) {
-                searchInput.setAttribute('placeholder', 'Search');
-            }
-        }
-        updatePlaceholder();
-
         searchInput.addEventListener('input', function () {
             const query = searchInput.value.trim(); 
-        
             if (query.length >= 2) {
                 const encodedQuery = encodeURIComponent(query);
-        
                 fetch(`/search/?q=${encodedQuery}`, {
                     headers: {
                         'X-CSRFToken': csrftoken,
@@ -283,7 +298,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     })
                     .then(data => {
                         resultsContainer.innerHTML = ''; 
-        
                         if (data.length > 0) {
                             resultsContainer.style.display = 'block'; 
                             data.forEach(restaurant => {
@@ -310,8 +324,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
-
-    const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
     let guestCount;
 
