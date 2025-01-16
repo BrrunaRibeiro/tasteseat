@@ -22,7 +22,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '.herokuapp.com',
-    'ep-gentle-mountain-a23bxz6h-pooler.eu-central-1.aws.neon.tech',
     '127.0.0.1',
 ]
 

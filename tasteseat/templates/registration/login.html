@@ -5,9 +5,7 @@
     <form method="POST">
         <h2>Login</h2>
         {% csrf_token %}
-        <!-- Render the form fields -->
-        {{ form.as_p }}  <!-- Ensures the form fields are rendered -->
-
+        {{ form.as_p }}
         <button type="submit" class="btn btn-primary">Login</button>
     </form>
 </div>

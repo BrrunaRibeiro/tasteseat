@@ -152,7 +152,11 @@ address {
     cursor: not-allowed;
 }
 
-#guest-selection .btn-secondary {
+#guest-selection .btn-success {
+    background-color: green;
+    color: white;
+}
+#time-slots .btn-success {
     background-color: green;
     color: white;
 }

@@ -136,6 +136,10 @@ document.addEventListener("DOMContentLoaded", function () {
             // Set the selected booking time  
             document.getElementById('booking_start_time').value = element.getAttribute('data-time');
 
+            // Highlight the selected time slot (make it green)
+            const timeSlots = document.querySelectorAll('.time-slot');
+            element.classList.remove('btn-primary'); // Remove blue background from selected
+            element.classList.add('btn-success'); // Apply green background to selected time slot
             // Show the booking form  
             document.getElementById('booking-form').style.display = 'block';
             document.getElementById('booking-form').scrollIntoView({ behavior: 'smooth' });
@@ -143,6 +147,26 @@ document.addEventListener("DOMContentLoaded", function () {
             alert('This time is not available. Please select another time.'); // Inform the user
         }
     }
+    // Function to ensure that only valid times can be selected and submitted
+    function validateSelectedTime() {
+        const selectedTime = document.getElementById('booking_start_time').value;
+        const availableTimesData = document.getElementById('available-times-data');
+        const availableTimes = JSON.parse(availableTimesData.textContent);
+
+        if (!availableTimes[selectedTime]) {
+            alert("The selected time is no longer available. Please choose another time.");
+            return false;
+        }
+
+        return true;
+    }
+
+    // Prevent form submission if an invalid time is selected
+    document.getElementById('booking-form').addEventListener('submit', function (event) {
+        if (!validateSelectedTime()) {
+            event.preventDefault(); // Stop form submission if time is not valid
+        }
+    });
 
     // Attach click listeners to the container of buttons
     document.querySelectorAll('.delete-booking-button').forEach(button => {
@@ -180,11 +204,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
         setDefaultDate();
 
+        function fetchAvailableTimes(date, guests) {
+            // Fetch available times for the selected date and guests from the backend
+            const availableTimesData = document.getElementById("available-times-data");
+            if (availableTimesData) {
+                const availableTimes = JSON.parse(availableTimesData.textContent);
+                initializeTimeSlots(availableTimes); // Initialize time slots with the available times
+            } else {
+                alert("No available Tables for this Restaurant.");
+            }
+        }
+
         // Function to update availability based on the selected date
         function updateAvailability() {
             const selectedDate = document.getElementById('date-picker').value;
             if (selectedDate) {
-                window.location.href = window.location.pathname + `?guests=${guestCount}&date=${selectedDate}`;
+                const newUrl = window.location.pathname + `?guests=${guestCount}&date=${selectedDate}`;
+                history.pushState({ path: newUrl }, '', newUrl);
+                // Dynamically update the time slots or other UI components based on guestCount and selectedDate
+                fetchAvailableTimes(selectedDate, guestCount);
             } else {
                 alert("No date selected.");
             }
@@ -321,14 +359,14 @@ document.addEventListener("DOMContentLoaded", function () {
     function selectGuest(button) {
         const buttons = document.querySelectorAll('#guest-selection button');
         buttons.forEach(btn => {
-            btn.classList.remove('btn-secondary'); 
+            btn.classList.remove('btn-success'); 
             btn.classList.add('btn-primary');
         });
 
         guestCount = button.value; 
 
         button.classList.remove('btn-primary');
-        button.classList.add('btn-secondary');
+        button.classList.add('btn-success');
 
         updateAvailability();
     }
