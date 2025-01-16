@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
-    
+
     // Function to handle selection of a time slot  
     // This is necessary to ensure that the user can select a valid time for booking.
     function selectTime(element, available) {
@@ -138,6 +138,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Show the booking form  
             document.getElementById('booking-form').style.display = 'block';
+            document.getElementById('booking-form').scrollIntoView({ behavior: 'smooth' });
         } else {
             alert('This time is not available. Please select another time.'); // Inform the user
         }
@@ -343,6 +344,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const bookingToDeleteUrl = button.getAttribute('data-delete-url');
         const modalElement = document.getElementById('delete-modal');
         const outsideContent = document.querySelectorAll('body > *:not(#delete-modal)');
+        document.getElementById('booking-form').scrollIntoView({ behavior: 'smooth' });
 
         modalMessage.textContent = `Are you sure you want to delete the booking for ${restaurantName} on ${bookingTime}?`;
 
