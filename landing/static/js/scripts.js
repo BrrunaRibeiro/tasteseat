@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const errorContainer = ensureErrorContainer(field);
 
             // Validate field on blur
-            if (field) {
+            if (field && field !== password1 && field !== password2) {
                 field.addEventListener("blur", function () {
                     if (!field.checkValidity()) {
                         errorContainer.textContent = field.validationMessage;
@@ -104,17 +104,22 @@ document.addEventListener("DOMContentLoaded", function () {
         function validateForm() {
             let isValid = true;
 
-            fields.forEach((field) => {
-                const errorContainer = ensureErrorContainer(field);
+            // Only validate general fields after passwords match
+            if (password1.value && password2.value && password1.value === password2.value) {
+                fields.forEach((field) => {
+                    const errorContainer = ensureErrorContainer(field);
 
-                if (!field.checkValidity()) {
-                    errorContainer.textContent = field.validationMessage;
-                    isValid = false;
-                } else if (field === emailField && emailField.style.borderColor === "red") {
-                    // Special case for email if validation is ongoing
-                    isValid = false;
-                }
-            });
+                    // Skip validation for email field and password
+                    if (field !== emailField && field !== password1 && field !== password2) {
+                        if (!field.checkValidity()) {
+                            errorContainer.textContent = field.validationMessage;
+                            isValid = false;
+                        }
+                    }
+                });
+            } else {
+                isValid = false;
+            }
 
             // Enable or disable the register button based on form validity
             if (registerButton) {
