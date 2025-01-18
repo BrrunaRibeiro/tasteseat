@@ -379,6 +379,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
         button.classList.remove('btn-primary');
         button.classList.add('btn-success');
+        // Dynamically update the value of the hidden "guests" input field
+        const guestCountInput = document.querySelector('input[name="guests"]');
+        if (guestCountInput) {
+            guestCountInput.value = guestCount; // Set the correct guest count
+        }
 
         updateAvailability();
     }
