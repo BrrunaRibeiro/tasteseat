@@ -9,22 +9,23 @@ class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField(
         max_length=254,
         required=True,
-        widget=forms.EmailInput(attrs={'placeholder': 'Enter your email'}), 
+        widget=forms.EmailInput(attrs={'placeholder': 'Enter your email'}),
     )
     full_name = forms.CharField(
         max_length=100,
         required=True,  # Make it required
-        widget=forms.TextInput(attrs={'placeholder': 'Full Name'}), 
+        widget=forms.TextInput(attrs={'placeholder': 'Full Name'}),
     )
-    phone_number = forms.CharField(  
+    phone_number = forms.CharField(
         max_length=20,
         required=True,  # Make it required
-        widget=forms.TextInput(attrs={'placeholder': 'Phone Number'}), 
+        widget=forms.TextInput(attrs={'placeholder': 'Phone Number'}),
     )
 
     class Meta:
         model = User
-        fields = ['email', 'full_name', 'phone_number', 'password1', 'password2']
+        fields = ['email', 'full_name', 'phone_number',
+                  'password1', 'password2']
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -34,7 +35,8 @@ class UserRegistrationForm(UserCreationForm):
 
     def save(self, commit=True):
         """
-        Save the user with the email as the username and full name split into first/last name.
+        Save the user with the email as the username and
+        full name split into first/last name.
         """
         user = super().save(commit=False)
         user.username = self.cleaned_data['email']  # Use email as the username
@@ -51,7 +53,7 @@ class UserRegistrationForm(UserCreationForm):
         user_profile, created = UserProfile.objects.get_or_create(user=user)
 
         # Only update if profile exists, otherwise create new one
-        if not created:  
+        if not created:
             user_profile.phone_number = self.cleaned_data['phone_number']
             user_profile.full_name = self.cleaned_data['full_name']
             user_profile.save()
@@ -61,7 +63,8 @@ class UserRegistrationForm(UserCreationForm):
 
 class UserInfoForm(forms.Form):
     """
-    A form to collect additional information for bookings, such as phone number.
+    A form to collect additional information for bookings,
+    such as phone number.
     """
     name = forms.CharField(
         max_length=100,
@@ -80,10 +83,10 @@ class UserInfoForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
-        phone_number = kwargs.pop('phone_number', None)  # Optionally get the phone number if passed
+        phone_number = kwargs.pop('phone_number', None)
 
         super().__init__(*args, **kwargs)
-        
+
         if user:
             self.fields['name'].initial = user.get_full_name()
             self.fields['email'].initial = user.email

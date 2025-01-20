@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'tasteseat.wsgi.application'
 # Database
 DATABASES = {
     'default': dj_database_url.parse(os.environ.get("DATABASE_URL"),
-                                      conn_max_age=600)
+                                     conn_max_age=600)
 }
 
 # List of trusted origins for requests
@@ -95,11 +95,12 @@ CSRF_TRUSTED_ORIGINS = [
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME':
+            'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
         'OPTIONS': {
-            'user_attributes': ('username', 'first_name', 'last_name'),  # Exclude email
+            'user_attributes': ('username', 'first_name', 'last_name'),
         },
-    },  
+    },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },

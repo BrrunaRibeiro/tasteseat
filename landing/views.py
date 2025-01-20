@@ -1,4 +1,6 @@
-import json, logging, time
+import json
+import logging
+import time
 from datetime import datetime, timedelta
 from django.views import generic
 from django.views.decorators.http import require_POST
@@ -13,11 +15,16 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 import pytz
-from django.http import HttpResponseForbidden, HttpResponseBadRequest, HttpResponseRedirect, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db import IntegrityError
 from django.contrib.auth.views import LoginView
 from django import forms
+from django.http import (
+    HttpResponseForbidden,
+    HttpResponseRedirect,
+    JsonResponse
+)
+
 
 def landing_page(request):
     """
@@ -43,11 +50,10 @@ def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
-            # Save the user and the user profile (save returns a tuple)
-            user, user_profile = form.save(commit=True)  # This returns a tuple (user, user_profile)
-            
+            # Save the user and the user profile
+            user, user_profile = form.save(commit=True)
             # Assign username and name fields
-            user.username = form.cleaned_data['email']  # Use email as username
+            user.username = form.cleaned_data['email']
             user.first_name, user.last_name = (
                 form.cleaned_data['full_name'].split(' ', 1)
                 if ' ' in form.cleaned_data['full_name']
@@ -55,14 +61,14 @@ def register(request):
             )
             user.save()
 
-            # Now the user profile has already been created by the form, but you can update it if necessary
+            # Update user profile info
             if user_profile:
                 user_profile.phone_number = form.cleaned_data['phone_number']
                 user_profile.full_name = form.cleaned_data['full_name']
                 user_profile.save()
-                return redirect('login')  # Redirect to some page after successful registration
-            
-            login(request, user) # Automatically log the user in after registration
+                return redirect('login')  # Redirect to login
+
+            login(request, user)  # Log the user in after registration
     else:
         form = UserRegistrationForm()
 
@@ -84,7 +90,8 @@ def login_view(request):
         except User.DoesNotExist:
             # Email not registered
             logger.debug(f"User with email {email} does not exist")
-            messages.error(request, "This email is not registered. Please register an account.")
+            messages.error(request, "This email is not registered."
+                           "Please register an account.")
             return render(request, 'landing/login.html')
 
         # Now authenticate using the email as the username
@@ -226,7 +233,7 @@ def fetch_available_times(request):
 
             # Call your existing function to get available times
             available_times = get_available_times(restaurant, guest_count,
-                                                   date)
+                                                  date)
 
             return JsonResponse(available_times)
 
@@ -244,7 +251,11 @@ def book_table(request):
         initial_data = {
             'name': request.user.get_full_name(),
             'email': request.user.email,
-            'phone_number': request.user.profile.phone_number if request.user.profile.phone_number else '',
+            'phone_number': (
+                request.user.profile.phone_number
+                if request.user.profile.phone_number
+                else ''
+            ),
         }
 
     # Handle form submission
@@ -262,8 +273,9 @@ def book_table(request):
         timezone_offset = 0
 
     if not booking_time_start or not restaurant_id or not guests:
-        form.add_error(None, "Missing booking details. Please fill all required fields.")
-        return render(request, 'landing/restaurant_detail.html', {'form': form})
+        form.add_error(None, "Missing details. All fields are required.")
+        return render(request, 'landing/restaurant_detail.html',
+                      {'form': form})
 
     if form.is_valid():
         if request.user.is_authenticated:
@@ -274,15 +286,19 @@ def book_table(request):
 
             # Parse booking time
             try:
-                naive_booking_time = datetime.strptime(booking_time_start, '%H:%M')
+                naive_booking_time = datetime.strptime(booking_time_start,
+                                                       '%H:%M')
             except ValueError:
                 form.add_error(None, 'Invalid time format. Please use HH:MM.')
-                return render(request, 'landing/restaurant_detail.html', {'form': form})
+                return render(request, 'landing/restaurant_detail.html',
+                              {'form': form})
 
             # Localize booking time
             today = timezone.localtime().date()
-            complete_booking_time = datetime.combine(today, naive_booking_time.time())
-            booking_time_utc = timezone.make_aware(complete_booking_time, timezone.utc)
+            complete_booking_time = datetime.combine(today,
+                                                     naive_booking_time.time())
+            booking_time_utc = timezone.make_aware(complete_booking_time,
+                                                   timezone.utc)
             booking_end_time_utc = booking_time_utc + timedelta(hours=2)
 
             # Query restaurant and check availability
@@ -306,14 +322,13 @@ def book_table(request):
                 )
                 return redirect('booking_confirmation', booking_id=booking.id)
             else:
-                form.add_error(None, "No tables available for the selected time.")
+                form.add_error(None, "No tables free for the selected time.")
         else:
             form.add_error(None, "User is not authenticated.")
 
     return render(request, 'landing/restaurant_detail.html', {
         'form': form,
     })
-
 
 
 def booking_confirmation(request, booking_id):
@@ -357,7 +372,7 @@ def my_bookings(request):
     Display bookings made by the logged-in user.
 
     This view is crucial for enabling users to review their
-    past and upcoming bookings. It enhances user retention by 
+    past and upcoming bookings. It enhances user retention by
     providing easy access to booking information, thereby
     increasing user satisfaction and engagement with the
     application.
@@ -365,6 +380,7 @@ def my_bookings(request):
     bookings = Booking.objects.filter(user_id=request.user, status='confirmed')
 
     return render(request, 'landing/my_bookings.html', {'bookings': bookings})
+
 
 def booking_forbidden(request):
     """
@@ -376,7 +392,8 @@ def booking_forbidden(request):
 @login_required
 def cancel_booking(request, booking_id):
     """
-    Cancel a user's existing booking by updating the status and setting the cancellation timestamp.
+    Cancel a user's existing booking by updating the status
+    and setting the cancellation timestamp.
 
     This view allows users to cancel their bookings, providing
     flexibility and control over their dining plans. By updating
@@ -386,21 +403,23 @@ def cancel_booking(request, booking_id):
     """
     if request.method == "POST":
         booking = get_object_or_404(Booking, id=booking_id)
-        
+
         # Check if the booking belongs to the logged-in user
         if booking.user_id != request.user:
             return booking_forbidden(request)  # Forbidden access
 
         # Check if the booking is already cancelled
         if booking.status == 'cancelled':
-            return JsonResponse({"error": "This booking has already been cancelled."}, status=400)
-        
-        # Update the booking's status to 'cancelled' and set the cancellation timestamp
+            return JsonResponse({"error": "It has already been cancelled."},
+                                status=400)
+
+        # Update the booking's status to 'cancelled', set the cancel timestamp
         booking.status = 'cancelled'
-        booking.cancelled_at = timezone.now()  # Set the current time for cancellation
+        booking.cancelled_at = timezone.now()
         booking.save()
 
-        return JsonResponse({"message": "Booking cancelled successfully."}, status=200)
+        return JsonResponse({"message": "Booking cancelled successfully."},
+                            status=200)
 
     return JsonResponse({"error": "Invalid request."}, status=400)
 

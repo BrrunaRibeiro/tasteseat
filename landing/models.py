@@ -116,12 +116,16 @@ class Booking(models.Model):
         """
         return self.status != 'cancelled'
 
+
 class UserProfile(models.Model):
     """
-    Profile model to store additional information for the user such as phone number
-    and full name. This is related to the default User model via a one-to-one relationship.
+    Profile model to store additional information
+    For the user such as phone number
+    and full name. This is related to the default User model
+    via a one-to-one relationship.
     """
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    user = models.OneToOneField(User, on_delete=models.CASCADE,
+                                related_name='profile')
     phone_number = models.CharField(
         max_length=20, blank=False,  # Required field
         help_text="Phone number of the user."
@@ -136,7 +140,8 @@ class UserProfile(models.Model):
 
     def clean(self):
         """
-        Custom validation for phone number. It checks if the phone number format is valid.
+        Custom validation for the phone number,if the format is valid.
         """
-        if self.phone_number and not re.match(r'^\+?\d{10,15}$', self.phone_number):
-            raise ValidationError("Phone number must be a valid format with 10 to 15 digits.")
+        if self.phone_number and not re.match(r'^\+?\d{10,15}$',
+                                              self.phone_number):
+            raise ValidationError("Phone number must be 10 to 15 digits.")
