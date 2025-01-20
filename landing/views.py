@@ -342,8 +342,8 @@ def booking_confirmation(request, booking_id):
     outcomes.
     """
     booking = get_object_or_404(Booking, id=booking_id)
-    return render(request, 'landing/booking_confirmation.html', {
-        'booking': booking})
+    return render(request, 'landing/booking_confirmation.html',
+                  {'booking': booking})
 
 
 def search_restaurants(request):

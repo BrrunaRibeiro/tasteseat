@@ -28,7 +28,7 @@ ALLOWED_HOSTS = [
 # Redirect URLs
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL = '/restaurant_list'
-REGISTER_REDIRECT_URL = '/restaurant_list'
+REGISTER_REDIRECT_URL = '/login'
 
 
 # Application definition
