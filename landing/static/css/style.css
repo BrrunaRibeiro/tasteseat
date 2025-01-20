@@ -15,8 +15,9 @@ body {
     height: 60px;
 }
 
-.navbar-nav {
+.navbar-nav, nav {
     align-items: center;
+    padding: 0;
 }
 
 a {
@@ -34,6 +35,7 @@ a {
 
 #greeting {
     margin-right: 10px;
+    text-align: center;
 }
 
 #logoutbtn {
@@ -82,6 +84,7 @@ a {
 .search-result-item:hover {
     background-color: #f0f0f0;
 }
+
 .form-control:focus {
     border-color: #888;
     box-shadow: 0 0 0 .25rem rgba(87, 87, 87, 0.25);
@@ -168,6 +171,7 @@ address {
     background-color: green;
     color: white;
 }
+
 #time-slots .btn-success {
     background-color: green;
     color: white;
@@ -226,9 +230,6 @@ address {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-}
-
-.modal .btn {
     background-color: #88aab5;
     color: white;
 }
@@ -296,6 +297,7 @@ form input[type="email"]:focus {
     border: 1px solid #ccc;
     box-shadow: 0 0 0.25rem rgba(161, 161, 161, 0.25);
 }
+
 form .btn {
     width: 100%;
     padding: 10px;
@@ -333,10 +335,6 @@ form .field-container {
 form .helptext {
     display: none;
 }
-
-/* @media screen and (max-width: 769px) {
-    
-} */
 
 @media screen and (max-width: 769px) {
     .nav-item {

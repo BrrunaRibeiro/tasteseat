@@ -404,7 +404,11 @@ document.addEventListener("DOMContentLoaded", function () {
         const bookingToDeleteUrl = button.getAttribute('data-delete-url');
         const modalElement = document.getElementById('delete-modal');
         const outsideContent = document.querySelectorAll('body > *:not(#delete-modal)');
-        document.getElementById('booking-form').scrollIntoView({ behavior: 'smooth' });
+
+        // Check if modal exists before calling scrollIntoView
+        if (modalElement) {
+            modalElement.scrollIntoView({ behavior: 'smooth' });
+        }
 
         modalMessage.textContent = `Are you sure you want to delete the booking for ${restaurantName} on ${bookingTime}?`;
 
