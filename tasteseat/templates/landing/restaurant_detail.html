@@ -27,9 +27,9 @@
                     <button type="button" class="time-slot btn btn-primary" value="5">5</button>
                 </div>
             </div>
-            <small style="color: #999;">  
+            <small style="color: #5f5f5f;">  
                 For 6+ guests, contact the Restaurant on   
-                <a href="tel:{{ restaurant.phone_number }}" style="color: #999; text-decoration: underline;">  
+                <a href="tel:{{ restaurant.phone_number }}" style="color: #5f5f5f; text-decoration: underline;">  
                     {{ restaurant.phone_number }}  
                 </a>  
             </small>
@@ -42,7 +42,7 @@
             <!-- Hidden div to store available times data -->
             <div id="available-times-data" style="display: none;">{{ available_times|safe }}</div>
             <div class="date-picker-container">
-                <label for="date-picker" style="color: #999;">Or select another day to see available tables</label>
+                <label for="date-picker" style="color: #5f5f5f;">Or select another day to see available tables</label>
                 <input type="date" id="date-picker" style="color: #999;">
             </div>
             <br>
