@@ -148,7 +148,7 @@ address {
 }
 
 .submit-form {
-    background-color: rgb(90, 107, 142);
+    background-color: rgb(68, 84, 120);
     border: rgb(66, 66, 100);
     color: white;
 }
@@ -299,7 +299,6 @@ form input[type="email"]:focus {
 form .btn {
     width: 100%;
     padding: 10px;
-    background-color: rgb(149, 166, 202);
     border: rgb(66, 66, 100);
     color: white;
     border: none;
