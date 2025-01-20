@@ -16,8 +16,14 @@ body {
 }
 
 .navbar-nav, nav {
-    align-items: center;
+    align-items: center !important;
     padding: 0;
+}
+
+#navbarNav, .navbar-nav, .navbar-collapse {
+    align-self: center;
+    align-items: center;
+    align-items: center !important;
 }
 
 a {
